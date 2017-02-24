@@ -29,7 +29,7 @@ export const App = React.createClass({
 		return (
 			<StyleRoot>
 				<Helmet 
-					title="Fifty Nifty"  
+					title="Experiment"  
 					meta={[
 						{ name: 'ROBOTS', content: 'NOINDEX, NOFOLLOW' },
 						{ name: 'description', content: 'Experiments for PubPub' },
