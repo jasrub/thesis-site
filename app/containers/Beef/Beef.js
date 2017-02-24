@@ -53,11 +53,6 @@ export const Beef = React.createClass({
 			: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`;
 		return fetch(url, {
 			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json'
-			},
-			credentials: 'include',
 		})
 		.then((response)=> {
 			if (!response.ok) { return response.json().then(err => { throw err; }); }
