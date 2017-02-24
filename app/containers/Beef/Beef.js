@@ -22,6 +22,14 @@ export const Beef = React.createClass({
 		};
 	},
 
+	componentWillMount() {
+		this.setState({
+			workerId: this.props.location.query.workerId,
+			assignmentId: this.props.location.query.assignmentId,
+			hitId: this.props.location.query.hitId,
+		});
+	},
+
 	componentWillReceiveProps(nextProps) {
 		const lastLoading = this.props.beefData.loading;
 		const nextLoading = nextProps.beefData.loading;
@@ -31,12 +39,23 @@ export const Beef = React.createClass({
 		}
 	},
 	
+	submitExperiment() {
+		const data = {
+			workerId: this.state.workerId,
+			assignmentId: this.state.assignmentId,
+			hitId: this.state.hitId,
+		};
+		console.log('Submitting Experiment ', data);
+		this.props.dispatch(submitExperiment(data));
+	},
+
 	render() {
 		
 		return (
 			<div style={styles.container}>
 				<h1>Beef</h1>
 				<p>This experiment blah blah</p>
+				<Button onClick={this.submitExperiment} text={'Submit Experiment'} loading={this.props.beefData.loading} />
 			</div>
 		);
 	}
