@@ -48,20 +48,22 @@ export const Beef = React.createClass({
 			hitId: this.state.hitId,
 		};
 		console.log('Submitting Experiment ', data);
-		const url = window.location.hostname === 'experiments.pubpub.org'
-			? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`
-			: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`;
-		return fetch(url, {
-			method: 'POST',
-		})
-		.then((response)=> {
-			if (!response.ok) { return response.json().then(err => { throw err; }); }
-			return this.props.dispatch(submitExperiment(data));
-		})
-		.catch((err)=> {
-			this.setState({ submitLoading: false, error: JSON.stringify(err) });
-			console.log(err);
-		});
+		return this.props.dispatch(submitExperiment(data));
+		
+		// const url = window.location.hostname === 'experiments.pubpub.org'
+		// 	? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`
+		// 	: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`;
+		// return fetch(url, {
+		// 	method: 'POST',
+		// })
+		// .then((response)=> {
+		// 	if (!response.ok) { return response.json().then(err => { throw err; }); }
+		// 	return this.props.dispatch(submitExperiment(data));
+		// })
+		// .catch((err)=> {
+		// 	this.setState({ submitLoading: false, error: JSON.stringify(err) });
+		// 	console.log(err);
+		// });
 
 		
 	},
