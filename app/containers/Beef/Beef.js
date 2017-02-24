@@ -48,22 +48,28 @@ export const Beef = React.createClass({
 			hitId: this.state.hitId,
 		};
 		console.log('Submitting Experiment ', data);
-		return this.props.dispatch(submitExperiment(data));
+		// return this.props.dispatch(submitExperiment(data));
 		
-		// const url = window.location.hostname === 'experiments.pubpub.org'
-		// 	? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`
-		// 	: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`;
-		// return fetch(url, {
-		// 	method: 'POST',
-		// })
-		// .then((response)=> {
-		// 	if (!response.ok) { return response.json().then(err => { throw err; }); }
-		// 	return this.props.dispatch(submitExperiment(data));
-		// })
-		// .catch((err)=> {
-		// 	this.setState({ submitLoading: false, error: JSON.stringify(err) });
-		// 	console.log(err);
-		// });
+		const url = window.location.hostname === 'experiments.pubpub.org'
+			? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&foo=bar`
+			: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&foo=bar`;
+
+		const form = new FormData();
+		form.append('assignmentId', this.state.assignmentId);
+		form.append('foo', 'bar');
+
+		return fetch(url, {
+			method: 'POST',
+			body: form,
+		})
+		.then((response)=> {
+			if (!response.ok) { return response.json().then(err => { throw err; }); }
+			return this.props.dispatch(submitExperiment(data));
+		})
+		.catch((err)=> {
+			this.setState({ submitLoading: false, error: JSON.stringify(err) });
+			console.log(err);
+		});
 
 		
 	},
@@ -75,6 +81,7 @@ export const Beef = React.createClass({
 				<h1>Beef</h1>
 				<p>This experiment blah blah</p>
 				<Button onClick={this.submitExperiment} text={'Submit Experiment'} loading={this.props.beefData.loading} />
+
 			</div>
 		);
 	}
