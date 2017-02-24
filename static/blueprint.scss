@@ -1,0 +1,19 @@
+@import "~normalize.css";
+
+// Override Default blueprint colors here
+// ****************************
+// $dark-gray1: desaturate(#182026, 0%) ;
+
+// Import blueprint core color and variables
+// ****************************
+$icon-font-path: "~@blueprintjs/core/resources/icons";
+@import "~@blueprintjs/core/src/common/_colors.scss";
+@import "~@blueprintjs/core/src/common/_variables.scss";
+
+// Override sass Variables here
+// ****************************
+// $pt-border-radius: floor($pt-grid-size / 5);
+
+// Import Core Blueprint sass
+// ****************************
+@import "~@blueprintjs/core/src/blueprint.scss";

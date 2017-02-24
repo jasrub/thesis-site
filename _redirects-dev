@@ -1,0 +1,5 @@
+/favicon.ico  /static/favicon.ico
+/robots.txt  /static/robots.txt
+/static/*  /static/:splat
+/api/*  https://pubpub-experiments-api-dev.herokuapp.com/:splat  200
+/*    /index.html   200
