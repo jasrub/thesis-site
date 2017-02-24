@@ -2,8 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Button, Dialog } from '@blueprintjs/core';
+import fetch from 'isomorphic-fetch';
 import Radium from 'radium';
 import { submitExperiment } from './actions';
+
 
 let styles;
 
@@ -46,7 +48,27 @@ export const Beef = React.createClass({
 			hitId: this.state.hitId,
 		};
 		console.log('Submitting Experiment ', data);
-		this.props.dispatch(submitExperiment(data));
+		const url = window.location.hostname === 'experiments.pubpub.org'
+			? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`
+			: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&completed=true`;
+		return fetch(url, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include',
+		})
+		.then((response)=> {
+			if (!response.ok) { return response.json().then(err => { throw err; }); }
+			return this.props.dispatch(submitExperiment(data));
+		})
+		.catch((err)=> {
+			this.setState({ submitLoading: false, error: JSON.stringify(err) });
+			console.log(err);
+		});
+
+		
 	},
 
 	render() {
