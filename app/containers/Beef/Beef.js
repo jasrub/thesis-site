@@ -61,6 +61,7 @@ export const Beef = React.createClass({
 		return fetch(url, {
 			method: 'POST',
 			body: form,
+			credentials: 'include',
 		})
 		.then((response)=> {
 			if (!response.ok) { return response.json().then(err => { throw err; }); }
