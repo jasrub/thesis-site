@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button, Dialog } from '@blueprintjs/core';
+import { Button, Dialog, NonIdealState } from '@blueprintjs/core';
 import fetch from 'isomorphic-fetch';
 import Radium from 'radium';
 import { submitExperiment } from './actions';
@@ -18,6 +18,7 @@ export const Beef = React.createClass({
 
 	getInitialState() {
 		return {
+			completed: false,
 			workerId: '',
 			assignmentId: '',
 			hitId: '',
@@ -37,7 +38,7 @@ export const Beef = React.createClass({
 		const nextLoading = nextProps.beefData.loading;
 		const nextError = nextProps.beefData.error;
 		if (lastLoading && !nextLoading && !nextError) {
-			// this.setState({ showAuthenticationPanel: true });
+			this.setState({ completed: true });
 		}
 	},
 	
@@ -65,8 +66,6 @@ export const Beef = React.createClass({
 			credentials: 'include',
 		})
 		.then((response)=> {
-			// console.log(response)
-			// if (!response.ok) { return response.json().then(err => { throw err; }); }
 			return this.props.dispatch(submitExperiment(data));
 		})
 		.catch((err)=> {
@@ -78,7 +77,14 @@ export const Beef = React.createClass({
 	},
 
 	render() {
-		
+		if (this.state.completed) {
+			return (
+				<NonIdealState
+					description={'Thank you! The HIT has been successfully Submitted and has been Approved.'}
+					title={'HIT Submitted and Approved!'}
+					visual={'endorsed'} />
+			);
+		}
 		return (
 			<div style={styles.container}>
 				<h1>Beef</h1>
