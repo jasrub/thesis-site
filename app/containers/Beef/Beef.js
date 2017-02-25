@@ -65,12 +65,13 @@ export const Beef = React.createClass({
 			credentials: 'include',
 		})
 		.then((response)=> {
-			if (!response.ok) { return response.json().then(err => { throw err; }); }
+			// console.log(response)
+			// if (!response.ok) { return response.json().then(err => { throw err; }); }
 			return this.props.dispatch(submitExperiment(data));
 		})
 		.catch((err)=> {
 			this.setState({ submitLoading: false, error: JSON.stringify(err) });
-			console.log(err);
+			console.log(JSON.stringify(err));
 		});
 
 		
