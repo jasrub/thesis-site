@@ -61,6 +61,7 @@ export const Beef = React.createClass({
 		return fetch(url, {
 			method: 'POST',
 			body: form,
+			mode: 'no-cors',
 			credentials: 'include',
 		})
 		.then((response)=> {
