@@ -123,6 +123,7 @@ export const DinoPaper = React.createClass({
 		return (
 			<div style={styles.container}>
 				<h1>Paper Review</h1>
+				<p>Please review the following work and write a few sentences containing you review in the form at the bottom.</p>
 
 				<div className={'pt-card pt-elevation-2 article-body'} style={styles.paper}>
 					<h2 style={styles.header}>Assessing Growth Patterns of the Jurassic Theropod Dinosaur Allosaurus</h2>
@@ -198,7 +199,7 @@ export const DinoPaper = React.createClass({
 					<div style={{ width: 'calc(100% / 11 * 4', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>7-10 = Accept</div>
 				</div>
 
-
+				{/*TODO: Make error section and handle data submit on button click*/}
 				<button className={'pt-button pt-intent-primary'} onClick={this.props.onComplete}>Finish Review and go to Final step</button>
 			</div>
 		);
@@ -227,6 +228,6 @@ styles = {
 		minHeight: '3em',
 	},
 	paper: {
-		marginBottom: '3em',
+		margin: '2em 0em 3em',
 	}
 };
