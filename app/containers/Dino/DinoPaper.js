@@ -119,7 +119,7 @@ export const DinoPaper = React.createClass({
 	},
 
 	render() {
-
+		// TODO: Make error section and handle data submit on button click
 		return (
 			<div style={styles.container}>
 				<h1>Paper Review</h1>
@@ -199,7 +199,6 @@ export const DinoPaper = React.createClass({
 					<div style={{ width: 'calc(100% / 11 * 4', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>7-10 = Accept</div>
 				</div>
 
-				{/*TODO: Make error section and handle data submit on button click*/}
 				<button className={'pt-button pt-intent-primary'} onClick={this.props.onComplete}>Finish Review and go to Final step</button>
 			</div>
 		);
