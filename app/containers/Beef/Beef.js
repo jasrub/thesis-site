@@ -48,8 +48,6 @@ export const Beef = React.createClass({
 			assignmentId: this.state.assignmentId,
 			hitId: this.state.hitId,
 		};
-		console.log('Submitting Experiment ', data);
-		// return this.props.dispatch(submitExperiment(data));
 		
 		const url = window.location.hostname === 'experiments.pubpub.org'
 			? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&foo=bar`

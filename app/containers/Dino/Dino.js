@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { Button, Dialog } from '@blueprintjs/core';
 import Radium from 'radium';
+import { connect } from 'react-redux';
+import { NonIdealState } from '@blueprintjs/core';
+import Terms from 'components/Terms/Terms';
+import Survey from 'components/Survey/Survey';
+import DinoPaper from './DinoPaper';
 import { submitExperiment } from './actions';
 
 let styles;
@@ -19,24 +21,65 @@ export const Dino = React.createClass({
 			workerId: '',
 			assignmentId: '',
 			hitId: '',
+
+			reviewData: {},
+			surveyData: {},
+
+			completedTerms: false,
+			completedReview: false,
+			completedSurvey: false,
 		};
 	},
-
-	componentWillReceiveProps(nextProps) {
-		const lastLoading = this.props.dinoData.loading;
-		const nextLoading = nextProps.dinoData.loading;
-		const nextError = nextProps.dinoData.error;
-		if (lastLoading && !nextLoading && !nextError) {
-			// this.setState({ showAuthenticationPanel: true });
-		}
-	},
 	
+	completeTerms: function() {
+		this.setState({ completedTerms: true });
+	},
+	completeReview: function(reviewData) {
+		this.setState({ 
+			completedReview: true,
+			reviewData: reviewData 
+		});
+	},
+	completeSurvey: function(surveyData) {
+		// this.props.dispatch(submitExperiment({
+		// 	workerId: this.state.workerId,
+		// 	assignmentId: this.state.assignmentId,
+		// 	hitId: this.state.hitId,
+		// 	...this.state.reviewData,
+		// 	...surveyData,
+		// }));
+		console.log(surveyData);
+		this.setState({ 
+			completedSurvey: true,
+			surveyData: surveyData,
+		});
+	},
+
 	render() {
-		
 		return (
 			<div style={styles.container}>
-				<h1>Dino</h1>
-				<p>This experiment blah blah</p>
+
+				{!this.state.completedTerms &&
+					<Terms onComplete={this.completeTerms} />
+				}
+
+				{this.state.completedTerms && !this.state.completedReview &&
+					<DinoPaper onComplete={this.completeReview} />
+				}
+
+				{this.state.completedTerms && this.state.completedReview && !this.props.dinoData.completed &&
+					<Survey onComplete={this.completeSurvey} loading={this.props.dinoData.loading} />
+				}
+
+				{this.props.dinoData.completed &&
+					<div style={styles.complete}>
+						<NonIdealState
+							description={'Thank you! The HIT has been successfully Submitted and has been Approved.'}
+							title={'HIT Submitted and Approved!'}
+							visual={'endorsed'} />
+					</div>
+				}
+				
 			</div>
 		);
 	}
@@ -53,5 +96,8 @@ export default connect(mapStateToProps)(Radium(Dino));
 styles = {
 	container: {
 		maxWidth: '100vw',
+	},
+	complete: {
+		margin: '3em 0em',
 	},
 };

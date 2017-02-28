@@ -2,3 +2,625 @@ body {
 	margin: 2em;
 	background-color: #F8F7F2;
 }
+
+.article-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #333;
+  font-family: serif;
+  font-size: 18px;
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+
+.article-body .pub-article *:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+.article-body a {
+  background-color: transparent;
+}
+
+.article-body a:active,
+.article-body a:hover {
+  outline: 0;
+}
+
+.article-body strong {
+  font-weight: bold;
+}
+
+.article-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.article-body img {
+  border: 0;
+}
+
+.article-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.article-body pre {
+  overflow: auto;
+}
+
+.article-body code,
+.article-body kbd,
+.article-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.article-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.article-body html input[disabled] {
+  cursor: default;
+}
+
+.article-body input {
+  line-height: normal;
+}
+
+.article-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.article-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.article-body td,
+.article-body th {
+  padding: 0;
+}
+
+.article-body * {
+  box-sizing: border-box;
+}
+
+.article-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.article-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.article-body a:hover,
+.article-body a:active {
+  text-decoration: underline;
+}
+
+.article-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.article-body hr:before {
+  display: table;
+  content: "";
+}
+
+.article-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4,
+.article-body h5,
+.article-body h6 {
+  font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", "Helvetica Neue", sans-serif, "Icons16";
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.article-body h1 {
+  font-size: 30px;
+}
+
+.article-body h2 {
+  font-size: 21px;
+}
+
+.article-body h3 {
+  font-size: 16px;
+}
+
+.article-body h4 {
+  font-size: 14px;
+}
+
+.article-body h5 {
+  font-size: 12px;
+}
+
+.article-body h6 {
+  font-size: 11px;
+}
+
+.article-body blockquote {
+  margin: 0;
+}
+
+.article-body ul,
+.article-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.article-body ol ol,
+.article-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.article-body ul ul ol,
+.article-body ul ol ol,
+.article-body ol ul ol,
+.article-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.article-body dd {
+  margin-left: 0;
+}
+
+.article-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.article-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.article-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.article-body:before {
+  display: table;
+  content: "";
+}
+
+.article-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.article-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.article-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.article-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.article-body .anchor:focus {
+  outline: none;
+}
+
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4,
+.article-body h5,
+.article-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+.article-body h1:hover .anchor,
+.article-body h2:hover .anchor,
+.article-body h3:hover .anchor,
+.article-body h4:hover .anchor,
+.article-body h5:hover .anchor,
+.article-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.article-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  /*border-bottom: 1px solid #eee;*/
+}
+
+.article-body h1 .anchor {
+  line-height: 1;
+}
+
+.article-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  /*border-bottom: 1px solid #eee;*/
+}
+
+.article-body h2 .anchor {
+  line-height: 1;
+}
+
+.article-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.article-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.article-body h4 {
+  font-size: 1.25em;
+}
+
+.article-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.article-body h5 {
+  font-size: 1em;
+}
+
+.article-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.article-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.article-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.article-body p,
+.article-body .p-block,
+.article-body blockquote,
+.article-body ul,
+.article-body ol,
+.article-body dl,
+.article-body table,
+.article-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.article-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 2em;
+}
+
+.article-body ul ul,
+.article-body ul ol,
+.article-body ol ol,
+.article-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.article-body li>p {
+  margin-top: 16px;
+  font-size: 1em;
+}
+
+.article-body dl {
+  padding: 0;
+}
+
+.article-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.article-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.article-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.article-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.article-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.article-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.article-body table th {
+  font-weight: bold;
+}
+
+.article-body table th,
+.article-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.article-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.article-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.article-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.article-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.article-body code:before,
+.article-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.article-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.article-body .highlight {
+  margin-bottom: 16px;
+}
+
+.article-body .highlight pre,
+.article-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.article-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.article-body pre {
+  word-wrap: normal;
+}
+
+.article-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.article-body pre code:before,
+.article-body pre code:after {
+  content: normal;
+}
+
+.article-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.article-body .pl-c {
+  color: #969896;
+}
+
+.article-body .pl-c1,
+.article-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.article-body .pl-e,
+.article-body .pl-en {
+  color: #795da3;
+}
+
+.article-body .pl-s .pl-s1,
+.article-body .pl-smi {
+  color: #333;
+}
+
+.article-body .pl-ent {
+  color: #63a35c;
+}
+
+.article-body .pl-k {
+  color: #a71d5d;
+}
+
+.article-body .pl-pds,
+.article-body .pl-s,
+.article-body .pl-s .pl-pse .pl-s1,
+.article-body .pl-sr,
+.article-body .pl-sr .pl-cce,
+.article-body .pl-sr .pl-sra,
+.article-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.article-body .pl-v {
+  color: #ed6a43;
+}
+
+.article-body .pl-id {
+  color: #b52a1d;
+}
+
+.article-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.article-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.article-body .pl-ml {
+  color: #693a17;
+}
+
+.article-body .pl-mh,
+.article-body .pl-mh .pl-en,
+.article-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.article-body .pl-mq {
+  color: #008080;
+}
+
+.article-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.article-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.article-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.article-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.article-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.article-body .pl-mo {
+  color: #1d3e81;
+}
+
+.article-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.article-body .task-list-item {
+  list-style-type: none;
+}
+
+.article-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.article-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.article-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}

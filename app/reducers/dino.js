@@ -16,6 +16,7 @@ import {
 const defaultState = Immutable.Map({
 	loading: false,
 	error: undefined,
+	completed: false,
 });
 
 /* ----------------------------------------- */
@@ -33,6 +34,7 @@ export default function reducer(state = defaultState, action) {
 		return state.merge({
 			loading: false,
 			error: undefined,
+			completed: true,
 		});	
 	case POST_EXPERIMENT_FAIL:
 		return state.merge({
