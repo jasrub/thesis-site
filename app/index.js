@@ -15,7 +15,7 @@ if (window.location.hostname !== 'localhost') {
 	Raven.config('https://1e5e82de82aa437fba0ed4e65248d592@sentry.io/142480').install();
 }
 
-if (/PhantomJS/.test(window.navigator.userAgent)) { require('es6-promise').polyfill(); }
+require('es6-promise').polyfill();
 
 function onRouteUpdate() {
 	// Log Page View

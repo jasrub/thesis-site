@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { NonIdealState, Spinner } from '@blueprintjs/core';
 import Terms from 'components/Terms/Terms';
 import Survey from 'components/Survey/Survey';
+import fetch from 'isomorphic-fetch';
 import DinoPaper from './DinoPaper';
 import { submitExperiment, checkUniqueWorker } from './actions';
 
@@ -72,7 +73,7 @@ export const Dino = React.createClass({
 		return fetch(url, {
 			method: 'POST',
 			body: form,
-			// mode: 'no-cors',
+			mode: 'no-cors',
 			credentials: 'include',
 		})
 		.then((response)=> {
