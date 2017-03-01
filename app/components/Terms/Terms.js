@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
+import { Button } from '@blueprintjs/core';
 
 let styles;
 
 export const Terms = React.createClass({
 	propTypes: {
 		onComplete: PropTypes.func,
+		assignmentId: PropTypes.string,
 	},
 
 	render() {
@@ -18,7 +20,12 @@ export const Terms = React.createClass({
 				<p style={styles.text}>We invite you to participate in the experiments below. Your participation in these experiments is <b>not</b> linked to your PubPub profile in any way. The data collected in these experiments is self-contained and anonymized.</p>
 				<p style={styles.text}>The results of these experiments will be published and available on PubPub.</p>
 
-				<button className={'pt-button pt-intent-primary'} onClick={this.props.onComplete}>Accept and Begin HIT</button>
+
+				<Button 
+					className={'pt-button pt-intent-primary'} 
+					onClick={this.props.onComplete} 
+					disabled={this.props.assignmentId === 'ASSIGNMENT_ID_NOT_AVAILABLE'}
+					text={this.props.assignmentId === 'ASSIGNMENT_ID_NOT_AVAILABLE' ? 'Please accept HIT on Amazon first' : 'Accept and Begin HIT'} />
 			</div>
 		);
 	}

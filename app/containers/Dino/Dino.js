@@ -92,7 +92,7 @@ export const Dino = React.createClass({
 			<div style={styles.container}>
 
 				{!this.state.completedTerms &&
-					<Terms onComplete={this.completeTerms} />
+					<Terms onComplete={this.completeTerms} assignmentId={this.state.assignmentId} />
 				}
 
 				{this.state.completedTerms && !this.state.completedReview &&
