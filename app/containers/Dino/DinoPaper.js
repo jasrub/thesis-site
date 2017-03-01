@@ -2,11 +2,9 @@ import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import { Slider, Button } from '@blueprintjs/core';
 import Textarea from 'react-textarea-autosize';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import DinoFigure from './DinoFigure';
 
 let styles;
-
 const defaultOffsets = [
 	2,
 	3,
@@ -15,6 +13,8 @@ const defaultOffsets = [
 	10,
 	12,
 ];
+let time = Date.now();
+
 export const DinoPaper = React.createClass({
 	propTypes: {
 		onComplete: PropTypes.func,
@@ -28,6 +28,8 @@ export const DinoPaper = React.createClass({
 			reviewRating: undefined,
 			error: undefined,
 			offsets: defaultOffsets,
+			offsetInteractions: defaultOffsets.map(item => 0),
+			startTime: new Date().getTime(),
 			data: [ 
 				[
 					{ age: 0, circumference: 104 },
@@ -83,6 +85,26 @@ export const DinoPaper = React.createClass({
 		};
 	},
 
+	componentWillMount() {
+		window.addEventListener('scroll', this.addScroll);
+	},
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.addScroll);
+	},
+	
+	scrollValues: [],
+
+	addScroll: function() {
+		const wait = 250;
+		if ((time + wait - Date.now()) < 0) {
+			this.scrollValues.push({
+				t: new Date().getTime() - this.state.startTime,
+				y: document.body.scrollTop
+			});
+			time = Date.now();
+		}
+	},
+
 	submitReview: function() {
 		if (!this.state.reviewContent) { return this.setState({ error: 'A review is required' }); }
 		if (this.state.reviewRating === undefined) { return this.setState({ error: 'A review score is required' }); }
@@ -91,19 +113,27 @@ export const DinoPaper = React.createClass({
 		return this.props.onComplete({
 			reviewContent: this.state.reviewContent,
 			reviewRating: this.state.reviewRating,
+			offsetValues: JSON.stringify(this.state.offsets),
+			offsetInteractions: JSON.stringify(this.state.offsetInteractions),
+			timeOnReview: new Date().getTime() - this.state.startTime,
+			scrollValues: JSON.stringify(this.scrollValues)
 		});
 	},
 
 	sliderUpdate: function(index, value) {
 		const offsets = [...this.state.offsets];
 		offsets[index] = Math.floor(value * 10) / 10;
-		this.setState({ offsets: offsets });
+		const offsetInteractions = [...this.state.offsetInteractions];
+		offsetInteractions[index] += 1;
+		this.setState({ 
+			offsets: offsets,
+			offsetInteractions: offsetInteractions,
+		});
 	},
 
 	render() {
 		const tableNames = ['Femur 1', 'Femur 2', 'Femur 3', 'Femur 4', 'Femur 5', 'Femur 6'];
-		const tableSites = ['CLDQ','CLDQ','CLDQ','Provincial Park','Provincial Park','Provincial Park'];
-
+		const tableSites = ['CLDQ', 'CLDQ', 'CLDQ', 'Provincial Park', 'Provincial Park', 'Provincial Park'];
 		return (
 			<div style={styles.container}>
 				<h1>Paper Review</h1>
