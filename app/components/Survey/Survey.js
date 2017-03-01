@@ -53,17 +53,17 @@ export const Survey = React.createClass({
 			<div style={styles.container}>
 				<h1>Survey</h1>
 
-				<p>Final step! Please complete the survey below. All fields are required. </p>
+				<p>Final step! Please complete the survey below. All fields are required.</p>
 
 				<div className={'pt-button-group'} style={styles.inputBlock}>
-					<div style={styles.label}>How many times have you been a peer reviewer in the past?</div>
+					<div style={styles.label}>How many times have you been a peer reviewer for a scientific paper in the past?</div>
 					{hasReviewedOptions.map((item, index)=> {
 						return <Button key={`hasReviewed-${index}`} text={item} onClick={evt => this.setState({ hasReviewed: item })} className={this.state.hasReviewed === item ? 'pt-active' : ''} />;
 					})}
 				</div>
 
 				<div className={'pt-button-group'} style={styles.inputBlock}>
-					<div style={styles.label}>How many times have you been a peer reviewer in the past?</div>
+					<div style={styles.label}>How many times have you submitted scientific work to be peer reviewed in the past?</div>
 					{hasBeenReviewedOptions.map((item, index)=> {
 						return <Button key={`hasBeenReviewed-${index}`} text={item} onClick={evt => this.setState({ hasBeenReviewed: item })} className={this.state.hasBeenReviewed === item ? 'pt-active' : ''} />;
 					})}
@@ -90,7 +90,7 @@ export const Survey = React.createClass({
 
 
 				<label>
-					Please provide feedback on your experience during this experiment.
+					Please provide feedback on your experience during this study.
 					<Textarea value={this.state.feedback} onChange={evt => this.setState({ feedback: evt.target.value })} style={styles.input} />
 				</label>
 
