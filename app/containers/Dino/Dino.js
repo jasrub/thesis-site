@@ -72,7 +72,7 @@ export const Dino = React.createClass({
 		return fetch(url, {
 			method: 'POST',
 			body: form,
-			mode: 'no-cors',
+			// mode: 'no-cors',
 			credentials: 'include',
 		})
 		.then((response)=> {
@@ -87,7 +87,8 @@ export const Dino = React.createClass({
 		})
 		.catch((err)=> {
 			this.setState({ completedSurvey: false });
-			console.log(JSON.stringify(err));
+			Raven.captureException(err);
+			console.error(JSON.stringify(err));
 		});
 	},
 

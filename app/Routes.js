@@ -8,6 +8,7 @@ function getComponent(component) {
 			cb(null, module.default);
 		})
 		.catch(function(error) {
+			Raven.captureException(error);
 			throw new Error(`Dynamic page loading failed: ${error}`);
 		});
 	};
