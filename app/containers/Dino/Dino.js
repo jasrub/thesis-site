@@ -31,6 +31,15 @@ export const Dino = React.createClass({
 		};
 	},
 	
+	componentWillMount() {
+		const query = this.props.location.query || {};
+		this.setState({
+			workerId: query.workerId,
+			assignmentId: query.assignmentId,
+			hitId: query.hitId,
+		});
+	},
+
 	completeTerms: function() {
 		this.setState({ completedTerms: true });
 		document.body.scrollTop = 0;
