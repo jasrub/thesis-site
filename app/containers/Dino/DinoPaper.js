@@ -7,6 +7,14 @@ import DinoFigure from './DinoFigure';
 
 let styles;
 
+const defaultOffsets = [
+	2,
+	3,
+	4,
+	10,
+	10,
+	12,
+];
 export const DinoPaper = React.createClass({
 	propTypes: {
 		onComplete: PropTypes.func,
@@ -17,16 +25,9 @@ export const DinoPaper = React.createClass({
 		return {
 			reviewContent: '',
 			reviewRating: undefined,
-			width: 400,
-			margin: 0,
-			offsets: [
-				3,
-				3,
-				4,
-				5,
-				5,
-				8,
-			],
+			// width: 400,
+			// margin: 0,
+			offsets: defaultOffsets,
 			colors: [
 				'#8884d8',
 				'#82ca9d',
@@ -38,79 +39,78 @@ export const DinoPaper = React.createClass({
 			data: [ 
 				[
 					{ age: 0, circumference: 104 },
-					{ age: 1, circumference: 112 },
-					{ age: 2, circumference: 119 },
-					{ age: 3, circumference: 126 },
-					{ age: 4, circumference: 134 },
-					{ age: 5, circumference: 143 },
-					{ age: 6, circumference: 153 },
-					{ age: 7, circumference: 158 },
-					{ age: 8, circumference: 162 },
-					{ age: 9, circumference: 165 },
-					{ age: 10, circumference: 190 },
+					{ age: 1, circumference: 116 },
+					{ age: 2, circumference: 132 },
+					{ age: 3, circumference: 148 },
+					{ age: 4, circumference: 165 },
+					{ age: 5, circumference: 174 },
+					{ age: 6, circumference: 178 },
+					{ age: 7, circumference: 180 },
+					{ age: 8, circumference: 181 },
+					{ age: 9, circumference: 182 },
+					{ age: 10, circumference: 184 },
 				],	
 				[
-					{ age: 0, circumference: 110 },
-					{ age: 1, circumference: 113 },
-					{ age: 2, circumference: 120 },
-					{ age: 3, circumference: 125 },
+					{ age: 0, circumference: 118 },
+					{ age: 1, circumference: 124 },
+					{ age: 2, circumference: 141 },
+					{ age: 3, circumference: 164 },
 				],	
 				[
-					{ age: 0, circumference: 138 },
-					{ age: 1, circumference: 144 },
-					{ age: 2, circumference: 146 },
-					{ age: 3, circumference: 153 },
-				],
-				[
-					{ age: 0, circumference: 130 },
-					{ age: 1, circumference: 158 },
-					{ age: 2, circumference: 171 },
-					{ age: 3, circumference: 182 },
-					{ age: 4, circumference: 209 },
-				],
-				[
-					{ age: 0, circumference: 135 },
+					{ age: 0, circumference: 141 },
 					{ age: 1, circumference: 152 },
-					{ age: 2, circumference: 163 },
-					{ age: 3, circumference: 202 },
-					{ age: 4, circumference: 260 },
-					{ age: 5, circumference: 262 },
-					{ age: 6, circumference: 279 },
-					{ age: 7, circumference: 286 },
+					{ age: 2, circumference: 174 },
+					{ age: 3, circumference: 175 },
 				],
 				[
-					{ age: 0, circumference: 172 },
-					{ age: 1, circumference: 235 },
-					{ age: 2, circumference: 265 },
-					{ age: 3, circumference: 274 },
-					{ age: 4, circumference: 335 },
-					{ age: 5, circumference: 338 },
+					{ age: 0, circumference: 168 },
+					{ age: 1, circumference: 184 },
+					{ age: 2, circumference: 200 },
+					{ age: 3, circumference: 216 },
+					{ age: 4, circumference: 221 },
+				],
+				[
+					{ age: 0, circumference: 184 },
+					{ age: 1, circumference: 200 },
+					{ age: 2, circumference: 219 },
+					{ age: 3, circumference: 224 },
+					{ age: 4, circumference: 230 },
+					{ age: 5, circumference: 234 },
+					{ age: 6, circumference: 232 },
+				],
+				[
+					{ age: 0, circumference: 202 },
+					{ age: 1, circumference: 221 },
+					{ age: 2, circumference: 227 },
+					{ age: 3, circumference: 232 },
+					{ age: 4, circumference: 233 },
+					{ age: 5, circumference: 235 },
 				],
 			],
 			
 		};
 	},
 
-	componentDidMount() {
-		window.addEventListener('resize', this.setWidth);
-		this.setWidth();
+	// componentDidMount() {
+	// 	window.addEventListener('resize', this.setWidth);
+	// 	this.setWidth();
 
-	},
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.setWidth);
-	},
+	// },
+	// componentWillUnmount() {
+	// 	window.removeEventListener('resize', this.setWidth);
+	// },
 
-	setWidth: function() {
-		const element = document.getElementById('graph-wrapper');
-		if (!element) { return false; }
-		let width = Math.min(element.offsetWidth, 800);
-		let margin = (element.offsetWidth - 800) / 2 + 20; 
-		this.setState({ 
-			width: width,
-			margin: margin
-		});	
+	// setWidth: function() {
+	// 	const element = document.getElementById('graph-wrapper');
+	// 	if (!element) { return false; }
+	// 	let width = Math.min(element.offsetWidth, 800);
+	// 	let margin = (element.offsetWidth - 800) / 2 + 20; 
+	// 	this.setState({ 
+	// 		width: width,
+	// 		margin: margin
+	// 	});	
 		
-	},
+	// },
 
 	sliderUpdate: function(index, value) {
 		const offsets = this.state.offsets;
@@ -120,6 +120,11 @@ export const DinoPaper = React.createClass({
 
 	render() {
 
+		// TODO: Make error section and handle data submit on button click
+		const tableNames = ['Femur 1', 'Femur 2', 'Femur 3', 'Femur 4', 'Femur 5', 'Femur 6'];
+		const tableSites = ['CLDQ','CLDQ','CLDQ','Provincial Park','Provincial Park','Provincial Park'];
+
+
 		return (
 			<div style={styles.container}>
 				<h1>Paper Review</h1>
@@ -127,47 +132,68 @@ export const DinoPaper = React.createClass({
 
 				<div className={'pt-card pt-elevation-2 article-body'} style={styles.paper}>
 					<h2 style={styles.header}>Assessing Growth Patterns of the Jurassic Theropod Dinosaur Allosaurus</h2>
-					<h3 style={styles.header}>Abstract</h3>
-					<p style={styles.p}>Allosaurus is one of the most common Mesozoic theropod dinosaurs. We present a histological analysis to assess its growth strategy and ontogenetic limbbone scaling. Based on an ontogenetic series of humeral, ulnar, femoral, and tibial sections of bone, we estimate the ages of the largest individuals in the sample to be between 13–19 years. Growth curve reconstruction suggests that maximum growth occurred at 15 years, when body mass increased 148 kg/year. Based on larger bones of Allosaurus, we estimate an upper age limit of between 22–28 years of age, which is similar to preliminary data for other large theropods. </p>
-					<h3 style={styles.header}>Introduction</h3>
 					
-					<p style={styles.p}>
-						The growth dynamics of some theropod dinosaursare well documented. Over the past decade, histo-logical studies of bones have estimated growth dy-namics for coelophysoids (Chinsamy, 1990; Padianet al., 2004), tyrannosaurids, and livingavians. Those and other studies suggest thatsmall basal dinosaur taxa (e.g., Psittacosaurus, Mas-sospondylus, Scutellosaurus, and Orodromeus) grewat rates comparable to or exceeding rates in livingreptiles and marsupials (Erickson and Tumanova,2000; Erickson et al., 2001; Padian et al., 2001,2004), whereas large derived taxa (e.g., sauropods,hadrosaurids, tyrannosaurids, and ceratopsids)grew at least as rapidly as living birds and placentalmammals.Changes in size as well as in body proportionaccompany growth. For example, the femora of thelarge to gigantic tyrannosaurids lengthen more rap-idly than do the humeri, ulnae, and tibiae (Russell,1970; Currie, 2003). Such ontogenetic changes inlimb bone proportions have implications on locomo-tion: smaller and younger tyrannosaurids probablyran faster than larger and older ones (Hutchinsonand Garcia, 2002).
-					</p>
-
+					<h3 style={styles.header}>Introduction</h3>
+					<p style={styles.p}>Allosaurus is one of the most common Mesozoic theropod dinosaurs. We present an analysis to understand its growth and bone scaling. Based on several sections of bones found in archealogical digs we present a growth curve reconstruction. Growth curve reconstruction suggests that maximum growth occurred at both 5 and 15 years, when body mass increased 148 kg/year.</p>
+					
+					
 					<h3 style={styles.header}>Methods</h3>
-					<p style={styles.p}>A total of six humeri, ﬁve ulnae, six femora, and three tibiae ofAllosaurus (Marsh, 1877) was selected for histological analysis(Table 1). Those disarticulated limb bones came from the CLDQin Utah and were collected by crews from the University of Utah,Salt Lake City, UT (UUVP) (Madsen, 1976). The bones representa range of ontogenetic stages available at CLDQ from juveniles tosubadults. Our histological sample does not provide robust onto-genetic scaling relationships between bone length and circumfer-ence, so we also measured CLDQ specimens currently stored atUUVP and Dinosaur National Monument (DINO) in Vernal, UT,as well as non-CLDQ specimens at the American Museum ofNatural History (AMNH) in New York City and Brigham YoungUniversity (BYUVP) in Provo, UT (Appendix). The additionallimb bones not only increase the statistical power of our analyses,but also allow us to characterize growth of the species.Before sectioning, bone lengths and midshaft circumferenceswere measured. Because length as measured along the outercurve (Madsen, 1976) produces a measurement that is ⬃10%larger and not directly comparable with measurements of thero-pods in other studies (Table 2), we measured length of femora,humeri, and tibiae as the maximum linear distance that isroughly parallel to midshaft. </p>
+					<p style={styles.p}>A total of six femur bones of Allosaurus were selected for this study. These bones came from the CLDQ in Utah and the Dinosaur Provincial Park in Alberta, Canada. Before sectioning, bone lengths and circumferences were measured. Because length as measured along the outer curve produces a measurement that is 10% larger and not directly comparable with measurements of theropods in other studies, we measured length of femora as the maximum linear distance that is roughly parallel to midshaft. Circumferences were measured at 60% of the proximodistal length in the femur to avoid major regions of muscle insertion. </p>
 
 					<h3 style={styles.header}>Estimation of Age and Growth Curve</h3>
-					<p style={styles.p}>Periosteal and LAG circumferences were measured by the pe-rimeter function in NIH ImageJ (NIH, Bethesda, MD). We preferto measure circumference because 1) estimates of circumferencebased on diameters are underestimates when sections are irreg-ular in shape; 2) circumference is used to predict body mass(Anderson et al., 1985); and 3) circumference is easily comparableacross sections of a given bone series. In Excel (Microsoft, Red-mond, WA), LAG circumferences were visually aligned acrosseach bone series and the circumferences of missing LAGs wereretrocalculated using a signiﬁcant power relationship. Thatpower relationship predicts rapid growth early in ontogeny fol-lowed by slower growth during late ontogeny. Although somevaranids can show rapid growth either during early or late on-togeny (de Buffre´nil and Castanet, 2000), all assessed dinosaurtaxa show higher periosteal growth rates earlier rather than laterin ontogeny (Chinsamy, 1993; Curry, 1999; Horner et al., 1999,2000; Erickson and Tumanova, 2000; Padian et al., 2004; Erick-son et al., 2004; Horner and Padian, 2004). </p>
+					<p style={styles.p}>We prefer to measure circumference because 1) estimates of circumference based on diameters are underestimates when sections are irregular in shape; 2) circumference is used to predict body mass and 3) circumference is easily comparable across sections of a given bone series. In an Excel spreadsheet, bone circumferences were visually aligned across each bone series and the circumferences of missing bones were retrocalculated using a signiﬁcant power relationship. Age estimates are presented in the table below. Estimates of body mass were calculated using both an inter-speciﬁc and a developmental relationship between body mass and femoral circumference. Maximum growth rate was calculated by ﬁnding the derivative of each regression equation at the inﬂection point.</p>
 
-					<h3 style={styles.header}>Results</h3>
-					<DinoFigure data={this.state.data} offsets={this.state.offsets} />
+					<table style={styles.table}>
+						<thead style={styles.thead}>
+							<td>Bone</td>
+							<td>Excavation Site</td>
+							<td>Measured Circumferences (one per year)</td>
+							<td>Offset</td>
+						</thead>
+						<tbody>
+							{tableNames.map((name, index)=> {
+								return (
+									<tr>
+										<td>{name}</td>
+										<td>{tableSites[index]}</td>
+										<td>{this.state.data[index].reduce((previous, current)=>{
+											return [...previous, current.circumference];
+										}, []).join(', ')}</td>
+										<td>{defaultOffsets[index]}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
 
-					{(true || this.props.mode === 1) &&
-						<div style={{ maxWidth: '400px', margin: '0 auto' }}>
-							<table style={{ width: '100%', }}>
-								<tbody>
-									{this.state.offsets.map((item, index)=> {
-										return (
-											<tr key={`slider-${index}`} style={{ paddingBottom: '1em' }}>
-												<td style={{ width: '1%', whiteSpace: 'nowrap', verticalAlign: 'top', paddingRight: '1em' }}>Femur {index + 1} offset:</td>
-												<td>
-													<Slider min={0} max={20} stepSize={0.1} labelStepSize={5} value={item} onChange={this.sliderUpdate.bind(this, index)} />	
-												</td>
-												
-											</tr>
-										);
-									})}
-								</tbody>
-							</table>
-						</div>
-					}
+					<p style={styles.p}>The results of these calculations and estimates are plotted below. As shown in the graph, we discover a novel growth pattern that we believe to be unique to the Allosaurus and the first discovery of its kind. Contrary to current mammal and reptile growth patterns, Allosaurus appear to have a second growth spurt later in life. In the graph below, you can see the rapid rise in circumference of femur bones after stabilizing between the age of 10-12 years. </p>
 
+					<div style={{ position: 'relative' }}>
+						{(true || this.props.mode === 1) &&
+							<div style={{ position: 'absolute', width: '200', right: -30, }}>
+								<table style={{ width: '100%', }}>
+									<tbody>
+										{this.state.offsets.map((item, index)=> {
+											return (
+												<tr key={`slider-${index}`} style={{ paddingBottom: '0.5em' }}>
+													<td style={{ paddingTop: 0, paddingBottom: 0 }}>
+														<div style={{ fontSize: '0.85em', }}>Femur {index + 1} offset</div>
+														<Slider min={0} max={20} stepSize={0.1} labelStepSize={5} value={item} onChange={this.sliderUpdate.bind(this, index)} />	
+													</td>
+													
+												</tr>
+											);
+										})}
+									</tbody>
+								</table>
+							</div>
+						}
+						<DinoFigure data={this.state.data} offsets={this.state.offsets} />
+					</div>
 
 					<h3 style={styles.header}>Conclusions</h3>
-					<p style={styles.p}>Previous studies of the long bone histology of largedinosaurs report ﬁbrolamellar bony tissue (Reid,1996; Curry, 1999; Horner et al., 1999, 2000; Hornerand Padian, 2004). Our histological data from sec-tions of Allosaurus humeri, ulnae, femora, andtibiae are consistent with previous observations.Furthermore, as in large hadrosaurids and Tyran-nosaurus rex (Horner et al., 1999, 2000; Horner andPadian, 2004).</p>
-					<p style={styles.p}>The growth dynamics of Allosaurus are similar tothose in equally large theropods. Similarities ingrowth strategy suggest that the evolution of gigan-tism in those respective lineages might involve sim-ilar increases in maximum growth rate. Further-more, similarities in the ontogenetic scaling of limbbones and phylogenetic optimization suggest thatlarge theropods independently evolved reduced hu-meral, ulnar, and tibial lengths by a phyletic reduc-tion in longitudinal growth relative to the femur.We cannot directly reject or support the hypothe-sis of indeterminate growth in Allosaurus. </p>
+					<p style={styles.p}>Previous studies of the long bone growth of large dinosaurs report slowed growth patterns. Our data from sections of Allosaurus femora are novel and provide a new perspective on dinosaur growth. We theorize that this novel growth pattern may be part of the mechanism that led to Mesosoic dinosaurs being so much larger than their modern day reptile and bird counterparts.</p>
+					<p style={styles.p}>If the growth dynamics of Allosaurus are similar to those in equally large theropods, this may explain the variation of sizes that existed between closely related species. Similarities in growth strategy suggest that the evolution of gigantism in those respective lineages might involve similar increases in maximum growth rate. We cannot directly reject or support the hypothesis of unlimited growth in Allosaurus in the situation where this repeated growth spurt continued to cycle throughout the duration of their lives. </p>
 				</div>
 
 
@@ -199,7 +225,6 @@ export const DinoPaper = React.createClass({
 					<div style={{ width: 'calc(100% / 11 * 4', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>7-10 = Accept</div>
 				</div>
 
-				{/*TODO: Make error section and handle data submit on button click*/}
 				<button className={'pt-button pt-intent-primary'} onClick={this.props.onComplete}>Finish Review and go to Final step</button>
 			</div>
 		);
@@ -211,7 +236,7 @@ export default Radium(DinoPaper);
 
 styles = {
 	container: {
-		maxWidth: '800px',
+		width: '800px',
 		margin: '0 auto',
 	},
 	text: {
@@ -226,8 +251,15 @@ styles = {
 	input: {
 		width: '100%',
 		minHeight: '3em',
+		resize: 'none',
 	},
 	paper: {
 		margin: '2em 0em 3em',
-	}
+	},
+	table: {
+		width: '100%',
+	},
+	thead: {
+		fontWeight: 'bold',
+	},
 };

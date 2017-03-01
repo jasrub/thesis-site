@@ -13,7 +13,7 @@ export const DinoFigure = React.createClass({
 
 	getInitialState() {
 		return {
-			width: 400,
+			// width: 400,
 			colors: [
 				'#8884d8',
 				'#82ca9d',
@@ -25,33 +25,32 @@ export const DinoFigure = React.createClass({
 		};
 	},
 
-	componentDidMount() {
-		window.addEventListener('resize', this.setWidth);
-		this.setWidth();
+	// componentDidMount() {
+	// 	window.addEventListener('resize', this.setWidth);
+	// 	this.setWidth();
 
-	},
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.setWidth);
-	},
+	// },
+	// componentWillUnmount() {
+	// 	window.removeEventListener('resize', this.setWidth);
+	// },
 
-	setWidth: function() {
-		const element = document.getElementById('graph-wrapper');
-		if (!element) { return false; }
-		let width = Math.min(element.offsetWidth, 800);
-		this.setState({ 
-			width: width,
-		});	
+	// setWidth: function() {
+	// 	const element = document.getElementById('graph-wrapper');
+	// 	if (!element) { return false; }
+	// 	let width = Math.min(element.offsetWidth, 800) - 200;
+	// 	this.setState({ 
+	// 		width: width,
+	// 	});	
 		
-	},
+	// },
 
 	render() {
-
 		return (
 			<div id={'graph-wrapper'}>
-				<h6 style={{ textAlign: 'center' }}>Age vs Femur Circumference</h6>
-					<ScatterChart width={this.state.width} height={this.state.width / 1.5} margin={{ top: 20, left: 0, right: 35, bottom: 20 }}>
-						<XAxis dataKey={'circumference'} name='circumference' unit='mm' label={'mm'} domain={['dataMin - 4', 'dataMax + 10']} />
-						<YAxis dataKey={'age'} name='Age' unit='years' label={'Years'} domain={['dataMin', 'dataMax + 1']} />
+				<h6 style={{ textAlign: 'center', position: 'relative', left: '-100px' }}>Age vs Femur Circumference</h6>
+					<ScatterChart width={560} height={400} margin={{ top: 20, left: 0, right: 50, bottom: 20 }}>
+						<YAxis dataKey={'circumference'} name='circumference' unit='mm' label={'mm'} domain={['dataMin - 4', 'dataMax + 10']} />
+						<XAxis dataKey={'age'} name='Age' unit='years' label={'Years'} domain={['dataMin', 'dataMax + 1']} />
 						<CartesianGrid />
 						{/*<Tooltip cursor={{strokeDasharray: '3 3'}}/>*/}
 						<Legend />
