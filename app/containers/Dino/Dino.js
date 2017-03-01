@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import { connect } from 'react-redux';
-import { NonIdealState } from '@blueprintjs/core';
+import { NonIdealState, Spinner } from '@blueprintjs/core';
 import Terms from 'components/Terms/Terms';
 import Survey from 'components/Survey/Survey';
 import DinoPaper from './DinoPaper';
-import { submitExperiment } from './actions';
+import { submitExperiment, checkUniqueWorker } from './actions';
 
 let styles;
 
@@ -21,6 +21,7 @@ export const Dino = React.createClass({
 			workerId: '',
 			assignmentId: '',
 			hitId: '',
+			mode: undefined,
 
 			reviewData: {},
 			surveyData: {},
@@ -37,7 +38,9 @@ export const Dino = React.createClass({
 			workerId: query.workerId,
 			assignmentId: query.assignmentId,
 			hitId: query.hitId,
+			mode: Math.round(Math.random()),
 		});
+		this.props.dispatch(checkUniqueWorker(query.workerId));
 	},
 
 	completeTerms: function() {
@@ -88,6 +91,25 @@ export const Dino = React.createClass({
 	},
 
 	render() {
+		if (this.props.dinoData.canBegin === undefined) {
+			return (
+				<div style={[styles.container, styles.complete]}>
+					<Spinner />
+				</div>
+			);
+		}
+
+		if (this.props.dinoData.canBegin === false) {
+			return (
+				<div style={[styles.container, styles.complete]}>
+					<NonIdealState
+						description={'This Task is identical to one you have already completed. Unfortunately we only allow one worker per Task type.'}
+						title={'HIT Already Completed'}
+						visual={'delete'} />
+				</div>
+			);
+		}
+
 		return (
 			<div style={styles.container}>
 
@@ -131,5 +153,6 @@ styles = {
 	},
 	complete: {
 		margin: '3em 0em',
+		textAlign: 'center',
 	},
 };

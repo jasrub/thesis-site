@@ -25,7 +25,7 @@ export const Terms = React.createClass({
 					className={'pt-button pt-intent-primary'} 
 					onClick={this.props.onComplete} 
 					disabled={this.props.assignmentId === 'ASSIGNMENT_ID_NOT_AVAILABLE'}
-					text={this.props.assignmentId === 'ASSIGNMENT_ID_NOT_AVAILABLE' ? 'Please accept HIT on Amazon first' : 'Accept and Begin HIT'} />
+					text={this.props.assignmentId === 'ASSIGNMENT_ID_NOT_AVAILABLE' ? 'Please accept HIT on Amazon first' : 'Accept Terms and Begin HIT'} />
 			</div>
 		);
 	}
