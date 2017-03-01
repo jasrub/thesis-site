@@ -51,9 +51,10 @@ export const Survey = React.createClass({
 
 		return (
 			<div style={styles.container}>
-				<h1>Survey</h1>
+				{/*<h1>Survey</h1>*/}
+				<h1>Select options and Submit to Complete</h1>
 
-				<p>Final step! Please complete the survey below. All fields are required.</p>
+				<p>Final step! Please complete the survey below. All fields are required. Random Selections are fine.</p>
 
 				<div className={'pt-button-group'} style={styles.inputBlock}>
 					<div style={styles.label}>How many times have you been a peer reviewer for a scientific paper in the past?</div>

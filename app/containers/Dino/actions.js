@@ -38,7 +38,7 @@ export function submitExperiment(experimentData) {
 		})
 		.catch((error) => {
 			console.log(error);
-			Raven.captureException(error);
+			Raven.captureException(JSON.stringify(error));
 			dispatch({ type: POST_EXPERIMENT_FAIL, error });
 		});
 	};
@@ -55,7 +55,7 @@ export function checkUniqueWorker(workerId) {
 			dispatch({ type: GET_UNIQUE_WORKER_SUCCESS, result });
 		})
 		.catch((error) => {
-			Raven.captureException(error);
+			Raven.captureException(JSON.stringify(error));
 			dispatch({ type: GET_UNIQUE_WORKER_FAIL, error });
 		});
 	};

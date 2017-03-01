@@ -88,7 +88,7 @@ export const Dino = React.createClass({
 		})
 		.catch((err)=> {
 			this.setState({ completedSurvey: false });
-			Raven.captureException(err);
+			Raven.captureException(JSON.stringify(err));
 			console.error(JSON.stringify(err));
 		});
 	},

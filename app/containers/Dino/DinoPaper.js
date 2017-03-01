@@ -136,9 +136,10 @@ export const DinoPaper = React.createClass({
 		const tableSites = ['CLDQ', 'CLDQ', 'CLDQ', 'Provincial Park', 'Provincial Park', 'Provincial Park'];
 		return (
 			<div style={styles.container}>
-				<h1>Paper Review</h1>
-				<p>Please review the following work and write a few sentences containing you review in the form at the bottom.</p>
-
+				{/*<h1>Paper Review</h1>*/}
+				{/*<p>Please review the following work and write a few sentences containing you review in the form at the bottom.</p>*/}
+				<h1>Scroll to the Bottom and fill in fields to continue</h1>
+				<p>No need to read the content - we're just testing the buttons here!</p>
 				<div className={'pt-card pt-elevation-2 article-body'} style={styles.paper}>
 					<h2 style={styles.header}>Assessing Growth Patterns of the Jurassic Theropod Dinosaur Allosaurus</h2>
 					

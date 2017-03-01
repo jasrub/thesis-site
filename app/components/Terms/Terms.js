@@ -16,11 +16,12 @@ export const Terms = React.createClass({
 			<div style={styles.container}>
 				<h1>Activity Overview</h1>
 				
-				<p style={styles.text}>Welcome! We are asking you to review a short scientific article. The article should take about 5 minutes to read and has one figure. We ask that you review the article for quality of the logic and conclusions.</p>
+				{/*<p style={styles.text}>Welcome! We are asking you to review a short scientific article. The article should take about 5 minutes to read and has one figure. We ask that you review the article for quality of the logic and conclusions.</p>
 				<p style={styles.text}>After the review, we ask a short series of questions about you and your experience with scientific review.</p>
 				<p style={styles.text}>The submitted survey data will be used as experimental data in a study we are conducted. Your answers are completely anonymous and your individual answers will always remain private.</p>
-				<p style={styles.text}>If you accept this task (review and survey) and the privacy terms, please click below to begin!</p>
-
+				<p style={styles.text}>If you accept this task (review and survey) and the privacy terms, please click below to begin!</p>*/}
+				<p>We are testing our Mechanical Turk pipeline. Please step through this activity, fill in the fields (with whatever, random letters are fine), and submit.</p>
+				<p>Thank you!</p>
 
 				<Button 
 					className={'pt-button pt-intent-primary'} 
