@@ -80,6 +80,7 @@ export const Dino = React.createClass({
 				workerId: this.state.workerId,
 				assignmentId: this.state.assignmentId,
 				hitId: this.state.hitId,
+				mode: this.state.mode,
 				...this.state.reviewData,
 				...surveyData,
 			}));
@@ -118,7 +119,7 @@ export const Dino = React.createClass({
 				}
 
 				{this.state.completedTerms && !this.state.completedReview &&
-					<DinoPaper onComplete={this.completeReview} />
+					<DinoPaper onComplete={this.completeReview} mode={this.state.mode} />
 				}
 
 				{this.state.completedTerms && this.state.completedReview && !this.props.dinoData.completed &&

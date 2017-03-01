@@ -19,6 +19,7 @@ export const DinoPaper = React.createClass({
 	propTypes: {
 		onComplete: PropTypes.func,
 		onChange: PropTypes.func,
+		mode: PropTypes.number,
 	},
 
 	getInitialState() {
@@ -149,7 +150,7 @@ export const DinoPaper = React.createClass({
 					<p style={styles.p}>The results of these calculations and estimates are plotted below. As shown in the graph, we discover a novel growth pattern that we believe to be unique to the Allosaurus and the first discovery of its kind. Contrary to current mammal and reptile growth patterns, Allosaurus appear to have a second growth spurt later in life. In the graph below, you can see the rapid rise in circumference of femur bones after stabilizing between the age of 10-12 years. </p>
 
 					<div style={{ position: 'relative' }}>
-						{(true || this.props.mode === 1) &&
+						{this.props.mode === 1 &&
 							<div style={{ position: 'absolute', width: '200px', right: -30, }}>
 								<table style={{ width: '100%', }}>
 									<tbody>
@@ -175,8 +176,6 @@ export const DinoPaper = React.createClass({
 					<p style={styles.p}>Previous studies of the long bone growth of large dinosaurs report slowed growth patterns. Our data from sections of Allosaurus femora are novel and provide a new perspective on dinosaur growth. We theorize that this novel growth pattern may be part of the mechanism that led to Mesosoic dinosaurs being so much larger than their modern day reptile and bird counterparts.</p>
 					<p style={styles.p}>If the growth dynamics of Allosaurus are similar to those in equally large theropods, this may explain the variation of sizes that existed between closely related species. Similarities in growth strategy suggest that the evolution of gigantism in those respective lineages might involve similar increases in maximum growth rate. We cannot directly reject or support the hypothesis of unlimited growth in Allosaurus in the situation where this repeated growth spurt continued to cycle throughout the duration of their lives. </p>
 				</div>
-
-
 
 				<label>
 					Review the work. Please write a few short sentences containing your review and feedback on the work.
