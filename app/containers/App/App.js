@@ -36,7 +36,7 @@ export const App = React.createClass({
 						{ property: 'og:title', content: 'PubPub Experiments' },
 					]} 
 				/> 
-				<div style={{ minHeight: '600px' }}>{this.props.children}</div>
+				{this.props.children}
 			</StyleRoot>
 		);
 	},

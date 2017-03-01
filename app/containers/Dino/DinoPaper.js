@@ -25,17 +25,8 @@ export const DinoPaper = React.createClass({
 		return {
 			reviewContent: '',
 			reviewRating: undefined,
-			// width: 400,
-			// margin: 0,
+			error: undefined,
 			offsets: defaultOffsets,
-			colors: [
-				'#8884d8',
-				'#82ca9d',
-				'#a2ca9d',
-				'#822a9d',
-				'#82ca2d',
-				'#222a9d',
-			],
 			data: [ 
 				[
 					{ age: 0, circumference: 104 },
@@ -91,39 +82,26 @@ export const DinoPaper = React.createClass({
 		};
 	},
 
-	// componentDidMount() {
-	// 	window.addEventListener('resize', this.setWidth);
-	// 	this.setWidth();
-
-	// },
-	// componentWillUnmount() {
-	// 	window.removeEventListener('resize', this.setWidth);
-	// },
-
-	// setWidth: function() {
-	// 	const element = document.getElementById('graph-wrapper');
-	// 	if (!element) { return false; }
-	// 	let width = Math.min(element.offsetWidth, 800);
-	// 	let margin = (element.offsetWidth - 800) / 2 + 20; 
-	// 	this.setState({ 
-	// 		width: width,
-	// 		margin: margin
-	// 	});	
+	submitReview: function() {
+		if (!this.state.reviewContent) { return this.setState({ error: 'A review is required' }); }
+		if (this.state.reviewRating === undefined) { return this.setState({ error: 'A review score is required' }); }
 		
-	// },
+		this.setState({ error: undefined });
+		return this.props.onComplete({
+			reviewContent: this.state.reviewContent,
+			reviewRating: this.state.reviewRating,
+		});
+	},
 
 	sliderUpdate: function(index, value) {
-		const offsets = this.state.offsets;
+		const offsets = [...this.state.offsets];
 		offsets[index] = Math.floor(value * 10) / 10;
 		this.setState({ offsets: offsets });
 	},
 
 	render() {
-
-		// TODO: Make error section and handle data submit on button click
 		const tableNames = ['Femur 1', 'Femur 2', 'Femur 3', 'Femur 4', 'Femur 5', 'Femur 6'];
 		const tableSites = ['CLDQ','CLDQ','CLDQ','Provincial Park','Provincial Park','Provincial Park'];
-
 
 		return (
 			<div style={styles.container}>
@@ -145,15 +123,17 @@ export const DinoPaper = React.createClass({
 
 					<table style={styles.table}>
 						<thead style={styles.thead}>
-							<td>Bone</td>
-							<td>Excavation Site</td>
-							<td>Measured Circumferences (one per year)</td>
-							<td>Offset</td>
+							<tr>
+								<td>Bone</td>
+								<td>Excavation Site</td>
+								<td>Measured Circumferences (one per year)</td>
+								<td>Offset</td>
+							</tr>
 						</thead>
 						<tbody>
 							{tableNames.map((name, index)=> {
 								return (
-									<tr>
+									<tr key={`tablerow-${index}`}>
 										<td>{name}</td>
 										<td>{tableSites[index]}</td>
 										<td>{this.state.data[index].reduce((previous, current)=>{
@@ -170,7 +150,7 @@ export const DinoPaper = React.createClass({
 
 					<div style={{ position: 'relative' }}>
 						{(true || this.props.mode === 1) &&
-							<div style={{ position: 'absolute', width: '200', right: -30, }}>
+							<div style={{ position: 'absolute', width: '200px', right: -30, }}>
 								<table style={{ width: '100%', }}>
 									<tbody>
 										{this.state.offsets.map((item, index)=> {
@@ -225,7 +205,12 @@ export const DinoPaper = React.createClass({
 					<div style={{ width: 'calc(100% / 11 * 4', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>7-10 = Accept</div>
 				</div>
 
-				<button className={'pt-button pt-intent-primary'} onClick={this.props.onComplete}>Finish Review and go to Final step</button>
+				<button className={'pt-button pt-intent-primary'} onClick={this.submitReview}>Finish Review and go to Final step</button>
+				{!!this.state.error &&
+					<div className={'pt-callout pt-intent-danger'}>
+						{this.state.error}
+					</div>
+				}
 			</div>
 		);
 	}

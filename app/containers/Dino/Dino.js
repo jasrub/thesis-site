@@ -33,25 +33,48 @@ export const Dino = React.createClass({
 	
 	completeTerms: function() {
 		this.setState({ completedTerms: true });
+		document.body.scrollTop = 0;
 	},
 	completeReview: function(reviewData) {
 		this.setState({ 
 			completedReview: true,
 			reviewData: reviewData 
 		});
+		document.body.scrollTop = 0;
 	},
 	completeSurvey: function(surveyData) {
-		// this.props.dispatch(submitExperiment({
-		// 	workerId: this.state.workerId,
-		// 	assignmentId: this.state.assignmentId,
-		// 	hitId: this.state.hitId,
-		// 	...this.state.reviewData,
-		// 	...surveyData,
-		// }));
-		console.log(surveyData);
+
 		this.setState({ 
 			completedSurvey: true,
 			surveyData: surveyData,
+		});
+
+		const url = window.location.hostname === 'experiments.pubpub.org'
+			? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&foo=bar`
+			: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&foo=bar`;
+
+		const form = new FormData();
+		form.append('assignmentId', this.state.assignmentId);
+		form.append('foo', 'bar');
+
+		return fetch(url, {
+			method: 'POST',
+			body: form,
+			mode: 'no-cors',
+			credentials: 'include',
+		})
+		.then((response)=> {
+			return this.props.dispatch(submitExperiment({
+				workerId: this.state.workerId,
+				assignmentId: this.state.assignmentId,
+				hitId: this.state.hitId,
+				...this.state.reviewData,
+				...surveyData,
+			}));
+		})
+		.catch((err)=> {
+			this.setState({ completedSurvey: false });
+			console.log(JSON.stringify(err));
 		});
 	},
 
@@ -68,7 +91,7 @@ export const Dino = React.createClass({
 				}
 
 				{this.state.completedTerms && this.state.completedReview && !this.props.dinoData.completed &&
-					<Survey onComplete={this.completeSurvey} loading={this.props.dinoData.loading} />
+					<Survey onComplete={this.completeSurvey} loading={this.state.completedSurvey} />
 				}
 
 				{this.props.dinoData.completed &&

@@ -13,7 +13,6 @@ export const DinoFigure = React.createClass({
 
 	getInitialState() {
 		return {
-			// width: 400,
 			colors: [
 				'#8884d8',
 				'#82ca9d',
@@ -25,24 +24,12 @@ export const DinoFigure = React.createClass({
 		};
 	},
 
-	// componentDidMount() {
-	// 	window.addEventListener('resize', this.setWidth);
-	// 	this.setWidth();
-
-	// },
-	// componentWillUnmount() {
-	// 	window.removeEventListener('resize', this.setWidth);
-	// },
-
-	// setWidth: function() {
-	// 	const element = document.getElementById('graph-wrapper');
-	// 	if (!element) { return false; }
-	// 	let width = Math.min(element.offsetWidth, 800) - 200;
-	// 	this.setState({ 
-	// 		width: width,
-	// 	});	
-		
-	// },
+	shouldComponentUpdate(nextProps) {
+		const oldOffsets = this.props.offsets.join(',');
+		const newOffsets = nextProps.offsets.join(',');
+		if (oldOffsets === newOffsets) { return false; }
+		return true;
+	},
 
 	render() {
 		return (
