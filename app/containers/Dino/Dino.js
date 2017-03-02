@@ -141,16 +141,19 @@ export const Dino = React.createClass({
 				{this.props.dinoData.completed &&
 					<div style={styles.complete}>
 						<NonIdealState
-							description={'Thank you! The HIT has been successfully Submitted and has been Approved.'}
-							title={'HIT Submitted and Approved!'}
-							visual={'endorsed'} />
+							description={'Thank you! The HIT has been successfully completed. Submit the HIT with the button below.'}
+							title={'HIT Complete'}
+							visual={'endorsed'} 
+							action={
+								<form name="mturk_form" method="post" id="mturk_form" action={query.turkSubmitTo + '/mturk/externalSubmit'}>
+									<input type="hidden" value={query.assignmentId} name="assignmentId" id={query.assignmentId} />
+									<input type="hidden" value={query.hitId} name="hitId" id={query.hitId} />
+									<input type="hidden" value="bar" name="foo" />
+									<button type="submit" className={'pt-button pt-intent-primary'}>Submit HIT</button>
+								</form>
+							} />
 
-						<form name="mturk_form" method="post" id="mturk_form" action={query.turkSubmitTo + '/mturk/externalSubmit'}>
-							<input type="hidden" value={query.assignmentId} name="assignmentId" id={query.assignmentId} />
-							<input type="hidden" value={query.hitId} name="hitId" id={query.hitId} />
-							<input type="hidden" value="bar" name="foo" />
-							<button type="submit" className={'pt-button pt-intent-primary'}>Submit HIT</button>
-						</form>
+						
 					</div>
 				}
 				

@@ -138,8 +138,9 @@ export const DinoPaper = React.createClass({
 			<div style={styles.container}>
 				{/*<h1>Paper Review</h1>*/}
 				{/*<p>Please review the following work and write a few sentences containing you review in the form at the bottom.</p>*/}
-				<h1>Scroll to the Bottom and fill in fields to continue</h1>
-				<p>No need to read the content - we're just testing the buttons here!</p>
+				<h1>Fill in fields to continue</h1>
+				<p>Add some random content to the text and select a rating - we're just testing the buttons here! </p>
+				{/*
 				<div className={'pt-card pt-elevation-2 article-body'} style={styles.paper}>
 					<h2 style={styles.header}>Assessing Growth Patterns of the Jurassic Theropod Dinosaur Allosaurus</h2>
 					
@@ -206,7 +207,7 @@ export const DinoPaper = React.createClass({
 					<h3 style={styles.header}>Conclusions</h3>
 					<p style={styles.p}>Previous studies of the long bone growth of large dinosaurs report slowed growth patterns. Our data from sections of Allosaurus femora are novel and provide a new perspective on dinosaur growth. We theorize that this novel growth pattern may be part of the mechanism that led to Mesosoic dinosaurs being so much larger than their modern day reptile and bird counterparts.</p>
 					<p style={styles.p}>If the growth dynamics of Allosaurus are similar to those in equally large theropods, this may explain the variation of sizes that existed between closely related species. Similarities in growth strategy suggest that the evolution of gigantism in those respective lineages might involve similar increases in maximum growth rate. We cannot directly reject or support the hypothesis of unlimited growth in Allosaurus in the situation where this repeated growth spurt continued to cycle throughout the duration of their lives. </p>
-				</div>
+				</div>*/}
 
 				<label>
 					Review the work. Please write a few short sentences containing your review and feedback on the work.
@@ -214,7 +215,7 @@ export const DinoPaper = React.createClass({
 				</label>
 
 				<div style={styles.inputBlock}>
-					<div style={styles.label}>Review Rating</div>
+					<div style={styles.label}>Review Rating (Select a number)</div>
 
 					<div className={'pt-button-group pt-fill'} style={{ paddingTop: '1em' }}>
 						<Button key={'reviewRating-0'} text={0} onClick={evt => this.setState({ reviewRating: 0 })} className={this.state.reviewRating === 0 ? 'pt-active' : ''}/>
