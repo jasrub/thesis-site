@@ -136,11 +136,11 @@ export const DinoPaper = React.createClass({
 		const tableSites = ['CLDQ', 'CLDQ', 'CLDQ', 'Provincial Park', 'Provincial Park', 'Provincial Park'];
 		return (
 			<div style={styles.container}>
-				{/*<h1>Paper Review</h1>*/}
-				{/*<p>Please review the following work and write a few sentences containing you review in the form at the bottom.</p>*/}
-				<h1>Fill in fields to continue</h1>
-				<p>Add some random content to the text and select a rating - we're just testing the buttons here! </p>
-				{/*
+				<h1>Paper Review</h1>
+				<p style={styles.text}>Please read the following work and write a few sentences containing you review in the form at the bottom.</p>
+				<p style={styles.text}>There may be errors in the logic used and conclusions reached. We ask you to assume the role of a scientist and provide critical feedback to the authors of this work.</p>
+
+				
 				<div className={'pt-card pt-elevation-2 article-body'} style={styles.paper}>
 					<h2 style={styles.header}>Assessing Growth Patterns of the Jurassic Theropod Dinosaur Allosaurus</h2>
 					
@@ -207,15 +207,16 @@ export const DinoPaper = React.createClass({
 					<h3 style={styles.header}>Conclusions</h3>
 					<p style={styles.p}>Previous studies of the long bone growth of large dinosaurs report slowed growth patterns. Our data from sections of Allosaurus femora are novel and provide a new perspective on dinosaur growth. We theorize that this novel growth pattern may be part of the mechanism that led to Mesosoic dinosaurs being so much larger than their modern day reptile and bird counterparts.</p>
 					<p style={styles.p}>If the growth dynamics of Allosaurus are similar to those in equally large theropods, this may explain the variation of sizes that existed between closely related species. Similarities in growth strategy suggest that the evolution of gigantism in those respective lineages might involve similar increases in maximum growth rate. We cannot directly reject or support the hypothesis of unlimited growth in Allosaurus in the situation where this repeated growth spurt continued to cycle throughout the duration of their lives. </p>
-				</div>*/}
+				</div>
 
-				<label>
-					Review the work. Please write a few short sentences containing your review and feedback on the work.
-					<Textarea value={this.state.reviewContent} onChange={evt => this.setState({ reviewContent: evt.target.value })} style={styles.input} />
-				</label>
+				<hr />
+				<p style={styles.text}>Please write your review of the work. We ask you to assume the role of a scientist and provide critical feedback to the authors.</p>
+				<Textarea value={this.state.reviewContent} onChange={evt => this.setState({ reviewContent: evt.target.value })} style={styles.input} />
 
+				<hr />
 				<div style={styles.inputBlock}>
-					<div style={styles.label}>Review Rating (Select a number)</div>
+					{/*<div style={styles.label}>Review Rating (Select a number)</div>*/}
+					<p style={styles.text}>Please select a rating for this work.</p>
 
 					<div className={'pt-button-group pt-fill'} style={{ paddingTop: '1em' }}>
 						<Button key={'reviewRating-0'} text={0} onClick={evt => this.setState({ reviewRating: 0 })} className={this.state.reviewRating === 0 ? 'pt-active' : ''}/>
@@ -231,9 +232,9 @@ export const DinoPaper = React.createClass({
 						<Button key={'reviewRating-10'} text={10} onClick={evt => this.setState({ reviewRating: 10 })} className={this.state.reviewRating === 10 ? 'pt-active' : ''}/>
 					</div>
 
-					<div style={{ width: 'calc(100% / 11 * 4 - 2px', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>0-3 = Reject</div>
-					<div style={{ width: 'calc(100% / 11 * 3', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#d3d3d4'}}>4-6 = Request Revisions</div>
-					<div style={{ width: 'calc(100% / 11 * 4', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>7-10 = Accept</div>
+					<div style={{ verticalAlign: 'top', width: 'calc(100% / 11 * 4 - 2px', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>0-3<br />Low quality work.<br />Major fixes needed.</div>
+					<div style={{ verticalAlign: 'top', width: 'calc(100% / 11 * 3', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#d3d3d4'}}>4-6<br />Acceptable quality work.<br />Minor fixes needed.</div>
+					<div style={{ verticalAlign: 'top', width: 'calc(100% / 11 * 4', display: 'inline-block', textAlign: 'center', padding: '4em 0em 1em', marginTop: '-3em', backgroundColor: '#f3f3f4'}}>7-10<br />High quality work.<br />Trivial or no fixes needed.</div>
 				</div>
 
 				<button className={'pt-button pt-intent-primary'} onClick={this.submitReview}>Finish Review and go to Final step</button>
@@ -266,7 +267,7 @@ styles = {
 	},
 	input: {
 		width: '100%',
-		minHeight: '3em',
+		minHeight: '4em',
 		resize: 'none',
 	},
 	paper: {

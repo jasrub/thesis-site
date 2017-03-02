@@ -26,11 +26,13 @@ export const Survey = React.createClass({
 
 	submitSurvey: function() {
 
-		if (!this.state.levelOfEducation) { return this.setState({ error: 'Level of Education is required' }); }
-		if (this.state.isScientist === undefined) { return this.setState({ error: 'Scientist status is required' }); }
+		if (this.state.isScientist === undefined) { return this.setState({ error: 'Please answer if you consider yourself a scientist' }); }
+		if (this.state.interestedInTopic === undefined) { return this.setState({ error: 'Please answer if you were interested in the topic' }); }
+		if (!this.state.levelOfEducation) { return this.setState({ error: 'Please select your level of education' }); }
+		
 		if (!this.state.hasReviewed) { return this.setState({ error: 'Review experience is required' }); }
 		if (!this.state.hasBeenReviewed) { return this.setState({ error: 'Publishing experience is required' }); }
-		if (this.state.interestedInTopic === undefined) { return this.setState({ error: 'Stated interest is required' }); }
+		
 		if (!this.state.feedback) { return this.setState({ error: 'Please provide a short sentence or more describing your experience with this experiment.' }); }
 
 		this.setState({ error: undefined });
@@ -47,35 +49,13 @@ export const Survey = React.createClass({
 	render() {
 		const hasReviewedOptions = ['never', '1 or 2 times', '2-5 times', 'more than 5 times'];
 		const hasBeenReviewedOptions = hasReviewedOptions;
-		const levelOfEducationOptions = ['None', 'High school student', 'Undergraduate student', 'Masters student', 'PhD student', 'Postdoc', 'Faculty'];
+		const levelOfEducationOptions = ['None', 'High school diploma', 'Undergraduate degree', 'Masters degree', 'PhD degree', 'Postdoc', 'Faculty'];
 
 		return (
 			<div style={styles.container}>
-				{/*<h1>Survey</h1>*/}
-				<h1>Select options and Submit to Complete</h1>
+				<h1>Survey</h1>
 
-				<p>Final step! Please complete the survey below. All fields are required. Random Selections are fine.</p>
-
-				<div className={'pt-button-group'} style={styles.inputBlock}>
-					<div style={styles.label}>How many times have you been a peer reviewer for a scientific paper in the past?</div>
-					{hasReviewedOptions.map((item, index)=> {
-						return <Button key={`hasReviewed-${index}`} text={item} onClick={evt => this.setState({ hasReviewed: item })} className={this.state.hasReviewed === item ? 'pt-active' : ''} />;
-					})}
-				</div>
-
-				<div className={'pt-button-group'} style={styles.inputBlock}>
-					<div style={styles.label}>How many times have you submitted scientific work to be peer reviewed in the past?</div>
-					{hasBeenReviewedOptions.map((item, index)=> {
-						return <Button key={`hasBeenReviewed-${index}`} text={item} onClick={evt => this.setState({ hasBeenReviewed: item })} className={this.state.hasBeenReviewed === item ? 'pt-active' : ''} />;
-					})}
-				</div>
-
-				<div className={'pt-button-group'} style={styles.inputBlock}>
-					<div style={styles.label}>What is the highest academic role you've held?</div>
-					{levelOfEducationOptions.map((item, index)=> {
-						return <Button key={`levelOfEducation-${index}`} text={item} onClick={evt => this.setState({ levelOfEducation: item })} className={this.state.levelOfEducation === item ? 'pt-active' : ''} />;
-					})}
-				</div>
+				<p style={styles.text}>Final step. Please complete the survey below. All fields are required.</p>
 
 				<div className={'pt-button-group'} style={styles.inputBlock}>
 					<div style={styles.label}>Do you consider yourself a scientist?</div>
@@ -89,13 +69,38 @@ export const Survey = React.createClass({
 						<Button key={'interestedInTopic-1'} text={'No'} onClick={evt => this.setState({ interestedInTopic: false })} className={this.state.interestedInTopic === false ? 'pt-active' : ''} />
 				</div>
 
+				<div className={'pt-button-group'} style={styles.inputBlock}>
+					<div style={styles.label}>What is the highest academic achievement you've reached?</div>
+					{levelOfEducationOptions.map((item, index)=> {
+						return <Button key={`levelOfEducation-${index}`} text={item} onClick={evt => this.setState({ levelOfEducation: item })} className={this.state.levelOfEducation === item ? 'pt-active' : ''} />;
+					})}
+				</div>
+
+				<div className={'pt-button-group'} style={styles.inputBlock}>
+					<div style={styles.label}>How many times have you peer reviewed a scientific paper in the past?</div>
+					{hasReviewedOptions.map((item, index)=> {
+						return <Button key={`hasReviewed-${index}`} text={item} onClick={evt => this.setState({ hasReviewed: item })} className={this.state.hasReviewed === item ? 'pt-active' : ''} />;
+					})}
+				</div>
+
+				<div className={'pt-button-group'} style={styles.inputBlock}>
+					<div style={styles.label}>How many times have you submitted scientific work for peer review in the past?</div>
+					{hasBeenReviewedOptions.map((item, index)=> {
+						return <Button key={`hasBeenReviewed-${index}`} text={item} onClick={evt => this.setState({ hasBeenReviewed: item })} className={this.state.hasBeenReviewed === item ? 'pt-active' : ''} />;
+					})}
+				</div>
+
+				
+
+				
+
 
 				<label>
 					Please provide feedback on your experience during this study.
 					<Textarea value={this.state.feedback} onChange={evt => this.setState({ feedback: evt.target.value })} style={styles.input} />
 				</label>
 
-				<Button className={'pt-intent-primary'} onClick={this.submitSurvey} loading={this.props.loading}>Submit and Complete HIT</Button>
+				<Button className={'pt-intent-primary'} onClick={this.submitSurvey} loading={this.props.loading}>Submit Survey and Complete</Button>
 				{!!this.state.error &&
 					<div className={'pt-callout pt-intent-danger'}>
 						{this.state.error}
@@ -125,7 +130,8 @@ styles = {
 	},
 	input: {
 		width: '100%',
-		minHeight: '3em',
+		minHeight: '4em',
+		resize: 'none',
 	},
 
 };
