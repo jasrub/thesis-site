@@ -62,9 +62,18 @@ export const Dino = React.createClass({
 			surveyData: surveyData,
 		});
 
+		return this.props.dispatch(submitExperiment({
+			workerId: this.state.workerId,
+			assignmentId: this.state.assignmentId,
+			hitId: this.state.hitId,
+			mode: this.state.mode,
+			...this.state.reviewData,
+			...surveyData,
+		}));
+
 		const url = window.location.hostname === 'experiments.pubpub.org'
-			? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&foo=bar`
-			: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&foo=bar`;
+			? `https://www.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&hitId=${this.state.hitId}&foo=bar`
+			: `https://workersandbox.mturk.com/mturk/externalSubmit?assignmentId=${this.state.assignmentId}&hitId=${this.state.hitId}&foo=bar`;
 
 		const form = new FormData();
 		form.append('assignmentId', this.state.assignmentId);
@@ -94,6 +103,7 @@ export const Dino = React.createClass({
 	},
 
 	render() {
+		const query = this.props.location.query || {};
 		if (this.props.dinoData.canBegin === undefined) {
 			return (
 				<div style={[styles.container, styles.complete]}>
@@ -134,6 +144,13 @@ export const Dino = React.createClass({
 							description={'Thank you! The HIT has been successfully Submitted and has been Approved.'}
 							title={'HIT Submitted and Approved!'}
 							visual={'endorsed'} />
+
+						<form name="mturk_form" method="post" id="mturk_form" action={query.turkSubmitTo + '/mturk/externalSubmit'}>
+							<input type="hidden" value={query.assignmentId} name="assignmentId" id={query.assignmentId} />
+							<input type="hidden" value={query.hitId} name="hitId" id={query.hitId} />
+							<input type="hidden" value="bar" name="foo" />
+							<button type="submit" className={'pt-button pt-intent-primary'}>Submit HIT</button>
+						</form>
 					</div>
 				}
 				
