@@ -115,7 +115,7 @@ export const DinoPaper = React.createClass({
 			reviewRating: this.state.reviewRating,
 			offsetValues: JSON.stringify(this.state.offsets),
 			offsetInteractions: JSON.stringify(this.state.offsetInteractions),
-			timeOnReview: new Date().getTime() - this.state.startTime,
+			timeOnReview: Math.round((new Date().getTime() - this.state.startTime) / 1000),
 			scrollValues: JSON.stringify(this.scrollValues)
 		});
 	},
