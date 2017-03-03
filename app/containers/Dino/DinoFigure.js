@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import { Slider, Button } from '@blueprintjs/core';
-import Textarea from 'react-textarea-autosize';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
 
 
 export const DinoFigure = React.createClass({
@@ -14,12 +12,12 @@ export const DinoFigure = React.createClass({
 	getInitialState() {
 		return {
 			colors: [
-				'#8884d8',
-				'#82ca9d',
-				'#a2ca9d',
-				'#822a9d',
-				'#82ca2d',
-				'#222a9d',
+				'#c0392b',
+				'#f39c12',
+				'#16a085',
+				'#2980b9',
+				'#8e44ad',
+				'#34495e',
 			],
 		};
 	},
@@ -39,11 +37,10 @@ export const DinoFigure = React.createClass({
 						<YAxis dataKey={'circumference'} name='circumference' unit='mm' label={'mm'} domain={['dataMin - 4', 'dataMax + 10']} />
 						<XAxis dataKey={'age'} name='Age' unit='years' label={'Years'} domain={['dataMin', 'dataMax + 1']} />
 						<CartesianGrid />
-						{/*<Tooltip cursor={{strokeDasharray: '3 3'}}/>*/}
 						<Legend />
 						{this.props.data.map((data, index)=> {
 							const outputData = data.map((value)=> {
-								let offsets = this.props.offsets;
+								const offsets = this.props.offsets;
 								return {
 									age: value.age + offsets[index],
 									circumference: value.circumference
