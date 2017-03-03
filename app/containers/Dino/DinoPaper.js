@@ -280,6 +280,7 @@ styles = {
 	},
 	table: {
 		width: '100%',
+		fontSize: '0.9em',
 	},
 	thead: {
 		fontWeight: 'bold',
