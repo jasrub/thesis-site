@@ -133,26 +133,28 @@ export const DinoPaper = React.createClass({
 
 	render() {
 		const tableNames = ['Femur 1', 'Femur 2', 'Femur 3', 'Femur 4', 'Femur 5', 'Femur 6'];
-		const tableSites = ['CLDQ', 'CLDQ', 'CLDQ', 'Provincial Park', 'Provincial Park', 'Provincial Park'];
+		const tableSites = ['CLDQ', 'CLDQ', 'CLDQ', 'DPP', 'DPP', 'DPP'];
 		return (
 			<div style={styles.container}>
 				<h1>Paper Review</h1>
-				<p style={styles.text}>Please read the following work and write a few sentences containing you review in the form at the bottom.</p>
-				<p style={styles.text}>There may be errors in the logic used and conclusions reached. We ask you to assume the role of a scientist and provide critical feedback to the authors of this work.</p>
+				<p style={styles.text}>Please read the following work and write a few sentences containing your review in the input box at the bottom.</p>
+				<p style={styles.text}>There may be errors in the logic used and in the conclusions reached. We ask you to assume the role of a scientist and provide critical feedback to the authors of this work.</p>
 
 				
 				<div className={'pt-card pt-elevation-2 article-body'} style={styles.paper}>
 					<h2 style={styles.header}>Assessing Growth Patterns of the Jurassic Theropod Dinosaur Allosaurus</h2>
 					
 					<h3 style={styles.header}>Introduction</h3>
-					<p style={styles.p}>Allosaurus is one of the most common Mesozoic theropod dinosaurs. We present an analysis to understand its growth and bone scaling. Based on several sections of bones found in archealogical digs we present a growth curve reconstruction. Growth curve reconstruction suggests that maximum growth occurred at both 5 and 15 years, when body mass increased 148 kg/year.</p>
+					<p style={styles.p}>Allosaurus are one of the most common Mesozoic theropod dinosaurs. We present an analysis to understand its growth and bone scaling. Based on several sections of bones found in archealogical digs we present a growth curve reconstruction.</p>
 					
 					
 					<h3 style={styles.header}>Methods</h3>
-					<p style={styles.p}>A total of six femur bones of Allosaurus were selected for this study. These bones came from the CLDQ in Utah and the Dinosaur Provincial Park in Alberta, Canada. Before sectioning, bone lengths and circumferences were measured. Because length as measured along the outer curve produces a measurement that is 10% larger and not directly comparable with measurements of theropods in other studies, we measured length of femora as the maximum linear distance that is roughly parallel to midshaft. Circumferences were measured at 60% of the proximodistal length in the femur to avoid major regions of muscle insertion. </p>
+					<p style={styles.p}>A total of six femur bones of Allosaurus were selected for this study. These bones came from the Cleveland Lloyd Dinosaur Quarry (CLDQ) in Utah and the Dinosaur Provincial Park (DPP) in Alberta, Canada. Bone lengths and circumferences were measured. Circumferences were measured at 60% of the proximodistal length in the femur to avoid major regions of muscle insertion. We prefer to measure circumference because 1) estimates of circumference based on diameters are underestimates when sections are irregular in shape; 2) circumference is used to predict body mass and 3) circumference is easily comparable across sections of a given bone series. </p>
 
 					<h3 style={styles.header}>Estimation of Age and Growth Curve</h3>
-					<p style={styles.p}>We prefer to measure circumference because 1) estimates of circumference based on diameters are underestimates when sections are irregular in shape; 2) circumference is used to predict body mass and 3) circumference is easily comparable across sections of a given bone series. In an Excel spreadsheet, bone circumferences were visually aligned across each bone series to generate a set of 'age offsets'. The offsets (visible in the table and figure below) represent the fact that the fossilized bones come from dinosaurs that died at different ages. These offsets, which are visually estimated in Excel, are picked such that the growth curves of varying bones align with one another. Maximum growth rate was calculated by ﬁnding the derivative of each regression equation at the inﬂection point.</p>
+					<p style={styles.p}>For each bone, we use Lines of Arrested Growth (LAGs) to estimate the size of the bone at different ages. This process is akin to counting the rings of a tree to understand how old it is. In this case, we measure the circumference of the bone at each LAG. This allows us to have multiple circumference-age measurements from a single bone.</p>
+					<p style={styles.p}>In dinosaurs, previous work has suggested that the arrested growth associated with LAGs is seasonal. That is to say for example, dinosaurs grew less in the winter. Thus, each LAG can be assumed to represent one year of growth. However, depending on the age of the Allosaurus at death, LAGs from the dinosaur's youth may not be visible. To estimate the age of the bone at death (and thus the absolute age represented by each LAG), we take the series of bone-growth curves and introduce 'age offsets' such that the curves visually overlap into a single growth curve. We use an Excel spreadsheet to increase or decrease the age offset until the bone-growth curves visually align to one another.</p>
+					<p style={styles.p}>These bone-growth curves and the associated offsets we have visually determined are shown in the Table and Figure below.</p>
 
 					<table style={styles.table}>
 						<thead style={styles.thead}>
@@ -160,7 +162,7 @@ export const DinoPaper = React.createClass({
 								<td>Bone</td>
 								<td>Excavation Site</td>
 								<td>Measured Circumferences (one per year)</td>
-								<td>Offset</td>
+								<td>Age Offset</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -179,7 +181,7 @@ export const DinoPaper = React.createClass({
 						</tbody>
 					</table>
 
-					<p style={styles.p}>The results of these calculations and estimates are plotted below. As shown in the graph, we have found a novel growth pattern that is the first discovery of its kind. Contrary to current mammal and reptile growth patterns, Allosaurus appear to have a second growth spurt later in life. In the graph below, you can see the rapid rise in circumference of femur bones after stabilizing between the age of 10-12 years. </p>
+					<p style={styles.p}>These measurements and estimates lead us to a novel conclusion: the Allosaurus is the first animal to exhibit two major growth spurts in its life. Contrary to modern mammal and reptile growth patterns, Allosaurus appear to have a second growth spurt later in life. In the graph below, you can see a second rapid rise in circumference of femur bones after stabilizing between the age of 10-12 years.</p>
 
 					<div style={{ position: 'relative' }}>
 						{this.props.mode === 1 &&
@@ -205,8 +207,8 @@ export const DinoPaper = React.createClass({
 					</div>
 
 					<h3 style={styles.header}>Conclusions</h3>
-					<p style={styles.p}>Previous studies of the long bone growth of large dinosaurs report slowed growth patterns. Our data from sections of Allosaurus femora are novel and provide a new perspective on dinosaur growth. We theorize that this novel growth pattern may be part of the mechanism that led to Mesosoic dinosaurs being so much larger than their modern day reptile and bird counterparts.</p>
-					<p style={styles.p}>If the growth dynamics of Allosaurus are similar to those in equally large theropods, this may explain the variation of sizes that existed between closely related species. Similarities in growth strategy suggest that the evolution of gigantism in those respective lineages might involve similar increases in maximum growth rate. We cannot directly reject or support the hypothesis of unlimited growth in Allosaurus in the situation where this repeated growth spurt continued to cycle throughout the duration of their lives. </p>
+
+					<p style={styles.p}>All previous studies of bone growth of large dinosaurs report slowed growth patterns after the first growth spurt. Our data from sections of Allosaurus femora are novel and provide a different perspective on dinosaur growth. We theorize that this novel growth pattern may be part of the mechanism that led to Mesosoic dinosaurs being so much larger than their modern day reptile and bird counterparts. We cannot directly reject or support the hypothesis of unlimited growth in Allosaurus in the situation where this repeated growth spurt continued to cycle throughout the duration of their lives.</p>
 				</div>
 
 				<hr />
