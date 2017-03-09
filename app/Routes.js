@@ -20,6 +20,7 @@ export default (
 		<Route path="/dino" getComponent={getComponent('Dino')} />
 		<Route path="/beef" getComponent={getComponent('Beef')} />
 		<Route path="/govt" getComponent={getComponent('Govt')} />
+		<Route path="/search" getComponent={getComponent('Search')} />
 
 		<Route path="*" getComponent={getComponent('NoMatch')} />
 	</Route>

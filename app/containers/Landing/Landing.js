@@ -10,6 +10,7 @@ export const Landing = React.createClass({
 		
 		return (
 			<div style={styles.container}>
+				<div>Top News Topics Today:</div>
 				<div style={styles.wrapper}>
 					<Link to={'/dino'}>Dino</Link>
 				</div>

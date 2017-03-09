@@ -32,8 +32,8 @@ export const App = React.createClass({
 					title="Experiment"  
 					meta={[
 						{ name: 'ROBOTS', content: 'NOINDEX, NOFOLLOW' },
-						{ name: 'description', content: 'Experiments for PubPub' },
-						{ property: 'og:title', content: 'PubPub Experiments' },
+						{ name: 'description', content: 'News Explore' },
+						{ property: 'og:title', content: 'News Explore' },
 					]} 
 				/> 
 				{this.props.children}

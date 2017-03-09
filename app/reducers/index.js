@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import beef from './beef';
 import dino from './dino';
 import govt from './govt';
+import search from './search';
 
 export function ensureImmutable(state) {
 	// For some reason the @@INIT action is receiving a state variable that is a regular object.
@@ -21,4 +22,5 @@ export default combineReducers({
 	beef,
 	dino,
 	govt,
+	search,
 });

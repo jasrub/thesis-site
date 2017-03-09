@@ -149,13 +149,6 @@ export const Dino = React.createClass({
 	}
 });
 
-function mapStateToProps(state) {
-	return {
-		dinoData: state.dino.toJS(),
-	};
-}
-
-export default connect(mapStateToProps)(Radium(Dino));
 
 styles = {
 	container: {
