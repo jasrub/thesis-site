@@ -18,14 +18,17 @@ export const Search = React.createClass ({
     },
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            searchDescriptors:nextProps.descriptorsData.searchResults
-        })
-
+        if (this.props.descriptorsData.descriptors !== nextProps.descriptorsData.descriptors) {
+            const allDescriptors = this.getAllDescriptors(nextProps.descriptorsData.descriptors);
+            this.setState({
+                allDescriptors: allDescriptors
+            })
+        }
     },
 
     getInitialState() {
         return {
+            allDescriptors: [],
             searchDescriptors: [],
             searchValue: '',
         };
@@ -43,7 +46,14 @@ export const Search = React.createClass ({
                 searchDescriptors: [],
             });
         } else {
-            this.props.dispatch(searchDescriptors(value))
+            const searchResults= this.state.allDescriptors.filter((desc)=>{
+                    return desc.id.includes(value) && desc.numStories>0;
+                }
+            );
+            this.setState({
+                searchDescriptors: searchResults
+
+        });
         }
     },
 
@@ -54,87 +64,89 @@ export const Search = React.createClass ({
         });
     },
 
-    getAllDescriptors() {
-        const allDescriptors = this.props.descriptorsData.descriptors || [];
+    getAllDescriptors(descriptors) {
+        const allDescriptors = descriptors || [];
         allDescriptors.forEach((desc)=>{
             desc.score = desc.DescriptorsResults.reduce((acc, val)=>acc+val.score, 0);
             desc.numStories = desc.DescriptorsResults.length;
             desc.avgScore = desc.score/desc.numStories;
+            desc.DescriptorsResults.sort((a,b)=>(b.score-a.score))
             }
         );
-        allDescriptors.sort((a,b)=>(b.numStories-a.numStories))
+        allDescriptors.sort((a,b)=>(b.numStories-a.numStories || b.score-a.score))
         return allDescriptors;
     },
 
     render() {
-        const allDescriptors = this.getAllDescriptors();
+        const allDescriptors = this.state.allDescriptors;
         const searchResults = this.state.searchDescriptors || []
         //console.log(descriptors)
 
-        const foodRows = searchResults.map((descriptor, idx) =>{
-            descriptor.DescriptorsResults.sort((a,b)=>(a.socre-b.score));
+        const searchResultsRows = searchResults.map((descriptor, idx) =>{
             return (
-            <tr
-                key={idx}
-            >
-                <td>
+                <div key={idx}>
                     <h2>{descriptor.id} ({descriptor.DescriptorsResults.length} stories)</h2>
                     {descriptor.DescriptorsResults.slice(0,5).map((result, idx)=>{
                         return (
                         <div key={idx}>
-                            <a href={result.Story.url} target="_blank">{result.Story.title}</a>
+                            <span> <a href={result.Story.url} target="_blank">{result.Story.title}</a> - {result.score} </span>
                         </div>
                         )})}
-                </td>
-            </tr>
+                </div>
         )});
 
         return (
 
-            <div id='food-search'>
-                <table className='ui selectable structured large table'>
-                    <thead>
-                    <tr>
-                        <th colSpan='5'>
-                            <div className='ui fluid search'>
-                                <div className='ui icon input'>
-                                    <input
-                                        className='prompt'
-                                        type='text'
-                                        placeholder='Search topics...'
-                                        value={this.state.searchValue}
-                                        onChange={this.handleSearchChange}
-                                    />
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th className='eight wide'>Descriptors </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {foodRows}
-                    </tbody>
-                </table>
-                {this.props.descriptorsData.loadingSearch &&
-                <div>
-                    <ProgressBar />
-                </div>
-                }
+            <div>
+                <h1>Today's Hot Topics</h1>
+
                 <div>
                     {this.props.descriptorsData.loading &&
                     <div>
                         <Spinner />
                     </div>
                     }
-                    {allDescriptors.map((desc, idx)=><p key={idx}> {desc.id} - {desc.numStories} </p>)}
+                    {allDescriptors.slice(0,20).map((desc, idx)=><Descriptor key={idx} descriptor={desc}/>)}
 
                 </div>
+
+                    <label className="pt-label">
+                        Search Other Topics
+                        <div className="pt-input-group">
+                    <span className="pt-icon pt-icon-search"></span>
+                    <input className="pt-input" type="search" placeholder="Search input" dir="auto"
+                           value={this.state.searchValue}
+                           onChange={this.handleSearchChange}/>
+                        </div>
+                    </label>
+
+                {searchResultsRows}
             </div>
         );
     }
 });
+
+export const Descriptor = React.createClass ({
+    PropTypes: {
+        descriptor: PropTypes.object,
+    },
+
+    setInitialState() {
+          showStories: false
+    },
+
+    render() {
+        const desc = this.props.descriptor;
+        return (
+            <p> {desc.id} - {desc.numStories} </p>
+        )
+
+
+    },
+
+
+});
+
 
 function mapStateToProps(state) {
     return {

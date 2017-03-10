@@ -5,9 +5,6 @@ import { ensureImmutable } from './index';
 // Load Actions
 /* ---------- */
 import {
-    SEARCH_LOAD,
-    SEARCH_SUCCESS,
-    SEARCH_FAIL,
     GET_DESCRIPTORS_LOAD,
     GET_DESCRIPTORS_SUCCESS,
     GET_DESCRIPTORS_FAIL,
@@ -46,31 +43,9 @@ export default function reducer(state = defaultState, action) {
                 error: action.error,
                 descriptors: null,
             });
-        case SEARCH_LOAD:
-            return state.merge({
-                loadingSearch: true,
-                error: undefined,
-                searchResults: []
-            });
-        case SEARCH_SUCCESS:
-            return state.merge({
-                loadingSearch: false,
-                error: undefined,
-                searchResults: action.result
-            });
-        case SEARCH_FAIL:
-            return state.merge({
-                loadingSearch: false,
-                error: action.error,
-                searchResults: null,
-            });
-
 
         default:
             return ensureImmutable(state);
     }
 
 }
-/**
- * Created by jasrub on 3/8/17.
- */
