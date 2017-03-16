@@ -19,7 +19,7 @@ export const GET_DESCRIPTORS_FAIL = 'search/GET_DESCRIPTORS_FAIL';
 export function getDescriptors() {
     return (dispatch) => {
         dispatch({ type: GET_DESCRIPTORS_LOAD });
-        return clientFetch('/api/descriptors')
+        return clientFetch('/api/descriptors/sorted')
             .then((result) => {
                 dispatch({ type: GET_DESCRIPTORS_SUCCESS, result });
             })

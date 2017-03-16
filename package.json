@@ -30,6 +30,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "bourbon": "^4.3.1",
     "chai": "^3.5.0",
+    "chroma-js": "^1.2.2",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.25.0",
     "dateformat": "^1.0.12",
