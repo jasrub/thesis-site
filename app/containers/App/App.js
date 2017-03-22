@@ -29,13 +29,13 @@ export const App = React.createClass({
 		return (
 			<StyleRoot>
 				<Helmet 
-					title="Experiment"  
+					title="News Explorer"
 					meta={[
 						{ name: 'ROBOTS', content: 'NOINDEX, NOFOLLOW' },
 						{ name: 'description', content: 'News Explore' },
 						{ property: 'og:title', content: 'News Explore' },
 					]} 
-				/> 
+				/>
 				{this.props.children}
 			</StyleRoot>
 		);

@@ -16,11 +16,10 @@ function getComponent(component) {
 
 export default (
 	<Route getComponent={getComponent('App')}>
-		<Route path="/" getComponent={getComponent('Landing')} />
+		<Route path="/" getComponent={getComponent('Main')} />
 		<Route path="/dino" getComponent={getComponent('Dino')} />
 		<Route path="/beef" getComponent={getComponent('Beef')} />
 		<Route path="/govt" getComponent={getComponent('Govt')} />
-		<Route path="/search" getComponent={getComponent('Search')} />
 
 		<Route path="*" getComponent={getComponent('NoMatch')} />
 	</Route>

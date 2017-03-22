@@ -8,7 +8,10 @@ import {
     GET_DESCRIPTORS_LOAD,
     GET_DESCRIPTORS_SUCCESS,
     GET_DESCRIPTORS_FAIL,
-} from 'containers/Search/actions';
+    GET_RELATED_LOAD,
+    GET_RELATED_SUCCESS,
+    GET_RELATED_FAIL,
+} from 'containers/Main/actions';
 
 /* ------------------- */
 // Define Default State
@@ -16,6 +19,9 @@ import {
 const defaultState = Immutable.Map({
     loading: false,
     error: undefined,
+    relatedLoading: false,
+    relatedError: false,
+    descriptors: {},
 });
 
 /* ----------------------------------------- */
@@ -29,7 +35,7 @@ export default function reducer(state = defaultState, action) {
             return state.merge({
                 loading: true,
                 error: undefined,
-                descriptors: []
+                descriptors: {},
             });
         case GET_DESCRIPTORS_SUCCESS:
             return state.merge({
@@ -42,6 +48,25 @@ export default function reducer(state = defaultState, action) {
                 loading: false,
                 error: action.error,
                 descriptors: null,
+            });
+
+        case GET_RELATED_LOAD:
+            return state.merge({
+                relatedLoading: true,
+                relatedError: undefined,
+            });
+        case GET_RELATED_SUCCESS: {
+            const newState = state.setIn(
+                ['descriptors', action.descriptorId, 'related'], action.result);
+            return newState.merge({
+                relatedLoading: false,
+                relatedError: undefined,
+            });
+        }
+        case GET_RELATED_FAIL:
+            return state.merge({
+                relatedLoading: false,
+                relatedError: action.error,
             });
 
         default:
