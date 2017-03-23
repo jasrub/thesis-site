@@ -15,6 +15,7 @@ export const TopDescriptors = React.createClass({
         descriptors: PropTypes.object,
         list: PropTypes.object,
         loading: PropTypes.boolean,
+        stories: PropTypes.object,
     },
 
 
@@ -44,17 +45,19 @@ export const TopDescriptors = React.createClass({
                             descriptor={descriptors[desc]}
                             color={color(descriptors[desc].numStories)}
                             clicked={this.props.clicked}
+                            stories = {this.props.stories}
                         />);
                 })}
 
             </div>
 
-            <Search descriptorsList={this.props.list} descriptors={this.props.descriptors} notInclude={top20} color={color} clicked={this.props.clicked}/>
-
-            <div>
-                Filter By:
-                <Controls/>
-            </div>
+            <Search descriptorsList={this.props.list}
+                    descriptors={this.props.descriptors}
+                    notInclude={top20}
+                    color={color}
+                    clicked={this.props.clicked}
+                    stories={this.props.stories}
+            />
 
         </div>)
     },

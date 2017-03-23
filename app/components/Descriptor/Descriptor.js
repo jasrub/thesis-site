@@ -14,6 +14,7 @@ export const Descriptor = React.createClass ({
         color: PropTypes.string,
         selected: PropTypes.boolean,
         clicked: PropTypes.func,
+        stories: PropTypes.object,
     },
 
     setInitialState() {
@@ -32,9 +33,10 @@ export const Descriptor = React.createClass ({
                 <div>{desc.numStories} Stories</div>
                 <ul>
                     {desc.DescriptorsResults.slice(0,5).map((result, idx)=>{
+                        const story = this.props.stories[result.storyId];
                         return (
-                            <li key={idx}> <a href={result.Story.url} target="_blank">
-                                <span dangerouslySetInnerHTML={{__html: result.Story.title}} /></a>
+                            <li key={idx}> <a href={story.url} target="_blank">
+                                <span dangerouslySetInnerHTML={{__html: story.title}} /></a>
                             </li>
 
                         )})}

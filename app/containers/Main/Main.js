@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import { getDescriptors, getRelated } from './actions';
+import { getDescriptors, getRelated, getStories } from './actions';
 import { connect } from 'react-redux';
 import AppNav from 'components/AppNav/AppNav';
+import Controls from 'components/Controls/Controls';
 import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
 import Topic from 'containers/Topic/Topic';
+import Sidebar from 'react-sidebar';
 
 let styles;
 
@@ -16,15 +18,59 @@ export const Main = React.createClass ({
     },
 
     componentWillMount() {
-        this.props.dispatch(getDescriptors());
+        this.props.dispatch(getStories());
+        this.props.dispatch(getDescriptors(this.state.filters));
     },
 
     getInitialState() {
         return {
             selected: false,
             selectedDescriptor: null,
-            selectedIndex: -1,
+            filters: {
+                isLeftRight: {
+                    on: false,
+                    val: 2,
+                    label: "Political Stance",
+                    leftLabel: "Left",
+                    rightLabel: "Right"
+                },
+                isPosNeg: {
+                    on: false,
+                    val: 2,
+                    label: "Emotive Value",
+                    leftLabel: "Positive",
+                    rightLabel: "Negative"
+                },
+                isTrend: {
+                    on: false,
+                    val:2,
+                    label: "Emerging Topics",
+                    leftLabel: "Trending",
+                    rightLabel: "Ongoing"
+                },
+                isCont: {
+                    on: false,
+                    val: 2,
+                    label: "Controversial Subjects",
+                    leftLabel: "Controversial",
+                    rightLabel: "Safe"
+                },
+            }
         };
+    },
+
+    handleFilterChange(filter, isToggle, value) {
+        const newFilters = this.state.filters;
+        if (isToggle) {
+            newFilters[filter].on = !newFilters[filter].on;
+        }
+        else {
+            newFilters[filter].val = value;
+        }
+        this.setState({
+            filters:newFilters
+        });
+        // this.props.dispatch(filterStories(this.state.filters));
     },
 
     descriptorClicked(descriptor) {
@@ -55,19 +101,26 @@ export const Main = React.createClass ({
         const selected = allDescriptors[this.state.selectedDescriptor]
 
         return (
+        <Sidebar sidebar={<Controls filters={this.state.filters} onFilterChange={this.handleFilterChange}/>}
+                 open={true}
+                 docked={true}
+                 pullRight={true}>
             <div>
                 <AppNav onHomeClick={this.resetSelection}/>
-                    {!this.state.selected &&
+                    {!this.state.selected && !this.props.descriptorsData.storiesLoading &&
                         <TopDescriptors descriptors={allDescriptors}
                                         list = {descriptorsArray}
+                                        stories = {this.props.descriptorsData.stories}
                                         loading={this.props.descriptorsData.loading}
                                         clicked={this.descriptorClicked}/>
 
                     }
 
                     {this.state.selected && <Topic descriptor={selected}
+                                                   stories = {this.props.descriptorsData.stories}
                                                    loading={this.props.descriptorsData.relatedLoading}/>}
             </div>
+        </Sidebar>
         );
     }
 });
@@ -84,15 +137,4 @@ export default connect(mapStateToProps)(Radium(Main));
 styles = {
 
 };
-/**
- * Shuffles array in place. ES6 version
- * @param {Array} a items The array containing the items.
- */
-function shuffle(a) {
-    for (let i = a.length; i; i--) {
-        let j = Math.floor(Math.random() * i);
-        [a[i - 1], a[j]] = [a[j], a[i - 1]];
-    }
-}
-
 

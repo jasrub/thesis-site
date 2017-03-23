@@ -1,8 +1,5 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux';
-import beef from './beef';
-import dino from './dino';
-import govt from './govt';
 import main from './main';
 
 export function ensureImmutable(state) {
@@ -19,8 +16,5 @@ export function ensureImmutable(state) {
 }
 
 export default combineReducers({
-	beef,
-	dino,
-	govt,
 	main,
 });

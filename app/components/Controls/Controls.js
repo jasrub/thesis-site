@@ -3,106 +3,39 @@ import Radium from 'radium';
 import { Slider, Switch } from '@blueprintjs/core';
 
 const MIN = 0;
-const MAX = 50;
+const MAX = 4;
 const STEP = 0.5;
 
 let styles;
 
 export const Controls = React.createClass ({
     PropTypes: {
-
+        filters: PropTypes.object,
+        onFilterChange: PropTypes.func,
     },
-
-    getInitialState() {
-        return {
-            isLeftRight: false,
-            isPosNeg: false,
-            isTrend: false,
-            isCont: false,
-            leftRightVal:25,
-            posNegVal: 25,
-            trendVal: 25,
-            contVal:25
-        }
-    },
-
-    getChangeHandler(key) {
-        return (value) => {
-            this.setState({[key]: value});
-        }
-    },
-
-    getBoolHandler(key) {
-        return () => {
-            const currVal = this.state[key];
-            this.setState({[key]: !currVal});
-        }
-    },
-
-    getLabels(minStr, maxStr) {
-        return(value)=>{
-            const add = 3;
-            if (value==MIN+add) {
-                return minStr;
-            }
-            else if (value==MAX-add) {
-                return maxStr;
-            }
-            else {
-                return ''
-            }
-        }
-        //return false
-    },
-
 
     render() {
+        const filters = this.props.filters;
         return(
-        <div>
+        <div style={styles.controls}>
+            <h4> filter by: </h4>
 
-            <div className="pt-card pt-elevation-3" style={styles.controlsCard}>
-            <div className="pt-form-group">
-                <Switch checked={this.state.isLeftRight} label="Political Stance" onChange={this.getBoolHandler("isLeftRight")} />
-                { this.state.isLeftRight && <SliderRow
-                name={"leftRightVal"}
-                changeFunction={this.getChangeHandler}
-                value={this.state.leftRightVal}
-                leftLabel={"Left"}
-                rightLabel={"Right"}/>}
-            </div>
-
-            <div className="pt-form-group">
-                <Switch checked={this.state.isPosNeg} label="Emotive Value" onChange={this.getBoolHandler("isPosNeg")} />
-                {this.state.isPosNeg &&
-                <SliderRow
-                    name={"posNegVal"}
-                    changeFunction={this.getChangeHandler}
-                    value={this.state.posNegVal}
-                    leftLabel={"Positive"}
-                    rightLabel={"Negative"}/>}
-            </div>
-
-            <div className="pt-form-group">
-                <Switch checked={this.state.isTrend} label="Emerging Topics" onChange={this.getBoolHandler("isTrend")} />
-                {this.state.isTrend &&
-                <SliderRow
-                    name={"trendVal"}
-                    changeFunction={this.getChangeHandler}
-                    value={this.state.trendVal}
-                    leftLabel={"Trending"}
-                    rightLabel={"Ongoing"}/>}
-            </div>
-
-            <div className="pt-form-group">
-                <Switch checked={this.state.isCont} label="Controversial Subjects" onChange={this.getBoolHandler("isCont")} />
-                {this.state.isCont &&
-                <SliderRow
-                    name={"contVal"}
-                    changeFunction={this.getChangeHandler}
-                    value={this.state.contVal}
-                    leftLabel={"Controversial"}
-                    rightLabel={"Safe"}/>}
-            </div>
+            <div>
+                {Object.keys(filters).map((filterName)=>{
+                    const filter = filters[filterName];
+                    const onSwitchChange = (value)=>this.props.onFilterChange(filterName, true, value);
+                    return(
+                        <div key={filterName} className="pt-form-group">
+                            <Switch checked={filter.on} label={filter.label} onChange={onSwitchChange} />
+                            { filter.on && <SliderRow
+                                name={filterName}
+                                changeFunction={this.props.onFilterChange}
+                                value={filter.val}
+                                leftLabel={filter.leftLabel}
+                                rightLabel={filter.rightLabel}/>}
+                        </div>
+                    )
+                })}
             </div>
         </div>)
 
@@ -118,6 +51,9 @@ export const SliderRow = React.createClass ({
         leftLabel:PropTypes.string,
         rightLabel:PropTypes.string
     },
+    onChange(value) {
+        this.props.changeFunction(this.props.name, false, value)
+    },
     render() {
         return(
             <div>
@@ -125,7 +61,7 @@ export const SliderRow = React.createClass ({
                     min={MIN}
                     max={MAX}
                     stepSize={STEP}
-                    onChange={this.props.changeFunction(this.props.name)}
+                    onRelease={this.onChange}
                     value={this.props.value}
                     renderLabel={false}/>
                 <div>
@@ -136,14 +72,12 @@ export const SliderRow = React.createClass ({
 
         )
     }
-})
+});
 
 styles = {
-    controlsCard: {
-        width: '30%',
-        background: '#ffe4cb',
-        //color: '#fff',
+    controls: {
+        padding: '1em'
     }
-}
+};
 
 export default Radium(Controls);

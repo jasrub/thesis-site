@@ -10,11 +10,13 @@ export const Topic = React.createClass ({
     PropTypes: {
         descriptor: PropTypes.object,
         loading: PropTypes.boolean,
+        stories: PropTypes.object,
     },
 
     bySourceData() {
+        const stories = this.props.stories;
         return this.props.descriptor.DescriptorsResults.reduce(function(rv, x) {
-            (rv[x['Story']['mediaName']] = rv[x['Story']['mediaName']] || []).push(x);
+            (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
             return rv;
         }, {});
     },
@@ -28,16 +30,21 @@ export const Topic = React.createClass ({
         });
         //const connections = desc.connections;
         return(
-            <div>
-                <Descriptor key={desc.id} descriptor={desc} color='#b0c6cb'/>
+            <div style={styles.container}>
+                <Descriptor
+                    key={desc.id}
+                    descriptor={desc}
+                    stories={this.props.stories}
+                    color='#b0c6cb'/>
 
                 <div>
                     <div>{desc.numStories} Stories</div>
                     <ul>
                         {desc.DescriptorsResults.slice(0,15).map((result, idx)=>{
+                            const story = this.props.stories[result.storyId];
                             return (
-                                <li key={idx}> <a href={result.Story.url} target="_blank">
-                                    <span dangerouslySetInnerHTML={{__html: result.Story.title}} /></a>
+                                <li key={idx}> <a href={story.url} target="_blank">
+                                    <span dangerouslySetInnerHTML={{__html: story.title}} /></a>
                                 </li>
 
                             )})}
@@ -61,8 +68,6 @@ export const Topic = React.createClass ({
                     <Tooltip/>
                 </BarChart>
                 </div>
-
-                <Controls/>
             </div>)
 
     }
@@ -70,6 +75,9 @@ export const Topic = React.createClass ({
 });
 
 styles = {
+    container: {
+        padding: '2em',
+    },
 };
 
 const AxisLabel = ({ axisType, x, y, width, height, stroke, children }) => {
