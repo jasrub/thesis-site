@@ -7,8 +7,10 @@ import Controls from 'components/Controls/Controls';
 import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
 import Topic from 'containers/Topic/Topic';
 import Sidebar from 'react-sidebar';
+import {Spinner} from '@blueprintjs/core';
 
 let styles;
+const FILTER_THRESHOLD = 1.5
 
 export const Main = React.createClass ({
     PropTypes: {
@@ -27,31 +29,31 @@ export const Main = React.createClass ({
             selected: false,
             selectedDescriptor: null,
             filters: {
-                isLeftRight: {
+                leftRight: {
                     on: false,
                     val: 2,
                     label: "Political Stance",
                     leftLabel: "Left",
                     rightLabel: "Right"
                 },
-                isPosNeg: {
+                posNeg: {
                     on: false,
                     val: 2,
                     label: "Emotive Value",
                     leftLabel: "Positive",
                     rightLabel: "Negative"
                 },
-                isTrend: {
+                trend: {
                     on: false,
                     val:2,
                     label: "Emerging Topics",
                     leftLabel: "Trending",
                     rightLabel: "Ongoing"
                 },
-                isCont: {
+                cont: {
                     on: false,
                     val: 2,
-                    label: "Controversial Subjects",
+                    label: "Polarity",
                     leftLabel: "Controversial",
                     rightLabel: "Safe"
                 },
@@ -70,11 +72,11 @@ export const Main = React.createClass ({
         this.setState({
             filters:newFilters
         });
-        // this.props.dispatch(filterStories(this.state.filters));
+        this.props.dispatch(getDescriptors(this.state.filters));
     },
 
     descriptorClicked(descriptor) {
-        if (!this.props.descriptorsData.descriptors[descriptor].related) {
+        if (!this.props.descriptorsData.relatedTopics[descriptor]) {
             this.props.dispatch(getRelated(descriptor))
         }
         this.setState({
@@ -101,24 +103,40 @@ export const Main = React.createClass ({
         const selected = allDescriptors[this.state.selectedDescriptor]
 
         return (
-        <Sidebar sidebar={<Controls filters={this.state.filters} onFilterChange={this.handleFilterChange}/>}
+
+            
+        <Sidebar sidebar={
+            <div>
+            <Controls filters={this.state.filters} onFilterChange={this.handleFilterChange}/>
+                {this.props.descriptorsData.loading &&
+                <div>
+                    <Spinner />
+                </div>
+                }
+            </div>
+        }
                  open={true}
                  docked={true}
                  pullRight={true}>
             <div>
                 <AppNav onHomeClick={this.resetSelection}/>
-                    {!this.state.selected && !this.props.descriptorsData.storiesLoading &&
+                <div style={styles.container}>
+                    {!this.state.selected &&
                         <TopDescriptors descriptors={allDescriptors}
                                         list = {descriptorsArray}
                                         stories = {this.props.descriptorsData.stories}
-                                        loading={this.props.descriptorsData.loading}
+                                        loading={this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading}
                                         clicked={this.descriptorClicked}/>
 
                     }
 
                     {this.state.selected && <Topic descriptor={selected}
                                                    stories = {this.props.descriptorsData.stories}
-                                                   loading={this.props.descriptorsData.relatedLoading}/>}
+                                                   related = {this.props.descriptorsData.relatedTopics[this.state.selectedDescriptor]}
+                                                   allDescriptors={allDescriptors}
+                                                    descriptorClicked = {this.descriptorClicked}/>
+                        }
+            </div>
             </div>
         </Sidebar>
         );
@@ -135,6 +153,10 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(Radium(Main));
 
 styles = {
+    container: {
+        margin: '0 auto',
+        padding: '4em',
+    }
 
 };
 

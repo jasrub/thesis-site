@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import Controls from 'components/Controls/Controls';
 import Descriptor from 'components/Descriptor/Descriptor';
+import Stories from 'components/Stories/Stories';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 let styles;
@@ -11,6 +11,8 @@ export const Topic = React.createClass ({
         descriptor: PropTypes.object,
         loading: PropTypes.boolean,
         stories: PropTypes.object,
+        allDescriptors: PropTypes.object,
+        descriptorClicked: PropTypes.func,
     },
 
     bySourceData() {
@@ -23,7 +25,7 @@ export const Topic = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        const related = desc.related || [];
+        const related = this.props.related || [];
         const storiesBySource = this.bySourceData() || [];
         const bySourceData = Object.keys(storiesBySource).map((source)=>{
             return {'name':source, 'size':storiesBySource[source].length}
@@ -31,30 +33,23 @@ export const Topic = React.createClass ({
         //const connections = desc.connections;
         return(
             <div style={styles.container}>
-                <Descriptor
-                    key={desc.id}
-                    descriptor={desc}
-                    stories={this.props.stories}
-                    color='#b0c6cb'/>
+                <div style={styles.title}> {desc.id} - {desc.numStories}%</div>
 
                 <div>
-                    <div>{desc.numStories} Stories</div>
-                    <ul>
-                        {desc.DescriptorsResults.slice(0,15).map((result, idx)=>{
-                            const story = this.props.stories[result.storyId];
-                            return (
-                                <li key={idx}> <a href={story.url} target="_blank">
-                                    <span dangerouslySetInnerHTML={{__html: story.title}} /></a>
-                                </li>
-
-                            )})}
-                    </ul>
+                    <Stories storiesIds = {desc.DescriptorsResults.slice(0,9)}
+                             stories = {this.props.stories}/>
                 </div>
 
                 <div>
                     <h3>Related Topics</h3>
                 {related.map((rel)=>{
-                    return <div key={rel.dest}>{rel.dest}</div>
+                    return (
+                        <div key={rel.dest}>
+                        <Descriptor  descriptor={this.props.allDescriptors[rel.dest]}
+                                     clicked={this.props.descriptorClicked}
+                                     stories = {this.props.stories}/>
+                        </div>
+                    )
                 })
 
                 }
@@ -78,6 +73,10 @@ styles = {
     container: {
         padding: '2em',
     },
+    title: {
+        fontSize:'3em',
+
+    }
 };
 
 const AxisLabel = ({ axisType, x, y, width, height, stroke, children }) => {

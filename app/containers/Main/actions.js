@@ -22,19 +22,10 @@ export const GET_STORIES_FAIL = 'main/GET_STORIES_FAIL';
 // action objects (e.g. {type:example, payload:data} ) within dispatch()
 // function calls
 /*--------*/
-export function getDescriptors() {
+export function getDescriptors(filters) {
     return (dispatch) => {
         dispatch({ type: GET_DESCRIPTORS_LOAD });
-        return clientFetch('/api/descriptors/sorted')
-        //     , {
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(filters)
-        // })
-        //
+        return clientFetch(`/api/descriptors/sorted?filters=${JSON.stringify(filters)}`)
         .then((result) => {
             dispatch({ type: GET_DESCRIPTORS_SUCCESS, result });
         })

@@ -29,34 +29,13 @@ const defaultState = Immutable.Map({
     stories:{},
     storiesLoading: false,
     storiesError: false,
+    storyCount:0,
+    relatedTopics: Immutable.Map({}),
 });
 
 /* ----------------------------------------- */
 // Bind actions to specific reducing functions
 /* ----------------------------------------- */
-function filterDescriptors(state = defaultState, filters) {
-    const allDescriptors = state.get('allDescriptors').toJS();
-    const result = {};
-    //if (allDescriptors) {
-        allDescriptors.forEach((desc) => {
-            const obj ={};
-            obj.id = desc.id;
-            obj.DescriptorsResults = desc.DescriptorsResults;
-            if (obj.DescriptorsResults.length > 0) {
-                    result[desc.id] = obj;
-                    obj.score = obj.DescriptorsResults.reduce((acc, val) => acc + val.score, 0);
-                    obj.numStories = obj.DescriptorsResults.length;
-                    obj.avgScore = obj.score / obj.numStories;
-                    obj.DescriptorsResults.slice(0, 100);
-                }
-            }
-        );
-    //}
-    console.log(result);
-    return result
-}
-
-
 export default function reducer(state = defaultState, action) {
     switch (action.type) {
 
@@ -64,25 +43,20 @@ export default function reducer(state = defaultState, action) {
             return state.merge({
                 loading: true,
                 error: undefined,
-                allDescriptors: [],
-                descriptors: {},
+                //descriptors: {},
             });
         case GET_DESCRIPTORS_SUCCESS: {
-            const newState = state.merge({
+            return state.merge({
                 loading: false,
                 error: undefined,
-                allDescriptors: action.result,
+                descriptors: action.result.descriptors,
+                storyCount: action.result.storyCount,
             });
-            const descriptors = filterDescriptors(newState, {});
-            return newState.merge({
-                descriptors:descriptors
-            })
         }
         case GET_DESCRIPTORS_FAIL:
             return state.merge({
                 loading: false,
                 error: action.error,
-                allDescriptors: null,
                 descriptors: null,
             });
 
@@ -111,8 +85,8 @@ export default function reducer(state = defaultState, action) {
                 relatedError: undefined,
             });
         case GET_RELATED_SUCCESS: {
-            const newState = state.setIn(
-                ['descriptors', action.descriptorId, 'related'], action.result);
+            console.log(action.descriptorId);
+            const newState = state.setIn(['relatedTopics', action.descriptorId], action.result);
             return newState.merge({
                 relatedLoading: false,
                 relatedError: undefined,

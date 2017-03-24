@@ -4,9 +4,7 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import Descriptor from 'components/Descriptor/Descriptor';
-import Controls from 'components/Controls/Controls';
 import Search from 'components/Search/Search';
-import {Spinner} from '@blueprintjs/core';
 import chroma from 'chroma-js';
 
 export const TopDescriptors = React.createClass({
@@ -22,10 +20,7 @@ export const TopDescriptors = React.createClass({
     render(){
         const descriptors = this.props.descriptors;
         const list = this.props.list;
-        const top20 = list.slice(0,20);
-        const colors = chroma.scale(["#fff", "295A6D"]);
-        const maxNum = list.length>1? descriptors[list[0]].numStories: 0;
-        const color = (num)=>colors(mapNum(num, 0, maxNum, 0, 1)).hex();
+        const top20 = list.slice(0,10);
 
         return(
 
@@ -33,17 +28,11 @@ export const TopDescriptors = React.createClass({
             <h1>Today's Hot Topics</h1>
 
             <div>
-                {this.props.loading &&
-                <div>
-                    <Spinner />
-                </div>
-                }
                 {top20.map((desc)=>{
                     return (
                         <Descriptor
                             key={desc}
                             descriptor={descriptors[desc]}
-                            color={color(descriptors[desc].numStories)}
                             clicked={this.props.clicked}
                             stories = {this.props.stories}
                         />);
@@ -54,7 +43,6 @@ export const TopDescriptors = React.createClass({
             <Search descriptorsList={this.props.list}
                     descriptors={this.props.descriptors}
                     notInclude={top20}
-                    color={color}
                     clicked={this.props.clicked}
                     stories={this.props.stories}
             />

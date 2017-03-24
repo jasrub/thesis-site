@@ -1,6 +1,8 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import Radium from 'radium';
 import Descriptor from 'components/Descriptor/Descriptor';
+
+let styles;
 
 export const Search = React.createClass({
 
@@ -8,7 +10,6 @@ export const Search = React.createClass({
         descriptorsList: PropTypes.object,
         descriptors: PropTypes.object,
         notInclude: PropTypes.array,
-        color: PropTypes.func,
         clicked: PropTypes.func,
     },
 
@@ -31,8 +32,8 @@ export const Search = React.createClass({
                 searchDescriptors: [],
             });
         } else {
-            const searchResults= this.props.descriptorsList.filter((desc)=>{
-                    return desc.includes(value)  && this.props.notInclude.indexOf(desc)===-1;
+            const searchResults = this.props.descriptorsList.filter((desc) => {
+                    return desc.includes(value) && this.props.notInclude.indexOf(desc) === -1;
                 }
             );
             this.setState({
@@ -53,15 +54,17 @@ export const Search = React.createClass({
     render(){
         const searchResults = this.state.searchDescriptors || [];
 
-        const searchResultsRows = searchResults.map((desc) =>{
+        const searchResultsRows = searchResults.map((desc) => {
             return (<Descriptor key={desc} descriptor={this.props.descriptors[desc]}
-                                color={this.props.color(this.props.descriptors[desc].numStories)}
-                                clicked={this.props.clicked}/>
-            )});
+                                clicked={this.props.clicked}
+                                stories={this.props.stories}
+                />
+            )
+        });
 
-        return(
+        return (
 
-            <div>
+            <div style={styles.search}>
 
 
                 <label className="pt-label">
@@ -82,6 +85,11 @@ export const Search = React.createClass({
 
 });
 
+styles = {
+    search: {
+        maxWidth: '400px',
+    }
+};
 
 
 export default Radium(Search);
