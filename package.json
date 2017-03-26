@@ -1,9 +1,9 @@
 {
-  "name": "pubpub-experiments-site",
+  "name": "news-explore",
   "version": "1.0.0",
-  "description": "PubPub Experiments",
+  "description": "News Explorer",
   "main": "exports.js",
-  "author": "PubPub Experiments <trich@media.mit.edu>",
+  "author": "Jasmin Rubinovitz <jasrub@media.mit.edu>",
   "repository": {
     "type": "git",
     "url": "https://github.com/pubpub/experiments-site.git"
@@ -16,7 +16,7 @@
     "start": "NODE_PATH=./app node server",
     "start-prod": "NODE_PATH=./app NODE_ENV=production node server",
     "start-prod-local": "npm run build && NODE_PATH=./app NODE_ENV=production PORT=3000 node server",
-    "test": "NODE_PATH=./app TESTING=true mocha $(find app -name '*.test.js') --compilers js:babel-register --require ./app/tests/mochaEnvInit.js --watch --watch-extensions js --reporter list"
+    "test": "NODE_PATH=./app TESTING=true mocha $(find app -name '*.test.js') --compilers js:babel-register --require ./app/tests/mochaEnvInit.js --watch --watch-extensions js --reporter list",
     "postinstall": "npm run build"
   },
   "dependencies": {
