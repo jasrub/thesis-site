@@ -13,6 +13,9 @@ export const GET_RELATED_FAIL = 'main/GET_RELATED_FAIL';
 export const GET_STORIES_LOAD = 'main/GET_STORIES_LOAD';
 export const GET_STORIES_SUCCESS = 'main/GET_STORIES_SUCCESS';
 export const GET_STORIES_FAIL = 'main/GET_STORIES_FAIL';
+export const GET_IMAGE_LOAD = 'story/GET_IMAGE_LOAD';
+export const GET_IMAGE_SUCCESS = 'story/GET_IMAGE_SUCCESS';
+export const GET_IMAGE_FAIL = 'story/GET_IMAGE_FAIL';
 
 
 /*--------*/
@@ -63,4 +66,19 @@ export function getRelated(descriptorId) {
             });
     };
 }
+
+export function getStoryImage(storyId) {
+    return (dispatch) => {
+        dispatch({ type: GET_IMAGE_LOAD });
+        return clientFetch(`/api/stories/image?story=${storyId}`)
+            .then((result) => {
+                dispatch({ type: GET_IMAGE_SUCCESS, storyId:storyId, result:result });
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({ type: GET_IMAGE_FAIL, error });
+            });
+    };
+}
+
 

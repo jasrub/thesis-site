@@ -14,6 +14,7 @@ export const Descriptor = React.createClass ({
         selected: PropTypes.boolean,
         clicked: PropTypes.func,
         stories: PropTypes.object,
+        glow: PropTypes.boolean,
     },
 
     setInitialState() {
@@ -27,30 +28,13 @@ export const Descriptor = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        // const tooltipContent = (
-        //     <div>
-        //         <div>{desc.numStories}%</div>
-        //         <ul>
-        //             {desc.DescriptorsResults.slice(0,5).map((result, idx)=>{
-        //                 const story = this.props.stories[result.storyId];
-        //                 return (
-        //                     <li key={idx}> <a href={story.url} target="_blank">
-        //                         <span dangerouslySetInnerHTML={{__html: story.title}} /></a>
-        //                     </li>
-        //
-        //                 )})}
-        //         </ul>
-        //     </div>
-        // );
-        const size = mapNum(desc.numStories, 0, 100, 6, 30)
+        const size = mapNum(desc.numStories, 0, 100, 6, 20)
         return (
             <div style={{display: 'inline-block'}}>
-                <div style={styles.circle(size)}
+                <div style={styles.circle(size, this.props.selected, this.props.glow)} className="circle"
                       onClick={this.handleClick}>
                     <span style={styles.title}>
-                        <Hover onHover={<div> {desc.numStories}% </div>}>
-                             <div> {desc.id} </div>
-                        </Hover>
+                             <div> {toTitleCase(desc.id)} </div>
                     </span>
                 </div>
             </div>
@@ -79,11 +63,12 @@ styles = {
         transition: '.3s',
 
     },
-    circle: (size) => {
-        const boxShadow = '0 0 8px rgba(50, 50, 50, 0.8)';
-        const colorA = '#a6a6a6';
-        const colorB = '#454545';
-        const background = ' radial-gradient(ellipse at center, '+colorA+' 0%,'+colorB+' 100%)';
+    circle: (size, selected, glow) => {
+        const shadowColor = selected? 'rgba(255, 136, 92, 0.5)' : 'rgba(250, 250, 250, 0.2)';
+        const shadowSize = selected? '80px ': '100px ';
+        const boxShadow = glow || selected? '0 0 '+shadowSize+ shadowColor: 'none';
+        const background = selected? '#FF885C': 'rgba(220, 220, 220, 0.27)';//' radial-gradient(ellipse at center, '+colorA+' 0%,'+colorB+' 100%)';
+        const transition = 'all 0.7s ease-out';
         return {
         borderRadius: '50%',
         width: size + 'em',
@@ -99,11 +84,11 @@ styles = {
         margin: '0.5em',
         display: 'flex',
         alignItems: 'center',
-        WebkitTransition: 'all 0.7s ease-out',
-        MozTransition: 'all 0.7s ease-out',
-        MsTransition: 'all 0.7s ease-out',
-        OTransition: 'all 0.7s ease-out',
-        transition: 'all 0.7s ease-out',
+        // WebkitTransition: 'all 0.7s ease-out',
+        // MozTransition: 'all 0.7s ease-out',
+        // MsTransition: 'all 0.7s ease-out',
+        // OTransition: 'all 0.7s ease-out',
+        // transition: 'all 1s',
 
             cursor: 'pointer',
 
@@ -112,17 +97,23 @@ styles = {
 
     title: {
         textAlign: 'center',
-        fontSize: '1em',
-        color: '#000',
+        fontSize: '1.2em',
+        color: '#FFF',
         margin: '0 auto',
+        opacity: '0.7',
         //margin: '6em',
-        //padding: '6em',
+        padding: '1em',
 
     },
 };
 
 function mapNum(num, in_min, in_max, out_min, out_max) {
     return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 export default Radium(Descriptor);

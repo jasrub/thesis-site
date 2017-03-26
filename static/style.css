@@ -1,8 +1,15 @@
+html {
+
+}
+
 body {
-	margin: 2em;
-	background-color: #303452;
+    padding: 2em;
+	background: linear-gradient(-15deg, #171435, #1A3746 );
+    background-repeat: no-repeat;
+    background-size: cover;
   color: #F1F1F9;
   font-family: 'Dosis', sans-serif;
+  font-weight: lighter;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -11,6 +18,8 @@ body {
   -ms-transition: width .3s;
   -o-transition: width .3s;
   transition: width .3s;
+    min-height:100vh;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,50 +27,78 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
-.pt-slider-handle, .pt-slider-handle-active, .pt-slider-handle:hover, .pt-slider-handle-active:hover {
-  background: none;
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-.hover {
-  position: relative;
-
-  &:hover &__no-hover {
-           opacity: 0;
-         }
-
-  &:hover &__hover {
-           opacity: 1;
-         }
-
-  &__hover {
-   position: absolute;
-   top: 0;
-   opacity: 0;
-  }
-
-  &__no-hover {
-    opacity: 1;
-  }
-}
-
-.circle {
+.pt-slider-handle {
   border-radius: 50%;
-  width: 10em;
-  height: 10em;
-  /* width and height can be anything, as long as they're equal */
-  background:#fff;
-  display: inline-block;
-  margin: 0.5em;
+}
+.pt-slider-handle, .pt-slider-handle-active,  .pt-slider-handle:hover, .pt-slider-handle-active:hover {
+  background: #ff9e58;
+}
+.pt-slider-handle.pt-active {
+  background: #ff9e58;
+}
+.pt-slider-track {
+  background: rgba(255, 158, 88, 0.4);
+}
 
+/*.pt-control.pt-switch .pt-control-indicator {*/
+  /*border: none;*/
+  /*border-radius: 28px;*/
+  /*box-shadow: none;*/
+  /*background: rgba(167, 182, 194, 0.5);*/
+  /*width: 28px;*/
+  /*height: 16px;*/
+  /*transition: background 100ms cubic-bezier(0.4, 1, 0.75, 0.9); }*/
+/*.pt-control.pt-switch .pt-control-indicator::before {*/
+  /*display: block;*/
+  /*top: 2px;*/
+  /*left: 2px;*/
+  /*border-radius: 16px;*/
+  /*box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2);*/
+  /*background: #ffffff;*/
+  /*background-clip: padding-box;*/
+  /*width: 12px;*/
+  /*height: 12px;*/
+  /*content: "";*/
+  /*transition: left 100ms cubic-bezier(0.4, 1, 0.75, 0.9); }*/
+.pt-control.pt-switch input:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator {
+  background-color: #ff9e58; }
+.pt-control.pt-switch input:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator::before {
+  left: 14px;
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }
+.pt-control.pt-switch:hover .pt-control-indicator {
+  background-color: rgba(115, 134, 148, 0.5); }
+.pt-control.pt-switch:hover input:checked ~ .pt-control-indicator, .pt-control.pt-switch:hover .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch:hover input:indeterminate ~ .pt-control-indicator {
+  background-color: #e48655; }
+.pt-control.pt-switch input:not(:disabled):active ~ .pt-control-indicator {
+  box-shadow: none;
+  background-color: rgba(92, 112, 128, 0.5); }
+.pt-control.pt-switch input:not(:disabled):active:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:not(:disabled):active:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:not(:disabled):active:indeterminate ~ .pt-control-indicator {
+  background-color: #d47d4f; }
+.pt-control.pt-switch input:not(:disabled):active:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:not(:disabled):active:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:not(:disabled):active:indeterminate ~ .pt-control-indicator::before {
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }
+.pt-control.pt-switch input:disabled ~ .pt-control-indicator {
+  background-color: rgba(206, 217, 224, 0.5); }
+.pt-control.pt-switch input:disabled ~ .pt-control-indicator::before {
+  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0.8); }
+.pt-control.pt-switch input:disabled:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:disabled:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:disabled:indeterminate ~ .pt-control-indicator {
+  background-color: rgba(212, 125, 79, 0.5); }
 
-  /*background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);*/
-  /*background-image: -webkit-radial-gradient(45px 45px, circle cover, yellow, orange);*/
-  /*background-image: radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);*/
+.grid:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
-  /*animation-name: spin;*/
-  /*animation-duration: 3s; !* 3 seconds *!*/
-  /*animation-iteration-count: infinite;*/
-  /*animation-timing-function: linear;*/
+.circle:hover {
+    background: rgba(156, 15, 62, 0.42) !important;
+
 }
 
 @keyframes spin {
@@ -70,44 +107,47 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .outer-square {
+  display: inline-block;
   position: relative;
-  width: 25%;
-  padding-bottom : 25%; /* = width for a 1:1 aspect ratio */
-  margin:0.1em;
+  width: 23%;
+  padding-bottom : 23%; /* = width for a 1:1 aspect ratio */
+  margin:0.2em 0.4em;
   text-align: center;
-  display: inline-flex;
 }
 
 .square {
   position:absolute;
   width: 100%;
   height: 100%;
-  background-color:#1E1E1E;
+  background-color: rgb(37, 38, 49);
 
-  -webkit-transition: width .8s, height .8s;
-  -moz-transition: width .8s, height .8s;
-  -ms-transition: width .8s, height .8s;
-  -o-transition: width .8s, height .8s;
-  transition: width .8s, height .8s, margin .8s;
+  -webkit-transition: width .5s, height .5s, margin .5s;
+  -moz-transition: width .5s, height .5s, margin .5s;
+  -ms-transition: width .5s, height .5s, margin .5s;
+  -o-transition: width .5s, height .5s, margin .5s;
+  transition: width .5s, height .5s, margin .5s;
 
   margin: 0;
+  text-align: center;
 }
 
 .square:hover {
-  width: 106%;
-  padding-bottom : 106%;
-  margin: -3%;
-  z-index:100;
+  width: 110%;
+  padding-bottom : 110%;
+  margin: -5%;
   cursor: pointer;
   cursor: hand;
+  box-shadow: 3px 15px 20px  4px rgba(20, 20, 20, 0.6);
 }
 
 .content {
   position:absolute;
-  height:98%; /* = 100% - 2*5% padding */
-  width:98%; /* = 100% - 2*5% padding */
-  padding: 1%;
-  margin: 0 auto
+  height:90%; /* = 100% - 2*5% padding */
+  width:90%; /* = 100% - 2*5% padding */
+  padding: 5%;
+  margin: 0 auto;
+  top: 5%;
+  left: 5%;
 
 }
 .table{
@@ -127,4 +167,37 @@ h1, h2, h3, h4, h5, h6 {
   max-width:100%;
   margin: 0 auto;
   text-align:center;
+}
+
+.iframe-enter {
+  max-height:0;
+  opacity: 0.01;
+}
+
+.iframe-enter.iframe-enter-active {
+  max-height: 60vh;
+  opacity: 1;
+  transition: max-height 700ms, opacity 300ms, ease-in;
+}
+
+.iframe-leave {
+  max-height: 60vh;
+  opacity: 1;
+}
+
+.iframe-leave.iframe-leave-active {
+  max-height:0;
+  opacity: 0.01;
+  transition: max-height 500ms, opacity 300ms, ease-in;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5); /*can be anything, of course*/
+  z-index: 2000;
+}
+
+.overlay:hover{
+  z-index: 100;
 }

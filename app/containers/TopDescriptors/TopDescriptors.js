@@ -7,6 +7,7 @@ import Descriptor from 'components/Descriptor/Descriptor';
 import Search from 'components/Search/Search';
 import chroma from 'chroma-js';
 
+let styles;
 export const TopDescriptors = React.createClass({
 
     PropTypes: {
@@ -14,27 +15,33 @@ export const TopDescriptors = React.createClass({
         list: PropTypes.object,
         loading: PropTypes.boolean,
         stories: PropTypes.object,
+        selected: PropTypes.string,
+        isSelected: PropTypes.boolean,
+        relatedTopics: PropTypes.array,
     },
 
 
     render(){
         const descriptors = this.props.descriptors;
-        const list = this.props.list;
-        const top20 = list.slice(0,10);
+        const list = this.props.isSelected? this.props.relatedTopics : this.props.list;
+        const top = list.slice(0,8);
 
         return(
 
         <div>
-            <h1>Today's Hot Topics</h1>
+            <div style={styles.circles}>
+                {top.map((desc)=>{
+                    const shouldGlow = Math.random();
+                    const glow = shouldGlow<0.3? true : false;
 
-            <div>
-                {top20.map((desc)=>{
                     return (
                         <Descriptor
                             key={desc}
                             descriptor={descriptors[desc]}
                             clicked={this.props.clicked}
                             stories = {this.props.stories}
+                            selected = {this.props.selected===desc}
+                            glow={glow}
                         />);
                 })}
 
@@ -42,7 +49,7 @@ export const TopDescriptors = React.createClass({
 
             <Search descriptorsList={this.props.list}
                     descriptors={this.props.descriptors}
-                    notInclude={top20}
+                    notInclude={top}
                     clicked={this.props.clicked}
                     stories={this.props.stories}
             />
@@ -53,7 +60,11 @@ export const TopDescriptors = React.createClass({
 
 });
 
-
+styles = {
+    circles:{
+        paddingBottom: '3em',
+    }
+};
 
 export default Radium(TopDescriptors);
 

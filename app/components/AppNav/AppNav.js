@@ -23,12 +23,13 @@ export const AppNav = React.createClass({
 						<div>
 							<div style={styles.appTitle}>News Explorer</div>
 						</div>
-						
-						
+
 						<div style={styles.linkWrapper}>
 							<span style={styles.link} onClick={this.props.onHomeClick}> Hot Topics </span>
 
 							<span style={styles.link}>Sources Compare</span>
+
+								{/*<span style={styles.link}>About</span>*/}
 						</div>
 					</div>
 					
@@ -48,21 +49,22 @@ styles = {
 		width: '100%',
 		maxWidth: '100vw',
 		overflow: 'hidden',
+		//background: 'rgba(250, 250, 250 ,0.1)'
 	},
 	navContent: {
 		padding: '1em',
 		maxWidth: '1024px',
-		margin: '0 auto',
 	},
     linkWrapper: {
         display: 'table',
         width: '100%',
+		//textAlign: 'center'
     },
     link: {
             display: 'table-cell',
             textDecoration: 'none',
-            //textAlign: 'center',
-            width: '25%',
+            textAlign: 'center',
+            width: '50%',
             padding: '1em 0em',
             color: '#fff',
 			cursor: 'pointer',

@@ -18,7 +18,7 @@ export const Controls = React.createClass ({
         const filters = this.props.filters;
         return(
         <div style={styles.controls}>
-            <h4> filter by: </h4>
+            <div style={styles.title}> Filter by: </div>
 
             <div>
                 {Object.keys(filters).map((filterName)=>{
@@ -63,7 +63,9 @@ export const SliderRow = React.createClass ({
                     stepSize={STEP}
                     onRelease={this.onChange}
                     value={this.props.value}
-                    renderLabel={false}/>
+                    renderLabel={false}
+                    showTrackFill={false}
+                />
                 <div>
                     <span style={{float:'left'}}>{this.props.leftLabel}</span>
                     <span style={{float:'right'}}>{this.props.rightLabel}</span>
@@ -76,7 +78,12 @@ export const SliderRow = React.createClass ({
 
 styles = {
     controls: {
-        padding: '1em'
+        padding: '0 1em',
+    },
+    title: {
+        fontSize: '1.5em',
+        paddingBottom: '1em',
+        fontWeight: 'semi-bold',
     }
 };
 

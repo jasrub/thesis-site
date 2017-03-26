@@ -14,6 +14,9 @@ import {
     GET_STORIES_LOAD,
     GET_STORIES_SUCCESS,
     GET_STORIES_FAIL,
+    GET_IMAGE_LOAD,
+    GET_IMAGE_SUCCESS,
+    GET_IMAGE_FAIL,
 } from 'containers/Main/actions';
 
 /* ------------------- */
@@ -80,10 +83,10 @@ export default function reducer(state = defaultState, action) {
             });
 
         case GET_RELATED_LOAD:
-            return state.merge({
-                relatedLoading: true,
-                relatedError: undefined,
-            });
+        return state.merge({
+            relatedLoading: true,
+            relatedError: undefined,
+        });
         case GET_RELATED_SUCCESS: {
             console.log(action.descriptorId);
             const newState = state.setIn(['relatedTopics', action.descriptorId], action.result);
@@ -97,6 +100,11 @@ export default function reducer(state = defaultState, action) {
                 relatedLoading: false,
                 relatedError: action.error,
             });
+
+        case GET_IMAGE_SUCCESS: {
+            console.log(action.descriptorId);
+            return state.setIn(['stories', action.storyId, 'image'], action.result);
+        }
 
         default:
             return ensureImmutable(state);

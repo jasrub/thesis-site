@@ -87,7 +87,7 @@ export const Search = React.createClass({
 
 styles = {
     search: {
-        maxWidth: '400px',
+        maxWidth: '90%',
     }
 };
 
