@@ -120,6 +120,35 @@ export const Main = React.createClass ({
         }
     },
 
+    radarData() {
+        const topics = [
+            "politics and government",
+            "finances",
+            "medicine and health",
+            "law and legislation",
+            "athletics and sports",
+            "computers and the internet",
+            "education and schools",
+        ];
+        const sources = this.props.descriptorsData.sources;
+        const result ={};
+        Object.keys(sources).forEach((source)=>{
+            result[source] = {'total':sources[source], data:[]}
+        });
+        topics.forEach((topic)=>{
+            const topicData = this.bySourceData(topic);
+            Object.keys(topicData).forEach((sourceName)=>{
+                if (sourceName in result) {
+                    const obj = {"subject": topic}
+                    obj.count = topicData[sourceName].length;
+                    obj.percent = topicData[sourceName].length / result[sourceName].total * 100;
+                    result[sourceName].data.push(obj)
+                }
+            })
+        });
+        return result;
+    },
+
     render() {
         const allDescriptors = this.props.descriptorsData.descriptors || {};
 
@@ -141,6 +170,8 @@ export const Main = React.createClass ({
             return {'name':source, 'size':storiesBySource[source].length/this.props.descriptorsData.sources[source]}
         });
 
+        const radarData = (selected || loading || descriptorsArray.length<=0)? {} : this.radarData();
+
         return (
 
             <div>
@@ -157,7 +188,7 @@ export const Main = React.createClass ({
                                                 selected={this.state.selectedDescriptorId}
                                                 isSelected = {this.state.selected}
                                 />
-                            {!this.state.selected && <RadarCharts sources={this.props.descriptorsData.sources} bySourceData={this.bySourceData} loading={loading}/>}
+                            {!this.state.selected && !loading && <RadarCharts data={radarData}/>}
                         </div>
                         <div style={styles.stories(this.state.selected)}>
 
