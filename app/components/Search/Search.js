@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import Radium from 'radium';
 import Descriptor from 'components/Descriptor/Descriptor';
+import FlipMove from 'react-flip-move';
 
 let styles;
 
@@ -50,13 +51,15 @@ export const Search = React.createClass({
         });
     },
 
-
     render(){
         const searchResults = this.state.searchDescriptors || [];
 
         const searchResultsRows = searchResults.map((desc) => {
             return (<Descriptor key={desc} descriptor={this.props.descriptors[desc]}
-                                clicked={this.props.clicked}
+                                clicked={()=>{
+                                    this.props.clicked(desc);
+                                    this.handleSearchCancel();
+                                }}
                                 stories={this.props.stories}
                 />
             )
@@ -76,8 +79,9 @@ export const Search = React.createClass({
                                onChange={this.handleSearchChange}/>
                     </div>
                 </label>
-
+                <FlipMove duration={750} easing="ease-out">
                 {searchResultsRows}
+                </FlipMove>
 
             </div>)
     },

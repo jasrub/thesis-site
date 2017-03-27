@@ -90,7 +90,8 @@ styles = {
     },
     grid: {
         margin: '0 auto',
-    }
+    },
+
 };
 
 // {/*<div key={id}>*/}
