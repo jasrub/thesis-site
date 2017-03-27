@@ -33,6 +33,7 @@ const defaultState = Immutable.Map({
     allDescriptors: [],
     descriptors:{},
     stories:{},
+    constStories:{},
     storiesLoading: false,
     storiesError: false,
     storyCount:0,
@@ -51,7 +52,6 @@ export default function reducer(state = defaultState, action) {
             return state.merge({
                 loading: true,
                 error: undefined,
-                descriptors: {},
             });
         case GET_DESCRIPTORS_SUCCESS: {
             return state.merge({
@@ -78,7 +78,8 @@ export default function reducer(state = defaultState, action) {
             return state.merge({
                 storiesLoading: false,
                 error: undefined,
-                stories: action.result
+                stories: action.result,
+                constStories: action.result,
             });
         case GET_STORIES_FAIL:
             return state.merge({

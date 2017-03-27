@@ -28,15 +28,15 @@ export const Descriptor = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        const size = mapNum(desc.numStories, 0, 100, 6, 20)
+        const size = desc? mapNum(desc.numStories, 0, 100, 6, 20): 0;
         return (
             <div style={{display: 'inline-block'}}>
-                <div style={styles.circle(size, this.props.selected, this.props.glow)} className="circle"
+                {desc && <div style={styles.circle(size, this.props.selected, this.props.glow)} className="circle"
                       onClick={this.handleClick}>
                     <span style={styles.title}>
                              <div> {toTitleCase(desc.id)} </div>
                     </span>
-                </div>
+                </div>}
             </div>
         )
 
@@ -45,24 +45,7 @@ export const Descriptor = React.createClass ({
 
 });
 
-const Hover = ({ onHover, children }) => (
-    <div className="hover">
-        <div className="hover__no-hover">{children}</div>
-        <div className="hover__hover">{onHover}</div>
-    </div>
-)
-
 styles = {
-    article: {
-        position: 'absolute',
-        left: '0',
-        WebkitTransition: '.3s',
-        MozTransition: '.3s',
-        MsTransition: '.3s',
-        OTransition: '.3s',
-        transition: '.3s',
-
-    },
     circle: (size, selected, glow) => {
         const shadowColor = selected? 'rgba(255, 136, 92, 0.5)' : 'rgba(250, 250, 250, 0.2)';
         const shadowSize = selected? '80px ': '100px ';
@@ -84,11 +67,11 @@ styles = {
         margin: '0.5em',
         display: 'flex',
         alignItems: 'center',
-        // WebkitTransition: 'all 0.7s ease-out',
-        // MozTransition: 'all 0.7s ease-out',
-        // MsTransition: 'all 0.7s ease-out',
-        // OTransition: 'all 0.7s ease-out',
-        // transition: 'all 1s',
+        WebkitTransition: transition,
+        MozTransition: transition,
+        MsTransition: transition,
+        OTransition: transition,
+        transition: transition,
 
             cursor: 'pointer',
 

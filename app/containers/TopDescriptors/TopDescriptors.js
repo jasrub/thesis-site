@@ -2,10 +2,11 @@
  * Created by jasrub on 3/17/17.
  */
 import React, { PropTypes } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Radium from 'radium';
 import Descriptor from 'components/Descriptor/Descriptor';
 import Search from 'components/Search/Search';
-import chroma from 'chroma-js';
+import FlipMove from 'react-flip-move';
 
 let styles;
 export const TopDescriptors = React.createClass({
@@ -18,6 +19,7 @@ export const TopDescriptors = React.createClass({
         selected: PropTypes.string,
         isSelected: PropTypes.boolean,
         relatedTopics: PropTypes.array,
+        onClick: PropTypes.func
     },
 
 
@@ -25,35 +27,34 @@ export const TopDescriptors = React.createClass({
         const descriptors = this.props.descriptors;
         const list = this.props.isSelected? this.props.relatedTopics : this.props.list;
         const top = list.slice(0,8);
+        const items = top.map((desc)=>{
+            const shouldGlow = Math.random();
+            const glow = shouldGlow<0.3? true : false;
+
+            return (
+                <Descriptor
+                    key={desc}
+                    descriptor={descriptors[desc]}
+                    clicked={this.props.onClick}
+                    stories = {this.props.stories}
+                    selected = {this.props.selected===desc}
+                    glow={glow}
+                />);
+        });
 
         return(
 
         <div>
-            <div style={styles.circles}>
-                {top.map((desc)=>{
-                    const shouldGlow = Math.random();
-                    const glow = shouldGlow<0.3? true : false;
-
-                    return (
-                        <Descriptor
-                            key={desc}
-                            descriptor={descriptors[desc]}
-                            clicked={this.props.clicked}
-                            stories = {this.props.stories}
-                            selected = {this.props.selected===desc}
-                            glow={glow}
-                        />);
-                })}
-
-            </div>
-
-            <Search descriptorsList={this.props.list}
-                    descriptors={this.props.descriptors}
-                    notInclude={top}
-                    clicked={this.props.clicked}
-                    stories={this.props.stories}
-            />
-
+                <FlipMove duration={750} easing="ease-out">
+                    {items}
+                    <div style={styles.searchBar} key="searchBar"><Search descriptorsList={this.props.list}
+                            descriptors={this.props.descriptors}
+                            notInclude={top}
+                            clicked={this.props.onClick}
+                            stories={this.props.stories}
+                    />
+                    </div>
+                </FlipMove>
         </div>)
     },
 
@@ -61,8 +62,8 @@ export const TopDescriptors = React.createClass({
 });
 
 styles = {
-    circles:{
-        paddingBottom: '3em',
+    searchBar:{
+        paddingTop: '3em',
     }
 };
 

@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import FlipMove from 'react-flip-move';
 
 let styles;
 export const Stories = React.createClass({
@@ -17,13 +19,14 @@ export const Stories = React.createClass({
             <div>
 
                 <div>
-                    {this.props.storiesIds.map((result)=>{
-                        const id = result.storyId;
-                        const story = this.props.stories[id];
-                        return(
-                            <Story key={id} story={story} onClick={this.props.onClick} getImage={this.props.getImage}/>)
-                    })}
-
+                    <FlipMove duration={750} easing="ease-out">
+                        {this.props.storiesIds.map((result)=>{
+                            const id = result.storyId;
+                            const story = this.props.stories[id];
+                            return(
+                                <Story key={id} story={story} onClick={this.props.onClick} getImage={this.props.getImage}/>)
+                        })}
+                    </FlipMove>
                 </div>
 
             </div>)
@@ -61,7 +64,7 @@ export const Story = React.createClass({
                 <div className="outer-square">
 
                 <div className="square" style={styles.square(image_url)} onClick={this.onClick}>
-                    <div className="overlay">
+                    <div className={showImage? "overlay": ""}>
                         <div className="content">
                             <div className="table">
                                 <div className="table-cell">

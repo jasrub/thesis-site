@@ -76,6 +76,7 @@ export const Iframe = React.createClass({
         onClose: PropTypes.func,
         id: PropTypes.string,
     },
+
     render() {
         return(
 
@@ -83,7 +84,8 @@ export const Iframe = React.createClass({
             <div style={styles.iframeBox}>
                 <button style={styles.closeButton} onClick={this.props.onClose} type="button" className="pt-button pt-minimal pt-icon-cross"/>
                 <a href={this.props.url} target="_blank">Click here to open the story in a new tab</a>
-                <iframe width="100%" height="95%" src={this.props.url} frameBorder="0" allowTransparency="true" style={{background: '#FFFFFF'}}/>
+                <iframe width="100%" height="95%" src={this.props.url}
+                        frameBorder="0" allowTransparency="true" style={{background: '#FFFFFF'}} onLoad={()=>{}}/>
             </div>
             </div>
         )

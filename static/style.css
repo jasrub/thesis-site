@@ -13,11 +13,6 @@ body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-transition: width .3s;
-  -moz-transition: width .3s;
-  -ms-transition: width .3s;
-  -o-transition: width .3s;
-  transition: width .3s;
     min-height:100vh;
 
 }
@@ -129,6 +124,9 @@ h1, h2, h3, h4, h5, h6 {
 
   margin: 0;
   text-align: center;
+  font-family: 'Oranienbaum', serif;
+  font-size:1.5em;
+  font-weight:lighter;
 }
 
 .square:hover {
@@ -192,6 +190,24 @@ h1, h2, h3, h4, h5, h6 {
   transition: max-height 500ms, opacity 300ms, ease-in;
 }
 
+.opac-enter {
+  opacity: 0.01;
+}
+
+.opac-enter.opac-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.opac-leave {
+  opacity: 1;
+}
+
+.opac-leave.opac-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
 .overlay {
   height: 100%;
   width: 100%;
@@ -201,4 +217,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .overlay:hover{
   z-index: 100;
+}
+.recharts-polar-angle-axis-ticks{
+  opacity:0;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  -ms-transition: opacity .5s;
+  -o-transition: opacity .5s;
+  transition: opacity .5s;
+
+}
+
+.recharts-wrapper:hover .recharts-polar-angle-axis-ticks{
+  opacity:1;
+  z-index:200;
 }

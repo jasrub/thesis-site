@@ -29,7 +29,9 @@ export const Main = React.createClass ({
     getInitialState() {
         return {
             selected: false,
-            selectedDescriptor: null,
+            selectedDescriptorId: null,
+            selectedStory: false,
+            selectedStoryId: null,
             filters: {
                 leftRight: {
                     on: false,
@@ -64,18 +66,22 @@ export const Main = React.createClass ({
     },
 
     handleFilterChange(filter, isToggle, value) {
-        const newFilters = this.state.filters;
-        if (isToggle) {
-            newFilters[filter].on = !newFilters[filter].on;
+        const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
+        this.props.descriptorsData.sourcesLoading );
+        if (!loading) {
+            const newFilters = this.state.filters;
+            if (isToggle) {
+                newFilters[filter].on = !newFilters[filter].on;
+            }
+            else {
+                newFilters[filter].val = value;
+            }
+            this.setState({
+                filters: newFilters
+            });
+            this.props.dispatch(getDescriptors(this.state.filters));
+            this.props.dispatch(getSources(this.state.filters));
         }
-        else {
-            newFilters[filter].val = value;
-        }
-        this.setState({
-            filters:newFilters
-        });
-        this.props.dispatch(getDescriptors(this.state.filters));
-        this.props.dispatch(getSources(this.state.filters));
     },
 
     descriptorClicked(descriptor) {
@@ -84,14 +90,14 @@ export const Main = React.createClass ({
         }
         this.setState({
             selected:true,
-            selectedDescriptor:descriptor,
+            selectedDescriptorId:descriptor,
         });
     },
 
     resetSelection() {
         this.setState({
             selected:false,
-            selectedDescriptor:null,
+            selectedDescriptorId:null,
         });
     },
 
@@ -100,8 +106,10 @@ export const Main = React.createClass ({
     },
 
     bySourceData(descriptorId) {
-        const stories = this.props.descriptorsData.stories;
-        if (!this.props.descriptorsData.loading) {
+        const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
+        this.props.descriptorsData.sourcesLoading );
+        if (!loading) {
+            const stories = this.props.descriptorsData.constStories;
             return this.props.descriptorsData.descriptors[descriptorId].DescriptorsResults.reduce(function (rv, x) {
                 (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
                 return rv;
@@ -120,61 +128,61 @@ export const Main = React.createClass ({
             return (allDescriptors[b].numStories-allDescriptors[a].numStories ||
             allDescriptors[b].score-allDescriptors[a].score)});
 
-        const related = this.props.descriptorsData.relatedTopics[this.state.selectedDescriptor] || [];
-        const relatedTopics = related.map((desc)=>desc.dest);
-        relatedTopics.unshift(this.state.selectedDescriptor);
+        const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading || this.props.descriptorsData.sourcesLoading );
 
-        const selected = this.state.selected? allDescriptors[this.state.selectedDescriptor]: null;
-        const storiesBySource = this.state.selected? this.bySourceData(this.state.selectedDescriptor) : [];
+        const related = this.props.descriptorsData.relatedTopics[this.state.selectedDescriptorId] || [];
+        const relatedTopics = related.map((desc)=>desc.dest);
+        relatedTopics.unshift(this.state.selectedDescriptorId);
+
+        const selected = this.state.selected? allDescriptors[this.state.selectedDescriptorId]: null;
+
+        const storiesBySource = this.state.selected? this.bySourceData(this.state.selectedDescriptorId, loading) : [];
         const bySourceData = Object.keys(storiesBySource).map((source)=>{
             return {'name':source, 'size':storiesBySource[source].length/this.props.descriptorsData.sources[source]}
         });
 
-        const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
-            descriptorsArray.length===0 || this.props.descriptorsData.sources=={} );
         return (
 
             <div>
                 <AppNav onHomeClick={this.resetSelection}/>
-        <div className="grid">
-            <div style={styles.topics(this.state.selected)}>
-                {!this.state.selected && <h3>Today's Hot Topics:</h3> }
-                    <TopDescriptors descriptors={allDescriptors}
-                                    list = {descriptorsArray}
-                                    relatedTopics = {relatedTopics}
-                                    stories = {this.props.descriptorsData.stories}
-                                    loading={this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading}
-                                    clicked={this.descriptorClicked}
-                                    selected={this.state.selectedDescriptor}
-                                    isSelected = {this.state.selected}
-                    />
-                {!this.state.selected && !loading && <RadarCharts sources={this.props.descriptorsData.sources} bySourceData={this.bySourceData}/>}
-            </div>
-            <div style={styles.stories(this.state.selected)}>
+                    <div className="grid">
+                        <div style={styles.topics(this.state.selected)}>
+                            {!this.state.selected && <h3>Today's Hot Topics:</h3> }
+                                <TopDescriptors descriptors={allDescriptors}
+                                                list = {descriptorsArray}
+                                                relatedTopics = {relatedTopics}
+                                                stories = {this.props.descriptorsData.constStories}
+                                                loading={loading}
+                                                onClick={this.descriptorClicked}
+                                                selected={this.state.selectedDescriptorId}
+                                                isSelected = {this.state.selected}
+                                />
+                            {!this.state.selected && <RadarCharts sources={this.props.descriptorsData.sources} bySourceData={this.bySourceData} loading={loading}/>}
+                        </div>
+                        <div style={styles.stories(this.state.selected)}>
 
-                    {this.state.selected && <Topic descriptor={selected}
-                                                   stories = {this.props.descriptorsData.stories}
-                                                   show={this.state.selected}
-                                                   allDescriptors={allDescriptors}
-                                                   descriptorClicked = {this.descriptorClicked}
-                                                   getImage = {this.getStoryImage}
-                    />
-                    }
-            </div>
-            <div style={styles.sideBar}>
-                <div>
-                    <Controls filters={this.state.filters} onFilterChange={this.handleFilterChange}/>
-                    {this.props.descriptorsData.loading &&
-                    <div>
-                        <Spinner />
+                                {this.state.selected && <Topic descriptor={selected}
+                                                               stories = {this.props.descriptorsData.stories}
+                                                               show={this.state.selected}
+                                                               allDescriptors={allDescriptors}
+                                                               descriptorClicked = {this.descriptorClicked}
+                                                               getImage = {this.getStoryImage}
+                                />
+                                }
+                        </div>
+                        <div style={styles.sideBar}>
+                            <div>
+                                <Controls filters={this.state.filters} onFilterChange={this.handleFilterChange}/>
+                                {loading &&
+                                <div>
+                                    <Spinner />
+                                </div>
+                                }
+                                {this.state.selected && !loading &&
+                                    <BySourceChart bySourceData={bySourceData}/>}
+                            </div>
+                        </div>
                     </div>
-                    }
-                    {this.state.selected && !this.props.descriptorsData.loading &&
-                    !this.props.descriptorsData.sourcesLoading &&
-                        <BySourceChart bySourceData={bySourceData}/>}
-                </div>
-            </div>
-        </div>
             </div>
         );
     }
@@ -203,17 +211,18 @@ styles = {
         return {
             float:'left',
             width: selected? '22.5%': '77.5%',
-            transition: 'all 1s',
             paddingTop:'3em',
+            transition:'all 1s',
         }
     },
     stories: (selected)=>{
         return {
             float:'left',
             width: selected? '55%': '0%',
-            transition: 'all 1s',
+            opacity: selected? '1' : '0',
             paddingTop:'3em',
             textAlign:'center',
+            transition:'all 1s',
         }
     }
 
