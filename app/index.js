@@ -11,8 +11,6 @@ import fetch from 'isomorphic-fetch';
 
 const store = configureStore();
 if (window.location.hostname !== 'localhost') {
-	ga.initialize('UA-61723493-5');
-	Raven.config('https://1e5e82de82aa437fba0ed4e65248d592@sentry.io/142480').install();
 }
 
 require('es6-promise').polyfill();

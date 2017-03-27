@@ -17,12 +17,12 @@ export const App = React.createClass({
 		const FocusStyleManager = require('@blueprintjs/core').FocusStyleManager;
 		FocusStyleManager.onlyShowFocusOnTabs();
 
-		const workerId = this.props.location.query.workerId;
-		const assignmentId = this.props.location.query.assignmentId;
-		const hitId = this.props.location.query.hitId;
-		if (workerId || assignmentId || hitId) {
-			Raven.setUserContext({ username: workerId, workerId: workerId, assignmentId: assignmentId, hitId: hitId });
-		}
+		// const workerId = this.props.location.query.workerId;
+		// const assignmentId = this.props.location.query.assignmentId;
+		// const hitId = this.props.location.query.hitId;
+		// if (workerId || assignmentId || hitId) {
+		// 	Raven.setUserContext({ username: workerId, workerId: workerId, assignmentId: assignmentId, hitId: hitId });
+		// }
 	},
 
 	render() {
