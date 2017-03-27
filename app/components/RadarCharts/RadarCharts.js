@@ -22,10 +22,10 @@ export const RadarCharts = React.createClass({
                     <div key={source} style={styles.radar}>
                         <div style={styles.sourceName}>{source}</div>
                         <ResponsiveContainer width="100%" aspect={1} className="radarChart">
-                         <RadarChart data={data[source].data}>
+                         <RadarChart data={data[source].data} outerRadius="50%" cy="40%">
                             <Radar name={source} dataKey="percent" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
                              <PolarGrid gridType="polygon" />
-                             <PolarAngleAxis dataKey="subject" axisLineType="circle" tick={{fill:'white', className:'tick'}}/>
+                             <PolarAngleAxis width={300} dataKey="subject" axisLineType="circle" tick={{style:styles.tickStyle, ScaleToFit:true, width:'200%', }}/>
                          </RadarChart>
                         </ResponsiveContainer>
                     </div>
@@ -42,17 +42,24 @@ export default Radium(RadarCharts);
 styles = {
     radar: {
         color: '#fff',
-        width: '25%',
-        //padding: '2em',
+        width: '16%',
         textAlign: 'center',
         display: 'inline-block',
     },
     chartsContainer: {
-        textAlign: 'center',
+        textAlign: 'left',
     },
     sourceName: {
         fontWeight: 'bold',
         fontSize: '1.2em',
+    },
+    tickStyle: {
+        fill:'white',
+        fontSize: '0.8em',
+        overflow:'auto',
+
+
+
     }
 
 

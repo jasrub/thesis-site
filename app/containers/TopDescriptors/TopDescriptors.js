@@ -63,7 +63,7 @@ export const TopDescriptors = React.createClass({
 
 styles = {
     searchBar:{
-        paddingTop: '3em',
+        padding: '3em 0',
     }
 };
 
