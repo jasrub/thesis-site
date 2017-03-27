@@ -108,12 +108,13 @@ export const Main = React.createClass ({
     bySourceData(descriptorId) {
         const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
         this.props.descriptorsData.sourcesLoading );
-        if (!loading) {
+        if (!loading && this.props.descriptorsData.descriptors[descriptorId]) {
             const stories = this.props.descriptorsData.constStories;
             return this.props.descriptorsData.descriptors[descriptorId].DescriptorsResults.reduce(function (rv, x) {
                 (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
                 return rv;
             }, {});
+
         }
         else {
             return {}

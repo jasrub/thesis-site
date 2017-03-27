@@ -20,7 +20,7 @@ export const RadarCharts = React.createClass({
                 {Object.keys(data).map((source)=>{
                 return (
                     <div key={source} style={styles.radar}>
-                        <div>{source}</div>
+                        <div style={styles.sourceName}>{source}</div>
                         <ResponsiveContainer width="100%" aspect={1} className="radarChart">
                          <RadarChart data={data[source].data}>
                             <Radar name={source} dataKey="percent" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
@@ -49,6 +49,10 @@ styles = {
     },
     chartsContainer: {
         textAlign: 'center',
+    },
+    sourceName: {
+        fontWeight: 'bold',
+        fontSize: '1.2em',
     }
 
 
