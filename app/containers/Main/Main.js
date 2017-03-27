@@ -1,13 +1,15 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import { getDescriptors, getRelated, getStories, getStoryImage } from './actions';
+import { getDescriptors, getRelated, getStories, getStoryImage, getSources } from './actions';
 import { connect } from 'react-redux';
 import AppNav from 'components/AppNav/AppNav';
+import BySourceChart from 'components/BySourceChart/BySourceChart';
+import RadarCharts from 'components/RadarCharts/RadarCharts';
 import Controls from 'components/Controls/Controls';
 import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
 import Topic from 'containers/Topic/Topic';
 import {Spinner} from '@blueprintjs/core';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+
 
 let styles;
 
@@ -19,8 +21,9 @@ export const Main = React.createClass ({
     },
 
     componentWillMount() {
-        this.props.dispatch(getStories());
         this.props.dispatch(getDescriptors(this.state.filters));
+        this.props.dispatch(getStories());
+        this.props.dispatch(getSources(this.state.filters));
     },
 
     getInitialState() {
@@ -72,6 +75,7 @@ export const Main = React.createClass ({
             filters:newFilters
         });
         this.props.dispatch(getDescriptors(this.state.filters));
+        this.props.dispatch(getSources(this.state.filters));
     },
 
     descriptorClicked(descriptor) {
@@ -97,10 +101,15 @@ export const Main = React.createClass ({
 
     bySourceData(descriptorId) {
         const stories = this.props.descriptorsData.stories;
-        return this.props.descriptorsData.descriptors[descriptorId].DescriptorsResults.reduce(function(rv, x) {
-            (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
-            return rv;
-        }, {});
+        if (!this.props.descriptorsData.loading) {
+            return this.props.descriptorsData.descriptors[descriptorId].DescriptorsResults.reduce(function (rv, x) {
+                (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
+                return rv;
+            }, {});
+        }
+        else {
+            return {}
+        }
     },
 
     render() {
@@ -111,16 +120,18 @@ export const Main = React.createClass ({
             return (allDescriptors[b].numStories-allDescriptors[a].numStories ||
             allDescriptors[b].score-allDescriptors[a].score)});
 
-        const related = this.props.descriptorsData.relatedTopics[this.state.selectedDescriptor] || []
+        const related = this.props.descriptorsData.relatedTopics[this.state.selectedDescriptor] || [];
         const relatedTopics = related.map((desc)=>desc.dest);
         relatedTopics.unshift(this.state.selectedDescriptor);
 
         const selected = this.state.selected? allDescriptors[this.state.selectedDescriptor]: null;
         const storiesBySource = this.state.selected? this.bySourceData(this.state.selectedDescriptor) : [];
         const bySourceData = Object.keys(storiesBySource).map((source)=>{
-            return {'name':source, 'size':storiesBySource[source].length}
+            return {'name':source, 'size':storiesBySource[source].length/this.props.descriptorsData.sources[source]}
         });
 
+        const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
+            descriptorsArray.length===0 || this.props.descriptorsData.sources=={} );
         return (
 
             <div>
@@ -137,7 +148,7 @@ export const Main = React.createClass ({
                                     selected={this.state.selectedDescriptor}
                                     isSelected = {this.state.selected}
                     />
-
+                {!this.state.selected && !loading && <RadarCharts sources={this.props.descriptorsData.sources} bySourceData={this.bySourceData}/>}
             </div>
             <div style={styles.stories(this.state.selected)}>
 
@@ -159,14 +170,8 @@ export const Main = React.createClass ({
                     </div>
                     }
                     {this.state.selected && !this.props.descriptorsData.loading &&
-                    <ResponsiveContainer  width={'100%'} aspect={5.0/3.0}>
-                        <BarChart  data={bySourceData}
-                                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-                            <XAxis dataKey="name"/>
-                            <Bar dataKey="size" fill="rgba(0, 167, 126, 0.6)" />
-                            <Tooltip/>
-                        </BarChart>
-                    </ResponsiveContainer>}
+                    !this.props.descriptorsData.sourcesLoading &&
+                        <BySourceChart bySourceData={bySourceData}/>}
                 </div>
             </div>
         </div>

@@ -20,16 +20,10 @@ export const Topic = React.createClass ({
         return{
             storyClicked: false,
             selectedStoryId: -1,
+            storiesCount:12,
         }
     },
 
-    bySourceData() {
-        const stories = this.props.stories;
-        return this.props.descriptor.DescriptorsResults.reduce(function(rv, x) {
-            (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
-            return rv;
-        }, {});
-    },
 
     handleStoryClicked(storyId) {
         this.setState({
@@ -43,15 +37,14 @@ export const Topic = React.createClass ({
             selectedStoryId: -1
         })
     },
+    moreClicked() {
+        const newStoriesCount = this.state.storiesCount+12;
+        this.setState({storiesCount: newStoriesCount})
+    },
 
     render() {
         const desc = this.props.descriptor;
-        const related = this.props.related || [];
-        const storiesBySource = this.bySourceData() || [];
-        const bySourceData = Object.keys(storiesBySource).map((source)=>{
-            return {'name':source, 'size':storiesBySource[source].length}
-        });
-        const chartWidth = this.props.show? '100%': '1px';
+        const storyList = desc.DescriptorsResults.sort((a, b)=>(b.score-a.score)).slice(0,this.state.storiesCount);
         return(
             <div style={styles.container}>
                 <div style={styles.grid}>
@@ -63,12 +56,13 @@ export const Topic = React.createClass ({
                 <Iframe url={this.props.stories[this.state.selectedStoryId].url} id={this.props.stories[this.state.selectedStoryId].id} onClose={this.handleStoryClosed}/>}
                 </ReactCSSTransitionGroup>
                 <div>
-                    <Stories storiesIds = {desc.DescriptorsResults.slice(0,12)}
+                    <Stories storiesIds = {storyList}
                              stories = {this.props.stories}
                              onClick = {this.handleStoryClicked}
                              getImage = {this.props.getImage}
                     />
                 </div>
+                    <span onClick={this.moreClicked}>Show More Stories</span>
                 </div>
             </div>)
 
@@ -89,7 +83,7 @@ export const Iframe = React.createClass({
             <div style={styles.iframeBox}>
                 <button style={styles.closeButton} onClick={this.props.onClose} type="button" className="pt-button pt-minimal pt-icon-cross"/>
                 <a href={this.props.url} target="_blank">Click here to open the story in a new tab</a>
-                <iframe width="100%" height="95%" src={this.props.url} frameBorder="0" allowtransparency="true" style={{background: '#FFFFFF'}}/>
+                <iframe width="100%" height="95%" src={this.props.url} frameBorder="0" allowTransparency="true" style={{background: '#FFFFFF'}}/>
             </div>
             </div>
         )

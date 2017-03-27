@@ -16,6 +16,9 @@ export const GET_STORIES_FAIL = 'main/GET_STORIES_FAIL';
 export const GET_IMAGE_LOAD = 'story/GET_IMAGE_LOAD';
 export const GET_IMAGE_SUCCESS = 'story/GET_IMAGE_SUCCESS';
 export const GET_IMAGE_FAIL = 'story/GET_IMAGE_FAIL';
+export const GET_SOURCES_LOAD = 'main/GET_SOURCES_LOAD';
+export const GET_SOURCES_SUCCESS = 'main/GET_SOURCES_SUCCESS';
+export const GET_SOURCES_FAIL = 'main/GET_SOURCES_FAIL';
 
 
 /*--------*/
@@ -75,8 +78,22 @@ export function getStoryImage(storyId) {
                 dispatch({ type: GET_IMAGE_SUCCESS, storyId:storyId, result:result });
             })
             .catch((error) => {
-                console.log(error);
+                //console.log(error);
                 dispatch({ type: GET_IMAGE_FAIL, error });
+            });
+    };
+}
+
+export function getSources(filters) {
+    return (dispatch) => {
+        dispatch({ type: GET_SOURCES_LOAD });
+        return clientFetch(`/api//descriptors/source_count?filters=${JSON.stringify(filters)}`)
+            .then((result) => {
+                dispatch({ type: GET_SOURCES_SUCCESS, result });
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({ type: GET_SOURCES_FAIL, error });
             });
     };
 }

@@ -17,6 +17,9 @@ import {
     GET_IMAGE_LOAD,
     GET_IMAGE_SUCCESS,
     GET_IMAGE_FAIL,
+    GET_SOURCES_LOAD,
+    GET_SOURCES_SUCCESS,
+    GET_SOURCES_FAIL,
 } from 'containers/Main/actions';
 
 /* ------------------- */
@@ -34,6 +37,8 @@ const defaultState = Immutable.Map({
     storiesError: false,
     storyCount:0,
     relatedTopics: Immutable.Map({}),
+    sources:{},
+    sourcesLoading:false,
 });
 
 /* ----------------------------------------- */
@@ -46,7 +51,7 @@ export default function reducer(state = defaultState, action) {
             return state.merge({
                 loading: true,
                 error: undefined,
-                //descriptors: {},
+                descriptors: {},
             });
         case GET_DESCRIPTORS_SUCCESS: {
             return state.merge({
@@ -88,7 +93,6 @@ export default function reducer(state = defaultState, action) {
             relatedError: undefined,
         });
         case GET_RELATED_SUCCESS: {
-            console.log(action.descriptorId);
             const newState = state.setIn(['relatedTopics', action.descriptorId], action.result);
             return newState.merge({
                 relatedLoading: false,
@@ -102,8 +106,21 @@ export default function reducer(state = defaultState, action) {
             });
 
         case GET_IMAGE_SUCCESS: {
-            console.log(action.descriptorId);
             return state.setIn(['stories', action.storyId, 'image'], action.result);
+        }
+        case GET_IMAGE_FAIL: {
+            return state;
+        }
+        case GET_SOURCES_LOAD: {
+            return state.merge({
+                sourcesLoading:true,
+            });
+        }
+        case GET_SOURCES_SUCCESS: {
+            return state.merge({
+                sources:action.result,
+                sourcesLoading:false
+            });
         }
 
         default:

@@ -42,21 +42,25 @@ export const Story = React.createClass({
         getImage: PropTypes.func
     },
 
-    onClick() {
-        return this.props.onClick(this.props.story.id)
-    },
     componentWillMount() {
-        if (!this.props.story.image) {
+        if (this.props.story.showImage && !this.props.story.image) {
             this.props.getImage(this.props.story.id);
         }
+
+    },
+
+    onClick() {
+        return this.props.onClick(this.props.story.id)
     },
 
     render() {
         const s = this.props.story;
+        const showImage = s.showImage || s.isSuperglue;
+        const image_url = showImage? s.image: '';
         return(
                 <div className="outer-square">
 
-                <div className="square" style={styles.square(s.image)} onClick={this.onClick}>
+                <div className="square" style={styles.square(image_url)} onClick={this.onClick}>
                     <div className="overlay">
                         <div className="content">
                             <div className="table">

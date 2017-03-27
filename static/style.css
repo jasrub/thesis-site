@@ -138,6 +138,7 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   cursor: hand;
   box-shadow: 3px 15px 20px  4px rgba(20, 20, 20, 0.6);
+  z-index: 100;
 }
 
 .content {
