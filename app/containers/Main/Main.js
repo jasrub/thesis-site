@@ -36,28 +36,28 @@ export const Main = React.createClass ({
                 leftRight: {
                     on: false,
                     val: 2,
-                    label: "Political Stance",
+                    label: "Left / Right",
                     leftLabel: "Left",
                     rightLabel: "Right"
                 },
                 posNeg: {
                     on: false,
                     val: 2,
-                    label: "Emotive Value",
+                    label: "Positive / Negative",
                     leftLabel: "Positive",
                     rightLabel: "Negative"
                 },
                 trend: {
                     on: false,
                     val:2,
-                    label: "Emerging Topics",
+                    label: "Trending / Ongoing",
                     leftLabel: "Trending",
                     rightLabel: "Ongoing"
                 },
                 cont: {
                     on: false,
                     val: 2,
-                    label: "Polarity",
+                    label: "Controversial / Safe",
                     leftLabel: "Controversial",
                     rightLabel: "Safe"
                 },

@@ -29,9 +29,10 @@ export const Descriptor = React.createClass ({
     render() {
         const desc = this.props.descriptor;
         const size = desc? mapNum(desc.numStories, 0, 100, 6, 20): 0;
+        const selected = this.props.selected;
         return (
             <div style={{display: 'inline-block'}}>
-                {desc && <div style={styles.circle(size, this.props.selected, this.props.glow)} className="circle"
+                {desc && <div style={styles.circle(size, selected, this.props.glow)} className={selected? "":"circle"}
                       onClick={this.handleClick}>
                     <span style={styles.title}>
                              <div> {toTitleCase(desc.id)} </div>
@@ -51,7 +52,7 @@ styles = {
         const shadowSize = selected? '80px ': '100px ';
         const boxShadow = glow || selected? '0 0 '+shadowSize+ shadowColor: 'none';
         const background = selected? '#FF885C': 'rgba(220, 220, 220, 0.27)';//' radial-gradient(ellipse at center, '+colorA+' 0%,'+colorB+' 100%)';
-        const transition = 'all 0.7s ease-out';
+        const transition = 'width 0.7s, height 0.7s, background 0.3s,  ease-out';
         return {
         borderRadius: '50%',
         width: size + 'em',

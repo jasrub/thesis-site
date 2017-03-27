@@ -91,10 +91,12 @@ h1, h2, h3, h4, h5, h6 {
   clear: both;
 }
 
+
 .circle:hover {
-    background: rgba(156, 15, 62, 0.42) !important;
+    background: rgba(99, 99, 99, 0.39) !important;
 
 }
+
 
 @keyframes spin {
   from { transform: rotate(0deg); }
