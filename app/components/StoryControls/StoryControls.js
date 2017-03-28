@@ -68,18 +68,18 @@ export const StoryControls = React.createClass({
             <div>
                 <Controls title={"Label As:"} filters={this.state.values} onFilterChange={this.handleValueChange}/>
                 <div style={styles.buttonContainer}>
-                <button style={styles.labelButton} onClick={()=>{}}>Label Now!</button>
+                    <button style={styles.labelButton} onClick={()=>{}}>Label Now!</button>
                 </div>
 
                 <div style={styles.otherTopics}>
                     <div>This story is also related to:</div>
-                {data.map((desc)=>{
-                    const id = desc.descriptorId;
-                    return (
-                        <div style={styles.storyTopic(desc.score)} key={`descriptor-${id}`}
-                             onClick={()=>this.props.descriptorClicked(id)}>{id}</div>)
+                    {data.map((desc)=>{
+                        const id = desc.descriptorId;
+                        return (
+                            <div style={styles.storyTopic(desc.score)} key={`descriptor-${id}`}
+                                 onClick={()=>this.props.descriptorClicked(id)}>{id}</div>)
 
-                })}
+                    })}
                 </div>
 
 
@@ -94,13 +94,13 @@ export default Radium(StoryControls);
 styles = {
     storyTopic:function(width){
         return{
-        background:'rgba(100, 100, 100, 0.5)',
-        borderRadius: '10px',
-        margin:'0.7em 0',
-        padding: '0.5em',
-        cursor: 'pointer',
+            background:'rgba(100, 100, 100, 0.5)',
+            borderRadius: '10px',
+            margin:'0.7em 0',
+            padding: '0.5em',
+            cursor: 'pointer',
             width:width*100+'%',
-    }},
+        }},
     otherTopics:{
         padding:'2em 1em',
     },
