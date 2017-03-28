@@ -14,29 +14,18 @@ export const Topic = React.createClass ({
         allDescriptors: PropTypes.object,
         descriptorClicked: PropTypes.func,
         getImage: PropTypes.func,
+        isStorySelected: PropTypes.boolean,
+        selectedStoryId: PropTypes.string,
+        onStoryClick: PropTypes.func,
+        onStoryClose: PropTypes.func,
     },
 
     getInitialState() {
         return{
-            storyClicked: false,
-            selectedStoryId: -1,
             storiesCount:12,
         }
     },
 
-
-    handleStoryClicked(storyId) {
-        this.setState({
-            storyClicked: true,
-            selectedStoryId: storyId,
-        })
-    },
-    handleStoryClosed () {
-        this.setState({
-            storyClicked: false,
-            selectedStoryId: -1
-        })
-    },
     moreClicked() {
         const newStoriesCount = this.state.storiesCount+12;
         this.setState({storiesCount: newStoriesCount})
@@ -52,13 +41,13 @@ export const Topic = React.createClass ({
                     transitionName="iframe"
                     transitionEnterTimeout={700}
                     transitionLeaveTimeout={500}>
-                {this.state.storyClicked &&
-                <Iframe url={this.props.stories[this.state.selectedStoryId].url} id={this.props.stories[this.state.selectedStoryId].id} onClose={this.handleStoryClosed}/>}
+                {this.props.isStorySelected &&
+                <Iframe url={this.props.stories[this.props.selectedStoryId].url} id={this.props.stories[this.props.selectedStoryId].id} onClose={this.props.onStoryClose}/>}
                 </ReactCSSTransitionGroup>
                 <div>
                     <Stories storiesIds = {storyList}
                              stories = {this.props.stories}
-                             onClick = {this.handleStoryClicked}
+                             onClick = {this.props.onStoryClick}
                              getImage = {this.props.getImage}
                     />
                 </div>

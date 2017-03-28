@@ -4,6 +4,7 @@ import { getDescriptors, getRelated, getStories, getStoryImage, getSources } fro
 import { connect } from 'react-redux';
 import AppNav from 'components/AppNav/AppNav';
 import BySourceChart from 'components/BySourceChart/BySourceChart';
+import StoryControls from 'components/StoryControls/StoryControls';
 import RadarCharts from 'components/RadarCharts/RadarCharts';
 import Controls from 'components/Controls/Controls';
 import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
@@ -34,29 +35,29 @@ export const Main = React.createClass ({
             selectedStoryId: null,
             filters: {
                 leftRight: {
-                    on: false,
-                    val: 2,
+                    min:0,
+                    max: 4,
                     label: "Left / Right",
                     leftLabel: "Left",
                     rightLabel: "Right"
                 },
                 posNeg: {
-                    on: false,
-                    val: 2,
+                    min:0,
+                    max: 4,
                     label: "Positive / Negative",
                     leftLabel: "Positive",
                     rightLabel: "Negative"
                 },
                 trend: {
-                    on: false,
-                    val:2,
+                    min:0,
+                    max: 4,
                     label: "Trending / Ongoing",
                     leftLabel: "Trending",
                     rightLabel: "Ongoing"
                 },
                 cont: {
-                    on: false,
-                    val: 2,
+                    min:0,
+                    max: 4,
                     label: "Controversial / Safe",
                     leftLabel: "Controversial",
                     rightLabel: "Safe"
@@ -65,19 +66,19 @@ export const Main = React.createClass ({
         };
     },
 
-    handleFilterChange(filter, isToggle, value) {
+    handleFilterChange(filter, value) {
+        console.log(filter, value);
         const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
         this.props.descriptorsData.sourcesLoading );
         if (!loading) {
             const newFilters = this.state.filters;
-            if (isToggle) {
-                newFilters[filter].on = !newFilters[filter].on;
-            }
-            else {
-                newFilters[filter].val = value;
-            }
+            newFilters[filter].min = value[0];
+            newFilters[filter].max = value[1];
+
             this.setState({
-                filters: newFilters
+                filters: newFilters,
+                selectedStory: false,
+                selectedStoryId: null,
             });
             this.props.dispatch(getDescriptors(this.state.filters));
             this.props.dispatch(getSources(this.state.filters));
@@ -91,6 +92,22 @@ export const Main = React.createClass ({
         this.setState({
             selected:true,
             selectedDescriptorId:descriptor,
+            selectedStory: false,
+            selectedStoryId: null,
+        });
+    },
+
+    storyClicked(storyId) {
+        this.setState({
+            selectedStory: true,
+            selectedStoryId: storyId,
+        });
+    },
+
+    storyClosed() {
+        this.setState({
+            selectedStory: false,
+            selectedStoryId: null,
         });
     },
 
@@ -98,6 +115,8 @@ export const Main = React.createClass ({
         this.setState({
             selected:false,
             selectedDescriptorId:null,
+            selectedStory: false,
+            selectedStoryId: null,
         });
     },
 
@@ -171,6 +190,8 @@ export const Main = React.createClass ({
             return {'name':source, 'size':storiesBySource[source].length/this.props.descriptorsData.sources[source]}
         });
 
+        const stories = this.props.descriptorsData.stories;
+
         const radarData = (selected || loading || descriptorsArray.length<=0)? {} : this.radarData();
 
         return (
@@ -194,24 +215,32 @@ export const Main = React.createClass ({
                         <div style={styles.stories(this.state.selected)}>
 
                                 {this.state.selected && <Topic descriptor={selected}
-                                                               stories = {this.props.descriptorsData.stories}
+                                                               stories = {stories}
                                                                show={this.state.selected}
                                                                allDescriptors={allDescriptors}
                                                                descriptorClicked = {this.descriptorClicked}
                                                                getImage = {this.getStoryImage}
+                                                               isStorySelected = {this.state.selectedStory}
+                                                               selectedStoryId = {this.state.selectedStoryId}
+                                                               onStoryClick = {this.storyClicked}
+                                                               onStoryClose = {this.storyClosed}
                                 />
                                 }
                         </div>
                         <div style={styles.sideBar}>
                             <div>
-                                <Controls filters={this.state.filters} onFilterChange={this.handleFilterChange}/>
+                                <Controls title={"Filter By"} filters={this.state.filters} onFilterChange={this.handleFilterChange} isRange={true}/>
                                 {loading &&
                                 <div>
                                     <Spinner />
                                 </div>
                                 }
                                 {this.state.selected && !loading &&
-                                    <BySourceChart bySourceData={bySourceData}/>}
+                                    <BySourceChart bySourceData={bySourceData}
+                                                   selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}/>}
+
+                                {this.state.selectedStory && <StoryControls story={stories[this.state.selectedStoryId]}
+                                                                            descriptorClicked={this.descriptorClicked}/>}
                             </div>
                         </div>
                     </div>

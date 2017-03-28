@@ -1,39 +1,32 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+import {BarChart, Bar, XAxis, Cell, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
 let styles;
 
 export const BySourceChart = React.createClass({
     propTypes: {
-        bySourceData:PropTypes.array
+        bySourceData:PropTypes.array,
+        selectedSource: PropTypes.string,
     },
-    // getInitialState() {
-    //     return {
-    //         data:this.props.bySourceData
-    //     }
-    // },
-    // componentWillReceiveProps(nextProps){
-    //     console.log('recieved!')
-    //     console.log(this.props.bySourceData, nextProps.bySourceData)
-    //     if (!objectsAreSame(this.props.bySourceData, nextProps.bySourceData)) {
-    //         console.log('change!')
-    //         const newData = nextProps.bySourceData;
-    //         this.setState({
-    //             data:newData
-    //         })
-    //     }
-    //
-    // },
 
     render() {
         const data = this.props.bySourceData;
+        const selectedSource = this.props.selectedSource;
+        const isAnimationActive = !selectedSource;
         return (
-            <ResponsiveContainer  width={'100%'} aspect={5.0/3.0}>
+            <ResponsiveContainer  width={'100%'} aspect={5.0/1.8}>
                 <BarChart  data={data}
                            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                     <XAxis dataKey="name"/>
-                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.6)" />
+                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.6)" isAnimationActive={isAnimationActive}>
+                        {
+                            data.map((entry, index) => (
+                                <Cell key={`cell-${index}`}
+                                      fill={data[index].name === selectedSource ? 'rgba(255, 125, 58, 0.8)' : 'rgba(0, 167, 126, 0.6)' }/>
+                            ))
+                        }
+                    </Bar>
                     <Tooltip formatter={(val)=>Math.round(val*100)+'%'}
                              labelStyle={{color:'#000', fontWeight:'bold'}}
                              wrapperStyle={{background:'#fff'}}
@@ -51,14 +44,3 @@ styles = {
 
 
 };
-
-function objectsAreSame(x, y) {
-    var objectsAreSame = true;
-    for(var propertyName in x) {
-        if(x[propertyName] !== y[propertyName]) {
-            objectsAreSame = false;
-            break;
-        }
-    }
-    return objectsAreSame;
-}

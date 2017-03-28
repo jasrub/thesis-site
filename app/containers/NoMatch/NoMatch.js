@@ -6,7 +6,7 @@ export const NoMatch = React.createClass({
 	render() {
 		return (
 			<div>
-				<Helmet title="Not Found · News Explore" />
+				<Helmet title="Not Found · Panorama" />
 				Page was not found
 			</div>
 		);

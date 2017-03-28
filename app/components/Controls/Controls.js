@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import { Slider, Switch } from '@blueprintjs/core';
+import { Slider, RangeSlider } from '@blueprintjs/core';
 
 const MIN = 0;
 const MAX = 4;
-const STEP = 0.5;
+const STEP = 0.1;
 
 let styles;
 
@@ -18,21 +18,21 @@ export const Controls = React.createClass ({
         const filters = this.props.filters;
         return(
         <div style={styles.controls}>
-            <div style={styles.title}> Filter by: </div>
+            <div style={styles.title}> {this.props.title} </div>
 
             <div>
                 {Object.keys(filters).map((filterName)=>{
                     const filter = filters[filterName];
                     const onSwitchChange = (value)=>this.props.onFilterChange(filterName, true, value);
                     return(
-                        <div key={filterName} className="pt-form-group">
-                            <Switch checked={filter.on} label={filter.label} onChange={onSwitchChange} />
-                            { filter.on && <SliderRow
+                        <div key={filterName} className="pt-form-group" style={styles.controlLine}>
+                            <SliderRow
                                 name={filterName}
                                 changeFunction={this.props.onFilterChange}
-                                value={filter.val}
+                                value={this.props.isRange? [filter.min, filter.max] :filter.val}
                                 leftLabel={filter.leftLabel}
-                                rightLabel={filter.rightLabel}/>}
+                                rightLabel={filter.rightLabel}
+                                isRange={this.props.isRange}/>
                         </div>
                     )
                 })}
@@ -49,23 +49,38 @@ export const SliderRow = React.createClass ({
         changeFunction:PropTypes.func,
         value:PropTypes.float,
         leftLabel:PropTypes.string,
-        rightLabel:PropTypes.string
+        rightLabel:PropTypes.string,
+        isRange: PropTypes.boolean,
+    },
+    getInitialState() {
+        return {
+            value:this.props.value
+        }
     },
     onChange(value) {
-        this.props.changeFunction(this.props.name, false, value)
+        this.setState( {
+            value:value
+        })
+    },
+    onRelease(value) {
+        this.props.changeFunction(this.props.name, value)
     },
     render() {
+        const props = {
+            min:MIN,
+            max:MAX,
+            stepSize:STEP,
+            onRelease:this.onRelease,
+            onChange: this.onChange,
+            value:this.state.value,
+            renderLabel:false,
+            showTrackFill: this.props.isRange? true: false,
+
+        };
+        const slider = this.props.isRange?(<RangeSlider {...props}/>):(<Slider {...props}/>)
         return(
             <div>
-                <Slider
-                    min={MIN}
-                    max={MAX}
-                    stepSize={STEP}
-                    onRelease={this.onChange}
-                    value={this.props.value}
-                    renderLabel={false}
-                    showTrackFill={false}
-                />
+                {slider}
                 <div>
                     <span style={{float:'left'}}>{this.props.leftLabel}</span>
                     <span style={{float:'right'}}>{this.props.rightLabel}</span>
@@ -84,6 +99,9 @@ styles = {
         fontSize: '1.5em',
         paddingBottom: '1em',
         fontWeight: 'semi-bold',
+    },
+    controlLine:{
+        padding:'0.5em 0',
     }
 };
 

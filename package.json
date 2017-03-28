@@ -1,7 +1,7 @@
 {
-  "name": "news-explore",
+  "name": "Panorama",
   "version": "1.0.0",
-  "description": "News Explorer",
+  "description": "Panorama",
   "main": "exports.js",
   "author": "Jasmin Rubinovitz <jasrub@media.mit.edu>",
   "repository": {

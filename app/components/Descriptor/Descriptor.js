@@ -28,7 +28,7 @@ export const Descriptor = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        const size = desc? mapNum(desc.numStories, 0, 100, 6, 20): 0;
+        const size = desc? mapNum(desc.numStories, 0, 100, 7,23): 0;
         const selected = this.props.selected;
         return (
             <div style={{display: 'inline-block'}}>
@@ -55,8 +55,8 @@ styles = {
         const transition = 'width 0.7s, height 0.7s, background 0.3s,  ease-out';
         return {
         borderRadius: '50%',
-        width: size + 'em',
-        height: size + 'em',
+        width: size + 'vw',
+        height: size + 'vw',
         background: background,
 
 
@@ -81,7 +81,7 @@ styles = {
 
     title: {
         textAlign: 'center',
-        fontSize: '1.2em',
+        fontSize: '1em',
         color: '#FFF',
         margin: '0 auto',
         opacity: '0.7',

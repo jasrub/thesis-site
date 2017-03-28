@@ -32,8 +32,8 @@ export const App = React.createClass({
 					title="News Explorer"
 					meta={[
 						{ name: 'ROBOTS', content: 'NOINDEX, NOFOLLOW' },
-						{ name: 'description', content: 'News Explore' },
-						{ property: 'og:title', content: 'News Explore' },
+						{ name: 'description', content: 'Panorama - see the whole picture' },
+						{ property: 'og:title', content: 'Panorama' },
 					]} 
 				/>
 				{this.props.children}

@@ -21,7 +21,7 @@ export const AppNav = React.createClass({
 				<div style={styles.navContent}>
 					<div style={{ display: 'inline-block' }}>
 						<div>
-							<div style={styles.appTitle} onClick={this.props.onHomeClick}>News Explorer</div>
+							<div style={styles.appTitle} onClick={this.props.onHomeClick}>Panorama</div>
 						</div>
 
 						{/*<div style={styles.linkWrapper}>*/}
@@ -72,6 +72,7 @@ styles = {
 	appTitle: {
 		fontSize:'4em',
         cursor: 'pointer',
+        fontFamily: "'Dosis', sans-serif",
 	}
 	
 };
