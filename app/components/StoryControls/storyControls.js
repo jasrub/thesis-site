@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import Controls from 'components/Controls/Controls';
-import {BarChart, Bar, XAxis, YAxis, Cell, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+
 
 let styles;
 
@@ -13,6 +13,12 @@ export const StoryControls = React.createClass({
 
     getInitialState() {
         return {
+            values:{}}
+
+    },
+
+    componentWillMount() {
+        this.setState({
             values: {
                 leftRight: {
                     val: this.props.story.leftRight,
@@ -40,7 +46,7 @@ export const StoryControls = React.createClass({
                 },
 
             }
-        }
+        })
     },
 
     handleValueChange(filter, isToggle, value) {
@@ -58,13 +64,25 @@ export const StoryControls = React.createClass({
 
     render() {
         const data = this.props.story.DescriptorsResults;
-        console.log(data);
         return (
             <div>
-                <div> Related To</div>
-                {data.map((desc)=>(<div onClick={()=>this.props.descriptorClicked(desc.descriptorId)}>{desc.descriptorId}</div>))}
-
                 <Controls title={"Label As:"} filters={this.state.values} onFilterChange={this.handleValueChange}/>
+                <div style={styles.buttonContainer}>
+                <button style={styles.labelButton} onClick={()=>{}}>Label Now!</button>
+                </div>
+
+                <div style={styles.otherTopics}>
+                    <div>This story is also related to:</div>
+                {data.map((desc)=>{
+                    const id = desc.descriptorId;
+                    return (
+                        <div style={styles.storyTopic(desc.score)} key={`descriptor-${id}`}
+                             onClick={()=>this.props.descriptorClicked(id)}>{id}</div>)
+
+                })}
+                </div>
+
+
             </div>
         );
     }
@@ -74,6 +92,32 @@ export const StoryControls = React.createClass({
 export default Radium(StoryControls);
 
 styles = {
+    storyTopic:function(width){
+        return{
+        background:'rgba(100, 100, 100, 0.5)',
+        borderRadius: '10px',
+        margin:'0.7em 0',
+        padding: '0.5em',
+        cursor: 'pointer',
+            width:width*100+'%',
+    }},
+    otherTopics:{
+        padding:'2em 1em',
+    },
+
+    labelButton:{
+        margin: '0 auto',
+        background: '#ff8833',
+        boxShadow:'none',
+        border: 'none',
+        borderRadius: '10px',
+        padding:'1em',
+        cursor:'pointer',
+
+    },
+    buttonContainer: {
+        textAlign:'center',
+    }
 
 
 };

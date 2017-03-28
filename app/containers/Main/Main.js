@@ -10,6 +10,7 @@ import Controls from 'components/Controls/Controls';
 import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
 import Topic from 'containers/Topic/Topic';
 import {Spinner} from '@blueprintjs/core';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 let styles;
@@ -67,7 +68,6 @@ export const Main = React.createClass ({
     },
 
     handleFilterChange(filter, value) {
-        console.log(filter, value);
         const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
         this.props.descriptorsData.sourcesLoading );
         if (!loading) {
@@ -127,7 +127,7 @@ export const Main = React.createClass ({
     bySourceData(descriptorId) {
         const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
         this.props.descriptorsData.sourcesLoading );
-        if (!loading && this.props.descriptorsData.descriptors[descriptorId]) {
+        if (!loading && this.props.descriptorsData.descriptors && this.props.descriptorsData.descriptors[descriptorId]) {
             const stories = this.props.descriptorsData.constStories;
             return this.props.descriptorsData.descriptors[descriptorId].DescriptorsResults.reduce(function (rv, x) {
                 (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
@@ -194,6 +194,11 @@ export const Main = React.createClass ({
 
         const radarData = (selected || loading || descriptorsArray.length<=0)? {} : this.radarData();
 
+        const storyControls = this.state.selectedStory?
+            <StoryControls key={`story-controls-${this.state.selectedStoryId}`}
+                           story={stories[this.state.selectedStoryId]}
+                           descriptorClicked={this.descriptorClicked}/>: <div/>;
+
         return (
 
             <div>
@@ -239,8 +244,12 @@ export const Main = React.createClass ({
                                     <BySourceChart bySourceData={bySourceData}
                                                    selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}/>}
 
-                                {this.state.selectedStory && <StoryControls story={stories[this.state.selectedStoryId]}
-                                                                            descriptorClicked={this.descriptorClicked}/>}
+                                <ReactCSSTransitionGroup
+                                    transitionName="opac"
+                                    transitionEnterTimeout={500}
+                                    transitionLeave={false}>
+                                {storyControls}
+                                </ReactCSSTransitionGroup>
                             </div>
                         </div>
                     </div>

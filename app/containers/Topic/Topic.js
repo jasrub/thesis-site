@@ -33,7 +33,10 @@ export const Topic = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        const storyList = desc.DescriptorsResults.sort((a, b)=>(b.score-a.score)).slice(0,this.state.storiesCount);
+        const storyList = desc? desc.DescriptorsResults.sort(fieldSorter(['-score', 'storyId'])):[];
+        const moreStories = storyList.length>this.state.storiesCount?
+            <span onClick={this.moreClicked}>Show More Stories</span>:
+            <div><p>No more stories to show.</p><p> Try Playing with the sliders on the right or select another topic</p></div>
         return(
             <div style={styles.container}>
                 <div style={styles.grid}>
@@ -45,13 +48,13 @@ export const Topic = React.createClass ({
                 <Iframe url={this.props.stories[this.props.selectedStoryId].url} id={this.props.stories[this.props.selectedStoryId].id} onClose={this.props.onStoryClose}/>}
                 </ReactCSSTransitionGroup>
                 <div>
-                    <Stories storiesIds = {storyList}
+                    <Stories storiesIds = {storyList.slice(0,this.state.storiesCount)}
                              stories = {this.props.stories}
                              onClick = {this.props.onStoryClick}
                              getImage = {this.props.getImage}
                     />
                 </div>
-                    <span onClick={this.moreClicked}>Show More Stories</span>
+                    {moreStories}
                 </div>
             </div>)
 
@@ -110,9 +113,6 @@ margin: 'auto',
     }
 };
 
-
-
-
 export default Radium(Topic);
 
 const groupBy = function(xs, key) {
@@ -121,3 +121,11 @@ const groupBy = function(xs, key) {
         return rv;
     }, {});
 };
+
+function fieldSorter(fields) {
+    return (a, b) => fields.map(o => {
+        let dir = 1;
+        if (o[0] === '-') { dir = -1; o=o.substring(1); }
+        return a[o] > b[o] ? dir : a[o] < b[o] ? -(dir) : 0;
+    }).reduce((p,n) => p ? p : n, 0);
+}

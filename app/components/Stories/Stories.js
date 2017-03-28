@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import FlipMove from 'react-flip-move';
 
 let styles;

@@ -40,27 +40,11 @@ h1, h2, h3, h4, h5, h6 {
 .pt-slider-track {
   background: rgba(255, 158, 88, 0.4);
 }
+.pt-slider-progress {
+  background: #ff9046;
+}
 
-/*.pt-control.pt-switch .pt-control-indicator {*/
-  /*border: none;*/
-  /*border-radius: 28px;*/
-  /*box-shadow: none;*/
-  /*background: rgba(167, 182, 194, 0.5);*/
-  /*width: 28px;*/
-  /*height: 16px;*/
-  /*transition: background 100ms cubic-bezier(0.4, 1, 0.75, 0.9); }*/
-/*.pt-control.pt-switch .pt-control-indicator::before {*/
-  /*display: block;*/
-  /*top: 2px;*/
-  /*left: 2px;*/
-  /*border-radius: 16px;*/
-  /*box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2);*/
-  /*background: #ffffff;*/
-  /*background-clip: padding-box;*/
-  /*width: 12px;*/
-  /*height: 12px;*/
-  /*content: "";*/
-  /*transition: left 100ms cubic-bezier(0.4, 1, 0.75, 0.9); }*/
+
 .pt-control.pt-switch input:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator {
   background-color: #ff9e58; }
 .pt-control.pt-switch input:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator::before {
