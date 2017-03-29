@@ -33,19 +33,18 @@ export const StoryControls = React.createClass({
                     leftLabel: "Positive",
                     rightLabel: "Negative"
                 },
+                objective: {
+                    val: this.props.story.cont,
+                    label: "Objective / Subjective",
+                    leftLabel: "Objective",
+                    rightLabel: "Safe"
+                },
                 trend: {
                     val:this.props.story.trend,
                     label: "Trending / Ongoing",
                     leftLabel: "Trending",
                     rightLabel: "Ongoing"
                 },
-                cont: {
-                    val: this.props.story.cont,
-                    label: "Controversial / Safe",
-                    leftLabel: "Controversial",
-                    rightLabel: "Safe"
-                },
-
             }
         })
     },
