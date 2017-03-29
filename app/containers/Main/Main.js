@@ -157,13 +157,17 @@ export const Main = React.createClass ({
         });
         topics.forEach((topic)=>{
             const topicData = this.bySourceData(topic);
-            Object.keys(topicData).forEach((sourceName)=>{
-                if (sourceName in result) {
-                    const obj = {"subject": topic}
+            Object.keys(result).forEach((sourceName)=>{
+                const obj = {"subject": topic}
+                if (topicData[sourceName]) {
                     obj.count = topicData[sourceName].length;
                     obj.percent = topicData[sourceName].length / result[sourceName].total * 100;
-                    result[sourceName].data.push(obj)
                 }
+                else {
+                    obj.count = 0;
+                    obj.percent = 0;
+                }
+                result[sourceName].data.push(obj)
             })
         });
         return result;

@@ -75,6 +75,10 @@ h1, h2, h3, h4, h5, h6 {
   clear: both;
 }
 
+.pt-toast {
+  background: #ff9046;
+}
+
 
 .circle:hover {
     background: rgba(99, 99, 99, 0.39) !important;

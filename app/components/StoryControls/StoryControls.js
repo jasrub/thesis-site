@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import Controls from 'components/Controls/Controls';
+import { Position, Toaster } from "@blueprintjs/core";
 
 
 let styles;
@@ -62,13 +63,24 @@ export const StoryControls = React.createClass({
         });
     },
 
+    addToast() {
+        console.log(this.toaster);
+        this.toaster.show({ message: "Thanks! Your labels were submitted!", timeout:2000 });
+    },
+
+    submitLabels() {
+        this.addToast();
+        // send labels to api!!
+    },
+
     render() {
         const data = this.props.story.DescriptorsResults;
         return (
             <div>
                 <Controls title={"Label As:"} filters={this.state.values} onFilterChange={this.handleValueChange}/>
                 <div style={styles.buttonContainer}>
-                    <button style={styles.labelButton} onClick={()=>{}}>Label Now!</button>
+                    <button style={styles.labelButton} onClick={this.submitLabels}>Label Now</button>
+                    <Toaster position={Position.BOTTOM_RIGHT} ref={(ref)=>(this.toaster=ref)}/>
                 </div>
 
                 <div style={styles.otherTopics}>
@@ -113,6 +125,8 @@ styles = {
         borderRadius: '10px',
         padding:'1em',
         cursor:'pointer',
+        color: '#fff',
+        fontWeight: 'lighter',
 
     },
     buttonContainer: {
