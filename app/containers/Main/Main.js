@@ -36,32 +36,32 @@ export const Main = React.createClass ({
             selectedStoryId: null,
             filters: {
                 leftRight: {
-                    min:0,
-                    max: 4,
+                    min:-1,
+                    max: 1,
                     label: "Left / Right",
                     leftLabel: "Left",
                     rightLabel: "Right"
                 },
                 posNeg: {
-                    min:0,
-                    max: 4,
+                    min:-1,
+                    max: 1,
                     label: "Positive / Negative",
                     leftLabel: "Positive",
                     rightLabel: "Negative"
                 },
+                objective: {
+                    min:-1,
+                    max: 1,
+                    label: "Objective / Subjective",
+                    leftLabel: "Objective",
+                    rightLabel: "Subjective"
+                },
                 trend: {
-                    min:0,
-                    max: 4,
+                    min:-1,
+                    max: 1,
                     label: "Trending / Ongoing",
                     leftLabel: "Trending",
                     rightLabel: "Ongoing"
-                },
-                cont: {
-                    min:0,
-                    max: 4,
-                    label: "Controversial / Safe",
-                    leftLabel: "Controversial",
-                    rightLabel: "Safe"
                 },
             }
         };
@@ -174,6 +174,7 @@ export const Main = React.createClass ({
     },
 
     render() {
+        console.log('story count: ', this.props.descriptorsData.storyCount);
         const allDescriptors = this.props.descriptorsData.descriptors || {};
 
         const descriptorsArray = Object.keys(allDescriptors);

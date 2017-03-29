@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import { Slider, RangeSlider } from '@blueprintjs/core';
 
-const MIN = 0;
-const MAX = 4;
+const MIN = -1;
+const MAX = 1;
 const STEP = 0.1;
 
 let styles;
