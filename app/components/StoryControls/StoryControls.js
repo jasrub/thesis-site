@@ -111,7 +111,8 @@ styles = {
             margin:'0.7em 0',
             padding: '0.5em',
             cursor: 'pointer',
-            width:width*100+'%',
+            width:Math.max(width, 0.2)*100+'%',
+            fontSize: width<0.3?mapNum(width,0,0.3, 0.4, 0.9)+'em':'1em',
         }},
     otherTopics:{
         padding:'2em 1em',
@@ -135,3 +136,7 @@ styles = {
 
 
 };
+
+function mapNum(num, in_min, in_max, out_min, out_max) {
+    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
