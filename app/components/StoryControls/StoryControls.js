@@ -142,10 +142,11 @@ styles = {
         textAlign:'center',
     },
     labelBox:{
-        background:'rgba(5, 255, 194, 0.15)',
+        background:'rgba(10, 120, 103, 0.22)',
+        border: '0.5px solid #064649',
         padding: '1em 0',
         borderRadius: '1%',
-        boxShadow :'rgba(69, 228, 189, 0.26) 0px 0px 100px',
+        boxShadow :'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
     }
 
 
