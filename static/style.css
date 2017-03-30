@@ -225,3 +225,23 @@ h1, h2, h3, h4, h5, h6 {
   opacity:1;
   z-index:200;
 }
+
+.label-button {
+  margin: 0 auto;
+  background: #ff8833;
+  box-shadow:none;
+  border: none;
+  border-radius: 10px;
+  padding:1em;
+  cursor:pointer;
+  color: #fff;
+  fontWeight: lighter;
+}
+
+.label-button:disabled{
+  outline: none;
+  box-shadow: none;
+  background-color: rgba(206, 217, 224, 0.5);
+  cursor: not-allowed;
+  color: #4d4d4d
+}

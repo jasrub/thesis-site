@@ -20,6 +20,7 @@ export const StoryControls = React.createClass({
 
     componentWillMount() {
         this.setState({
+            clicked: false,
             values: {
                 leftRight: {
                     val: this.props.story.leftRight,
@@ -69,16 +70,22 @@ export const StoryControls = React.createClass({
 
     submitLabels() {
         this.addToast();
+        this.setState({
+                clicked: true
+        });
         // send labels to api!!
     },
 
     render() {
+        console.log('clicked: ',this.state.clicked);
         const data = this.props.story.DescriptorsResults;
         return (
             <div>
                 <Controls title={"Label As:"} filters={this.state.values} onFilterChange={this.handleValueChange}/>
                 <div style={styles.buttonContainer}>
-                    <button style={styles.labelButton} onClick={this.submitLabels}>Label Now</button>
+                    <button className={"label-button"}
+                            onClick={this.submitLabels}
+                            disabled={this.state.clicked}>Label Now</button>
                     <Toaster position={Position.BOTTOM_RIGHT} ref={(ref)=>(this.toaster=ref)}/>
                 </div>
 
