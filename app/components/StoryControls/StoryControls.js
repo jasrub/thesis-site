@@ -81,12 +81,14 @@ export const StoryControls = React.createClass({
         const data = this.props.story.DescriptorsResults;
         return (
             <div>
+                <div style={styles.labelBox}>
                 <Controls title={"Label As:"} filters={this.state.values} onFilterChange={this.handleValueChange}/>
                 <div style={styles.buttonContainer}>
                     <button className={"label-button"}
                             onClick={this.submitLabels}
                             disabled={this.state.clicked}>Label Now</button>
                     <Toaster position={Position.BOTTOM_RIGHT} ref={(ref)=>(this.toaster=ref)}/>
+                </div>
                 </div>
 
                 <div style={styles.otherTopics}>
@@ -138,7 +140,14 @@ styles = {
     },
     buttonContainer: {
         textAlign:'center',
+    },
+    labelBox:{
+        background:'rgba(5, 255, 194, 0.15)',
+        padding: '1em 0',
+        borderRadius: '1%',
+        boxShadow :'rgba(69, 228, 189, 0.26) 0px 0px 100px',
     }
+
 
 
 };

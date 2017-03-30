@@ -26,11 +26,12 @@ export const TopDescriptors = React.createClass({
     render(){
         const descriptors = this.props.descriptors;
         const list = this.props.isSelected? this.props.relatedTopics : this.props.list;
-        const top = list.slice(0,8);
+        const count = this.props.isSelected? 6 : 8;
+        const top = list.slice(0,count);
+
         const items = top.map((desc)=>{
             const shouldGlow = Math.random();
             const glow = shouldGlow<0.3? true : false;
-
             return (
                 <Descriptor
                     key={desc}

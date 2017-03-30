@@ -28,7 +28,7 @@ export const Descriptor = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        const size = desc? mapNum(desc.numStories, 0, 100, 7,23): 0;
+        const size = desc? mapNum(desc.numStories, 0, 100, 6,17): 0;
         const selected = this.props.selected;
         return (
             <div style={{display: 'inline-block'}}>

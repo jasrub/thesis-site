@@ -208,6 +208,9 @@ export const Main = React.createClass ({
                 <AppNav onHomeClick={this.resetSelection}/>
                     <div className="grid">
                         <div style={styles.topics(this.state.selected)}>
+                            {this.state.selected && !loading &&
+                            <BySourceChart bySourceData={bySourceData}
+                                           selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}/>}
                             {!this.state.selected && <h3>Today's Hot Topics:</h3> }
                                 <TopDescriptors descriptors={allDescriptors}
                                                 list = {descriptorsArray}
@@ -222,7 +225,8 @@ export const Main = React.createClass ({
                         </div>
                         <div style={styles.stories(this.state.selected)}>
 
-                                {this.state.selected && <Topic descriptor={selected}
+
+                            {this.state.selected && <Topic descriptor={selected}
                                                                stories = {stories}
                                                                show={this.state.selected}
                                                                allDescriptors={allDescriptors}
@@ -243,10 +247,6 @@ export const Main = React.createClass ({
                                     <Spinner />
                                 </div>
                                 }
-                                {this.state.selected && !loading &&
-                                    <BySourceChart bySourceData={bySourceData}
-                                                   selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}/>}
-
                                 <ReactCSSTransitionGroup
                                     transitionName="opac"
                                     transitionEnterTimeout={500}

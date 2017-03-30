@@ -28,9 +28,10 @@ export const Search = React.createClass({
             searchValue: value,
         });
 
-        if (value === '') {
+        if (value == '') {
             this.setState({
                 searchDescriptors: [],
+                searchValue: '',
             });
         } else {
             const searchResults = this.props.descriptorsList.filter((desc) => {
@@ -74,7 +75,7 @@ export const Search = React.createClass({
                     Search Other Topics
                     <div className="pt-input-group">
                         <span className="pt-icon pt-icon-search"></span>
-                        <input className="pt-input" type="search" placeholder="Search input" dir="auto"
+                        <input className="pt-input" type="search" placeholder="Try things like animals or basketball" dir="auto"
                                value={this.state.searchValue}
                                onChange={this.handleSearchChange}/>
                     </div>
