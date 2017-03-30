@@ -20,7 +20,7 @@ export const BySourceChart = React.createClass({
                 <BarChart  data={data}
                            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                     <XAxis dataKey="name" hide={true}/>
-                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.6)" isAnimationActive={isAnimationActive} label={<CustomizedAxisTick/>}>
+                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.6)" isAnimationActive={isAnimationActive} verticalAnchor="middle" label={<CustomizedAxisTick/> }>
                         {
                             data.map((entry, index) => (
                                 <Cell key={`cell-${index}`}
@@ -54,7 +54,7 @@ const CustomizedAxisTick = React.createClass({
 
         return (
             <g transform={`translate(${x},${y})`}>
-                <text x={0} y={0} dx={-y} textAnchor="start" fill="#666" transform="rotate(90)" fontSize="0.5vw">{name}</text>
+                <text x={(-y)} y={0} dx={0} textAnchor="start" dominantBaseline="middle" fill="#999" transform="rotate(90)" fontSize="0.5vw">{name}</text>
             </g>
         );
     }
