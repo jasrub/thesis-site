@@ -210,7 +210,8 @@ export const Main = React.createClass ({
                         <div style={styles.topics(this.state.selected)}>
                             {this.state.selected && !loading &&
                             <BySourceChart bySourceData={bySourceData}
-                                           selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}/>}
+                                           selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}
+                                           descriptorId={this.state.selectedDescriptorId}/>}
                             {!this.state.selected && <h3>Today's Hot Topics:</h3> }
                                 <TopDescriptors descriptors={allDescriptors}
                                                 list = {descriptorsArray}

@@ -10,17 +10,32 @@ export const BySourceChart = React.createClass({
         selectedSource: PropTypes.string,
     },
 
+    getInitialState() {
+        return {
+            animate: true,
+        }
+    },
+    componentWillReceiveProps(nextProps) {
+        let animate = false;
+        if (this.props.descriptorId!==nextProps.descriptorId) {
+            animate=true;
+        }
+        this.setState({
+            animate:animate
+        });
+
+    },
+
     render() {
         const data = this.props.bySourceData;
         const selectedSource = this.props.selectedSource;
-        const isAnimationActive = !selectedSource;
         return (
             <div>
             <ResponsiveContainer  width={'100%'} aspect={5.0/1.2}>
                 <BarChart  data={data}
                            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                     <XAxis dataKey="name" hide={true}/>
-                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.6)" isAnimationActive={isAnimationActive} verticalAnchor="middle" label={<CustomizedAxisTick/> }>
+                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.6)" isAnimationActive={this.state.animate} verticalAnchor="middle" label={<CustomizedAxisTick/> }>
                         {
                             data.map((entry, index) => (
                                 <Cell key={`cell-${index}`}
