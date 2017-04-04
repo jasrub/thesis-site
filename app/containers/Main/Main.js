@@ -242,7 +242,7 @@ export const Main = React.createClass ({
                         </div>
                         <div style={styles.sideBar}>
                             <div>
-                                <Controls title={"Filter By"} filters={this.state.filters} onFilterChange={this.handleFilterChange} isRange={true}/>
+                                <Controls title={"Filter By"} filters={this.state.filters} onFilterChange={this.handleFilterChange} isRange={true} linesData={this.props.descriptorsData.storyPlots}/>
                                 {loading &&
                                 <div>
                                     <Spinner />

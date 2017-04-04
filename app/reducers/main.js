@@ -40,6 +40,7 @@ const defaultState = Immutable.Map({
     relatedTopics: Immutable.Map({}),
     sources:{},
     sourcesLoading:false,
+    storyPlots:{},
 });
 
 /* ----------------------------------------- */
@@ -74,13 +75,16 @@ export default function reducer(state = defaultState, action) {
                 storiesError: undefined,
                 stories: {},
             });
-        case GET_STORIES_SUCCESS:
+        case GET_STORIES_SUCCESS: {
+            const plots = calc_stories_plots(action.result)
             return state.merge({
                 storiesLoading: false,
                 error: undefined,
                 stories: action.result,
                 constStories: action.result,
+                storyPlots:plots,
             });
+        }
         case GET_STORIES_FAIL:
             return state.merge({
                 storiesLoading: false,
@@ -128,4 +132,50 @@ export default function reducer(state = defaultState, action) {
             return ensureImmutable(state);
     }
 
+}
+
+const count = function(ary, filter) {
+    return Object.keys(ary).reduce(function(counter, storyId) {
+        const story = ary[storyId]
+        var p = story[filter].toFixed(1);
+        counter[p] = counter.hasOwnProperty(p) ? counter[p] + 1 : 1;
+        return counter;
+    }, {})
+}
+
+function calc_stories_plots(stories) {
+    const plots = {
+        leftRight: {},
+        posNeg: {},
+        objective: {},
+        trend: {}
+    };
+    const new_dict = {
+            '-1.0': 0,
+            '-0.9': 0,
+            '-0.8': 0,
+            '-0.7:': 0,
+            '-0.6': 0,
+            '-0.5': 0,
+            '-0.4': 0,
+            '-0.3': 0,
+            '-0.2': 0,
+            '-0.1': 0,
+            '0.0':0,
+            '0.1': 0,
+            '0.2': 0,
+            '0.3': 0,
+            '0.4': 0,
+            '0.5': 0,
+            '0.6': 0,
+            '0.7:': 0,
+            '0.8': 0,
+            '0.9': 0,
+            '1.0': 0
+    };
+    Object.keys(plots).forEach((filter) => {
+        const vals_dict = Object.assign({}, new_dict, count(stories, filter));
+        plots[filter] = Object.keys(vals_dict).map((val)=>{return {'val':val, 'count':vals_dict[val]}}).sort((a,b)=>(a.val-b.val));
+    })
+    return plots
 }

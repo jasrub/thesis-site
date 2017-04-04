@@ -13,6 +13,7 @@ export const POST_LABEL_FAIL = 'storyControls/POST_LABEL_FAIL';
 export function postLabel(story, filters) {
     return (dispatch) => {
         dispatch({ type: POST_LABEL_LOAD });
+        console.log(filters)
         return clientFetch('/api/label', {
             method: 'POST',
             headers: {

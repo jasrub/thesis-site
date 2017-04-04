@@ -56,14 +56,9 @@ export const StoryControls = React.createClass({
         })
     },
 
-    handleValueChange(filter, isToggle, value) {
+    handleValueChange(filter, value) {
         const newValues = this.state.values;
-        if (isToggle) {
-            newValues[filter].on = !newValues[filter].on;
-        }
-        else {
-            newValues[filter].val = value;
-        }
+        newValues[filter].val = value;
         this.setState({
             values: newValues,
         });
@@ -84,10 +79,19 @@ export const StoryControls = React.createClass({
 
     render() {
         const data = this.props.story.DescriptorsResults;
+        const title = (
+            <div>
+                <div>
+                    Help the Algorithms Improve
+            </div>
+                <br/>
+                <div> How would you rate this story?</div>
+        </div>)
+
         return (
             <div>
                 <div style={styles.labelBox}>
-                <Controls title={"Label As:"} filters={this.state.values} onFilterChange={this.handleValueChange}/>
+                <Controls title={title} filters={this.state.values} onFilterChange={this.handleValueChange}/>
                 <div style={styles.buttonContainer}>
                     <button className={"label-button"}
                             onClick={this.submitLabels}
