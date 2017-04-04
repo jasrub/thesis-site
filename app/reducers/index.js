@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 import { combineReducers } from 'redux';
 import main from './main';
+import storyControls from './storyControls'
 
 export function ensureImmutable(state) {
 	// For some reason the @@INIT action is receiving a state variable that is a regular object.
@@ -17,4 +18,5 @@ export function ensureImmutable(state) {
 
 export default combineReducers({
 	main,
+	storyControls,
 });

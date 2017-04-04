@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
+import { connect } from 'react-redux';
 import Controls from 'components/Controls/Controls';
 import { Position, Toaster } from "@blueprintjs/core";
+import { postLabel } from './actions';
 
 
 let styles;
@@ -10,7 +12,11 @@ export const StoryControls = React.createClass({
     propTypes: {
         story:PropTypes.object,
         descriptorClicked:PropTypes.func,
+        storyControlsData: PropTypes.object,
+        location: PropTypes.object,
+        dispatch: PropTypes.func,
     },
+
 
     getInitialState() {
         return {
@@ -64,7 +70,6 @@ export const StoryControls = React.createClass({
     },
 
     addToast() {
-        console.log(this.toaster);
         this.toaster.show({ message: "Thanks! Your labels were submitted!", timeout:2000 });
     },
 
@@ -73,11 +78,11 @@ export const StoryControls = React.createClass({
         this.setState({
                 clicked: true
         });
+        this.props.dispatch(postLabel(this.props.story, this.state.values))
         // send labels to api!!
     },
 
     render() {
-        console.log('clicked: ',this.state.clicked);
         const data = this.props.story.DescriptorsResults;
         return (
             <div>
@@ -109,7 +114,14 @@ export const StoryControls = React.createClass({
 
 });
 
-export default Radium(StoryControls);
+function mapStateToProps(state) {
+    return {
+        storyControlsData: state.storyControls.toJS(),
+    };
+}
+
+export default connect(mapStateToProps)(Radium(StoryControls));
+
 
 styles = {
     storyTopic:function(width){
