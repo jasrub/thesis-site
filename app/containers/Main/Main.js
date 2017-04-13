@@ -81,7 +81,7 @@ export const Main = React.createClass ({
                 selectedStoryId: null,
             });
             this.props.dispatch(getDescriptors(this.state.filters));
-            this.props.dispatch(getSources(this.state.filters));
+            //this.props.dispatch(getSources(this.state.filters));
         }
     },
 
@@ -125,16 +125,23 @@ export const Main = React.createClass ({
     },
 
     bySourceData(descriptorId) {
+        const stories = this.props.descriptorsData.constStories;
+        const all_sources = {};
+        Object.keys(this.props.descriptorsData.sources).forEach((source)=>{
+            all_sources[source] = []
+        });
         if (this.props.descriptorsData.descriptors && this.props.descriptorsData.descriptors[descriptorId]) {
-            const stories = this.props.descriptorsData.constStories;
             return this.props.descriptorsData.descriptors[descriptorId].DescriptorsResults.reduce(function (rv, x) {
                 (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
                 return rv;
-            }, {});
+            }, all_sources);
 
         }
         else {
-            return {}
+            return Object.keys(stories).reduce(function(rv, x){
+                (rv[stories[x].mediaName] = rv[stories[x].mediaName] || []).push({storyId:x});
+                return rv;
+            }, all_sources);
         }
     },
 
@@ -182,13 +189,14 @@ export const Main = React.createClass ({
 
         const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading || this.props.descriptorsData.sourcesLoading );
 
+        const maxDescSize = descriptorsArray.length>0? allDescriptors[descriptorsArray[0]].DescriptorsResults.length: 0;
         const related = this.props.descriptorsData.relatedTopics[this.state.selectedDescriptorId] || [];
         const relatedTopics = related.map((desc)=>desc.dest);
         relatedTopics.unshift(this.state.selectedDescriptorId);
 
         const selected = this.state.selected? allDescriptors[this.state.selectedDescriptorId]: null;
 
-        const storiesBySource = this.state.selected? this.bySourceData(this.state.selectedDescriptorId, loading) : [];
+        const storiesBySource = this.bySourceData(this.state.selectedDescriptorId, loading);
         const bySourceData = Object.keys(storiesBySource).map((source)=>{
             return {'name':source, 'size':storiesBySource[source].length/this.props.descriptorsData.sources[source]}
         });
@@ -206,57 +214,69 @@ export const Main = React.createClass ({
 
             <div>
                 <AppNav onHomeClick={this.resetSelection}/>
-                    <div className="grid">
-                        <div style={styles.topics(this.state.selected)}>
-                            {this.state.selected && !loading &&
-                            <BySourceChart bySourceData={bySourceData}
-                                           selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}
-                                           descriptorId={this.state.selectedDescriptorId}/>}
-                            {!this.state.selected && <h3>Today's Hot Topics:</h3> }
-                                <TopDescriptors descriptors={allDescriptors}
-                                                list = {descriptorsArray}
-                                                relatedTopics = {relatedTopics}
-                                                stories = {this.props.descriptorsData.constStories}
-                                                loading={loading}
-                                                onClick={this.descriptorClicked}
-                                                selected={this.state.selectedDescriptorId}
-                                                isSelected = {this.state.selected}
-                                />
-                            {!this.state.selected && !loading && <RadarCharts data={radarData}/>}
-                        </div>
-                        <div style={styles.stories(this.state.selected)}>
-
-
-                            {this.state.selected && <Topic descriptor={selected}
-                                                               stories = {stories}
-                                                               show={this.state.selected}
-                                                               allDescriptors={allDescriptors}
-                                                               descriptorClicked = {this.descriptorClicked}
-                                                               getImage = {this.getStoryImage}
-                                                               isStorySelected = {this.state.selectedStory}
-                                                               selectedStoryId = {this.state.selectedStoryId}
-                                                               onStoryClick = {this.storyClicked}
-                                                               onStoryClose = {this.storyClosed}
-                                />
-                                }
-                        </div>
-                        <div style={styles.sideBar}>
+                <div className="grid">
+                    <div style={styles.sideBar}>
+                        <div>
+                            <Controls title={""}
+                                      filters={this.state.filters}
+                                      onFilterChange={this.handleFilterChange}
+                                      isRange={true}
+                                      linesData={this.props.descriptorsData.storyPlots}
+                                      stories = {this.props.descriptorsData.constStories}/>
+                            {loading &&
                             <div>
-                                <Controls title={"Filter By"} filters={this.state.filters} onFilterChange={this.handleFilterChange} isRange={true} linesData={this.props.descriptorsData.storyPlots}/>
-                                {loading &&
-                                <div>
-                                    <Spinner />
-                                </div>
-                                }
-                                <ReactCSSTransitionGroup
-                                    transitionName="opac"
-                                    transitionEnterTimeout={500}
-                                    transitionLeave={false}>
-                                {storyControls}
-                                </ReactCSSTransitionGroup>
+                                <Spinner />
                             </div>
+                            }
+                            <ReactCSSTransitionGroup
+                                transitionName="opac"
+                                transitionEnterTimeout={500}
+                                transitionLeave={false}>
+                                {storyControls}
+                            </ReactCSSTransitionGroup>
                         </div>
                     </div>
+                    <div style={styles.stories(this.state.selected)}>
+
+
+                        {this.state.selected && <Topic descriptor={selected}
+                                                       stories = {stories}
+                                                       show={this.state.selected}
+                                                       allDescriptors={allDescriptors}
+                                                       descriptorClicked = {this.descriptorClicked}
+                                                       getImage = {this.getStoryImage}
+                                                       isStorySelected = {this.state.selectedStory}
+                                                       selectedStoryId = {this.state.selectedStoryId}
+                                                       onStoryClick = {this.storyClicked}
+                                                       onStoryClose = {this.storyClosed}
+                        />
+                        }
+                    </div>
+                    <div style={styles.topics(this.state.selected)}>
+
+                        <h3>Topics</h3>
+                        <TopDescriptors descriptors={allDescriptors}
+                                        list = {descriptorsArray}
+                                        relatedTopics = {relatedTopics}
+                                        stories = {this.props.descriptorsData.constStories}
+                                        loading={loading}
+                                        onClick={this.descriptorClicked}
+                                        selected={this.state.selectedDescriptorId}
+                                        isSelected = {this.state.selected}
+                                        maxSize = {maxDescSize}
+                        />
+                        {/*{!this.state.selected && !loading && <RadarCharts data={radarData}/>}*/}
+
+                        {!loading &&
+                        <div>
+                            <h3>Sources</h3>
+                            <BySourceChart bySourceData={bySourceData}
+                                           selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}
+                                           descriptorId={this.state.selectedDescriptorId}/>
+                        </div>}
+                    </div>
+
+                </div>
             </div>
         );
     }
@@ -278,13 +298,13 @@ styles = {
     },
     sideBar: {
         float: 'left',
-        width: '22.5%',
+        width: '35%',
         paddingTop:'3em',
     },
     topics: (selected)=>{
         return {
-            float:'left',
-            width: selected? '22.5%': '77.5%',
+            float:'right',
+            width: '23%',
             paddingTop:'3em',
             transition:'all 1s',
         }
@@ -292,7 +312,7 @@ styles = {
     stories: (selected)=>{
         return {
             float:'left',
-            width: selected? '55%': '0%',
+            width: '42%',
             opacity: selected? '1' : '0',
             paddingTop:'3em',
             textAlign:'center',

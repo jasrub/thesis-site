@@ -34,10 +34,11 @@ export const Search = React.createClass({
                 searchValue: '',
             });
         } else {
-            const searchResults = this.props.descriptorsList.filter((desc) => {
+
+            const searchResults = value.length>2? this.props.descriptorsList.filter((desc) => {
                     return desc.includes(value) && this.props.notInclude.indexOf(desc) === -1;
                 }
-            );
+            ): [];
             this.setState({
                 searchDescriptors: searchResults
 
@@ -62,6 +63,7 @@ export const Search = React.createClass({
                                     this.handleSearchCancel();
                                 }}
                                 stories={this.props.stories}
+                                maxSize={this.props.maxSize}
                 />
             )
         });
