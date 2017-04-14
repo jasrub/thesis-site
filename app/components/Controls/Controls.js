@@ -17,17 +17,6 @@ export const Controls = React.createClass ({
 
     render() {
         const filters = this.props.filters;
-        const linesData = this.props.linesData || {};
-        const showLinesData = this.props.linesData? true : false;
-        const allNumberArr = Object.keys(linesData).map((filterName)=> {
-            return (linesData[filterName].map((item) => item.count))
-        });
-        // const max = Math.max.apply(null, [].concat.apply([], allNumberArr));
-        // const stories = this.props.stories
-        //
-        // const storiesArr = Object.keys(this.props.stories).map((storyId)=>{
-        //     return stories[storyId]
-        // });
 
         return(
         <div style={styles.controls}>
@@ -37,8 +26,7 @@ export const Controls = React.createClass ({
                 {Object.keys(filters).map((filterName)=>{
                     const filter = filters[filterName];
                     return(
-                        <div key={filterName} className="pt-form-group" style={styles.controlLine}>
-                            {/*{showLinesData && <FilterScatterChart data={storiesArr} dataKey={filterName} style={{marginBottom:'-10px'}} max={max}/>}*/}
+                        <div key={filterName} className="pt-form-group story-control" style={styles.controlLine}>
                             <SliderRow
                                 name={filterName}
                                 changeFunction={this.props.onFilterChange}
@@ -55,54 +43,6 @@ export const Controls = React.createClass ({
     }
 
 });
-
-export const FilterLineChart = React.createClass({
-    render () {
-
-        return (
-            <ResponsiveContainer width={'100%'} aspect={9/1}>
-            <AreaChart data={data} margin={{top: 0, right: 0, left: 0, bottom: 0}}>
-                <YAxis type="number" domain={['0', this.props.max]}  hide={true}/>
-                <Area type='monotone' dataKey='count' stroke='#673a18' fill='rgba(187, 105, 17, 0.3)' isAnimationActive={false}/>
-            </AreaChart>
-            </ResponsiveContainer>
-        );
-    }
-
-})
-
-export const FilterScatterChart = React.createClass({
-    render () {
-        const valCount = {}
-        const data = this.props.data.map((story)=>{
-            const xVal = story[this.props.dataKey]
-            valCount[xVal] = valCount[xVal]+1 || 0;
-            const yVal = valCount[xVal]
-            return {
-                x: xVal,
-                y:yVal
-            }
-        });
-        return (
-            <ResponsiveContainer width={'100%'} aspect={9/1}>
-        <ScatterChart margin={{top: 0, right: 5, bottom: 0, left: 5}}>
-            <XAxis dataKey={'x'} hide={true}/>
-            <YAxis  dataKey={'y'} hide={true}/>
-            <Scatter  data={data} fill='#666'/>
-            {/*<CartesianGrid />*/}
-            {/*<Tooltip cursor={{strokeDasharray: '3 3'}}/>*/}
-        </ScatterChart>
-            </ResponsiveContainer>
-            // <ResponsiveContainer width={'100%'} aspect={9/1}>
-            //     <AreaChart data={data} margin={{top: 0, right: 0, left: 0, bottom: 0}}>
-            //         <YAxis type="number" domain={['0', this.props.max]}  hide={true}/>
-            //         <Area type='monotone' dataKey='count' stroke='#673a18' fill='rgba(187, 105, 17, 0.3)' isAnimationActive={false}/>
-            //     </AreaChart>
-            // </ResponsiveContainer>
-        );
-    }
-
-})
 
 export const SliderRow = React.createClass ({
     PropTypes: {

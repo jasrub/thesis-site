@@ -26,6 +26,10 @@ export const BySourceChart = React.createClass({
 
     },
 
+    handleBarClick(data, index) {
+        this.props.onSourceClick(this.props.bySourceData[index].name)
+    },
+
     render() {
         const data = this.props.bySourceData;
         const selectedSource = this.props.selectedSource;
@@ -36,11 +40,14 @@ export const BySourceChart = React.createClass({
                            margin={{top: 0, right: 0, left: 0, bottom: 0}}>
                     <XAxis dataKey="name" hide={true}/>
                     <YAxis type="number" dataKey="size" hide={true} domain={[0,1]}/>
-                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.4)" isAnimationActive={this.state.animate} verticalAnchor="middle" label={<CustomizedAxisTick/> }>
+                    <Bar dataKey="size" fill="rgba(0, 167, 126, 0.4)"
+                         isAnimationActive={this.state.animate}
+                         verticalAnchor="middle" label={<CustomizedAxisTick/> }
+                         onClick={this.handleBarClick}>
                         {
                             data.map((entry, index) => (
-                                <Cell key={`cell-${index}`}
-                                      fill={data[index].name === selectedSource ? 'rgba(255, 125, 58, 0.8)' : 'rgba(0, 167, 126, 0.6)' }
+                                <Cell  key={`cell-${index}`} cursor="pointer"
+                                      fill={data[index].name === selectedSource ? '#10a38a': 'rgba(255, 125, 58, 0.8)' }
                                 />
                             ))
                         }

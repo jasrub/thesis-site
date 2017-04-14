@@ -43,6 +43,7 @@ const defaultState = Immutable.Map({
     storyPlots:{},
 });
 
+
 /* ----------------------------------------- */
 // Bind actions to specific reducing functions
 /* ----------------------------------------- */
@@ -138,6 +139,9 @@ const count = function(ary, filter) {
     return Object.keys(ary).reduce(function(counter, storyId) {
         const story = ary[storyId]
         var p = story[filter].toFixed(1);
+        if (p=='-0.0') {
+            p = '0.0'
+        }
         counter[p] = counter.hasOwnProperty(p) ? counter[p] + 1 : 1;
         return counter;
     }, {})
@@ -154,7 +158,7 @@ function calc_stories_plots(stories) {
             '-1.0': 0,
             '-0.9': 0,
             '-0.8': 0,
-            '-0.7:': 0,
+            '-0.7': 0,
             '-0.6': 0,
             '-0.5': 0,
             '-0.4': 0,
@@ -168,14 +172,14 @@ function calc_stories_plots(stories) {
             '0.4': 0,
             '0.5': 0,
             '0.6': 0,
-            '0.7:': 0,
+            '0.7': 0,
             '0.8': 0,
             '0.9': 0,
             '1.0': 0
     };
     Object.keys(plots).forEach((filter) => {
         const vals_dict = Object.assign({}, new_dict, count(stories, filter));
-        plots[filter] = Object.keys(vals_dict).map((val)=>{return {'val':val, 'count':vals_dict[val]}}).sort((a,b)=>(a.val-b.val));
+        plots[filter] = Object.keys(vals_dict).map((val)=>{return {'val':val, 'count':vals_dict[val], 'descCount':0}}).sort((a,b)=>(a.val-b.val));
     })
     return plots
 }

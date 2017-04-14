@@ -29,7 +29,7 @@ export const Descriptor = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        const size = desc? mapNum(desc.DescriptorsResults.length, 0, this.props.maxSize, 20, 100): 0;
+        const size = desc? mapNum(desc.numStories, 0, this.props.maxSize, 20, 100): 0;
         // console.log(size)
         // console.log(this.props.maxSize)
         const selected = this.props.selected;
@@ -83,11 +83,8 @@ styles = {
     },
 
     rect:function(width, selected, glow){
-        const shadowColor = selected? 'rgba(255, 136, 92, 0.5)' : 'rgba(250, 250, 250, 0.2)';
-        const shadowSize = selected? '80px ': '100px ';
-        const boxShadow = glow || selected? '0 0 '+shadowSize+ shadowColor: 'none';
         return{
-            background:selected? '#FF885C': 'rgba(220, 220, 220, 0.27)',
+            background:selected? '#9C5586': 'rgba(220, 220, 220, 0.27)',
             borderRadius: '10px',
             margin:'0.7em 0',
             padding: '0.1em',
@@ -95,10 +92,6 @@ styles = {
             width:width+'%',
             fontSize: width<30?mapNum(width,0,30, 0.4, 0.9)+'em':'1em',
 
-            boxShadow: boxShadow,
-            MozBoxShadow: boxShadow,
-            WebkitBoxShadow: boxShadow,
-            OBoxShadow: boxShadow,
         }},
 
     title: {

@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import AppNav from 'components/AppNav/AppNav';
 import BySourceChart from 'components/BySourceChart/BySourceChart';
 import StoryControls from 'components/StoryControls/StoryControls';
-import RadarCharts from 'components/RadarCharts/RadarCharts';
-import Controls from 'components/Controls/Controls';
+import Sliders from 'components/Sliders/Sliders';
 import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
 import Topic from 'containers/Topic/Topic';
 import {Spinner} from '@blueprintjs/core';
@@ -34,6 +33,8 @@ export const Main = React.createClass ({
             selectedDescriptorId: null,
             selectedStory: false,
             selectedStoryId: null,
+            selectedSource: false,
+            selectedSourceName:'',
             filters: {
                 leftRight: {
                     min:-1,
@@ -111,12 +112,34 @@ export const Main = React.createClass ({
         });
     },
 
+    sourceClicked(sourceName) {
+        if (this.state.selectedSourceName==sourceName) {
+            this.resetSourceSelection()
+        }
+        else {
+            this.setState({
+                selectedSource: true,
+                selectedSourceName: sourceName,
+            });
+        }
+
+    },
+    resetSourceSelection() {
+        this.setState({
+            selectedSource: false,
+            selectedSourceName:'',
+        });
+
+    },
+
     resetSelection() {
         this.setState({
             selected:false,
             selectedDescriptorId:null,
             selectedStory: false,
             selectedStoryId: null,
+            selectedSource: false,
+            selectedSourceName:'',
         });
     },
 
@@ -125,58 +148,46 @@ export const Main = React.createClass ({
     },
 
     bySourceData(descriptorId) {
-        const stories = this.props.descriptorsData.constStories;
+        const all_stories = this.props.descriptorsData.constStories;
         const all_sources = {};
         Object.keys(this.props.descriptorsData.sources).forEach((source)=>{
             all_sources[source] = []
         });
         if (this.props.descriptorsData.descriptors && this.props.descriptorsData.descriptors[descriptorId]) {
             return this.props.descriptorsData.descriptors[descriptorId].DescriptorsResults.reduce(function (rv, x) {
-                (rv[stories[x.storyId].mediaName] = rv[stories[x.storyId].mediaName] || []).push(x);
+                (rv[all_stories[x.storyId].mediaName] = rv[all_stories[x.storyId].mediaName] || []).push(x);
                 return rv;
             }, all_sources);
 
         }
         else {
-            return Object.keys(stories).reduce(function(rv, x){
-                (rv[stories[x].mediaName] = rv[stories[x].mediaName] || []).push({storyId:x});
+            return Object.keys(all_stories).reduce(function(rv, x){
+                (rv[all_stories[x].mediaName] = rv[all_stories[x].mediaName] || []).push({storyId:x});
                 return rv;
             }, all_sources);
         }
     },
-
-    radarData() {
-        const topics = [
-            "politics and government",
-            "finances",
-            "medicine and health",
-            "law and legislation",
-            "athletics and sports",
-            "computers and the internet",
-            "education and schools",
-        ];
-        const sources = this.props.descriptorsData.sources;
-        const result ={};
-        Object.keys(sources).forEach((source)=>{
-            result[source] = {'total':sources[source], data:[]}
-        });
-        topics.forEach((topic)=>{
-            const topicData = this.bySourceData(topic);
-            Object.keys(result).forEach((sourceName)=>{
-                const obj = {"subject": topic}
-                if (topicData[sourceName]) {
-                    obj.count = topicData[sourceName].length;
-                    obj.percent = topicData[sourceName].length / result[sourceName].total * 100;
-                }
-                else {
-                    obj.count = 0;
-                    obj.percent = 0;
-                }
-                result[sourceName].data.push(obj)
+    storyPlots(){
+        if (!this.state.selected || Object.keys(this.props.descriptorsData.stories).length<1) {
+            return this.props.descriptorsData.storyPlots;
+        }
+        else {
+            const storyPlots = this.props.descriptorsData.storyPlots
+            this.props.descriptorsData.descriptors[this.state.selectedDescriptorId].DescriptorsResults.forEach((s)=>{
+                const story = this.props.descriptorsData.constStories[s.storyId];
+                Object.keys(storyPlots).forEach((filterName)=>{
+                    var val = story[filterName].toFixed(1);
+                    if (val=='-0.0') {
+                        val = '0.0'
+                    }
+                    var element = storyPlots[filterName].find((el)=>el.val==val)
+                    element['descCount'] += 1
+                })
             })
-        });
-        return result;
+            return storyPlots
+        }
     },
+
 
     render() {
         console.log('story count: ', this.props.descriptorsData.storyCount);
@@ -189,7 +200,7 @@ export const Main = React.createClass ({
 
         const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading || this.props.descriptorsData.sourcesLoading );
 
-        const maxDescSize = descriptorsArray.length>0? allDescriptors[descriptorsArray[0]].DescriptorsResults.length: 0;
+        const maxDescSize = descriptorsArray.length>0? allDescriptors[descriptorsArray[0]].numStories: 0;
         const related = this.props.descriptorsData.relatedTopics[this.state.selectedDescriptorId] || [];
         const relatedTopics = related.map((desc)=>desc.dest);
         relatedTopics.unshift(this.state.selectedDescriptorId);
@@ -203,39 +214,43 @@ export const Main = React.createClass ({
 
         const stories = this.props.descriptorsData.stories;
 
-        const radarData = (selected || loading || descriptorsArray.length<=0)? {} : this.radarData();
-
         const storyControls = this.state.selectedStory?
             <StoryControls key={`story-controls-${this.state.selectedStoryId}`}
                            story={stories[this.state.selectedStoryId]}
                            descriptorClicked={this.descriptorClicked}/>: <div/>;
+
+        const storyPlots = this.props.descriptorsData.storyPlots//this.storyPlots();
 
         return (
 
             <div>
                 <AppNav onHomeClick={this.resetSelection}/>
                 <div className="grid">
-                    <div style={styles.sideBar}>
+                    <div style={styles.topics(this.state.selected)}>
+
+                        <h3>Topics</h3>
+                        <TopDescriptors descriptors={allDescriptors}
+                                        list = {descriptorsArray}
+                                        relatedTopics = {relatedTopics}
+                                        stories = {this.props.descriptorsData.constStories}
+                                        loading={loading}
+                                        onClick={this.descriptorClicked}
+                                        selected={this.state.selectedDescriptorId}
+                                        isSelected = {this.state.selected}
+                                        maxSize = {maxDescSize}
+                        />
+
+                        {!loading &&
                         <div>
-                            <Controls title={""}
-                                      filters={this.state.filters}
-                                      onFilterChange={this.handleFilterChange}
-                                      isRange={true}
-                                      linesData={this.props.descriptorsData.storyPlots}
-                                      stories = {this.props.descriptorsData.constStories}/>
-                            {loading &&
-                            <div>
-                                <Spinner />
-                            </div>
-                            }
-                            <ReactCSSTransitionGroup
-                                transitionName="opac"
-                                transitionEnterTimeout={500}
-                                transitionLeave={false}>
-                                {storyControls}
-                            </ReactCSSTransitionGroup>
-                        </div>
+                            <h3 onClick={this.resetSourceSelection}>Sources</h3>
+                            <BySourceChart bySourceData={bySourceData}
+                                           selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : this.state.selectedSourceName}
+                                           descriptorId={this.state.selectedDescriptorId}
+                                           onSourceClick={this.sourceClicked}
+                            />
+                        </div>}
                     </div>
+
                     <div style={styles.stories(this.state.selected)}>
 
 
@@ -252,28 +267,28 @@ export const Main = React.createClass ({
                         />
                         }
                     </div>
-                    <div style={styles.topics(this.state.selected)}>
-
-                        <h3>Topics</h3>
-                        <TopDescriptors descriptors={allDescriptors}
-                                        list = {descriptorsArray}
-                                        relatedTopics = {relatedTopics}
-                                        stories = {this.props.descriptorsData.constStories}
-                                        loading={loading}
-                                        onClick={this.descriptorClicked}
-                                        selected={this.state.selectedDescriptorId}
-                                        isSelected = {this.state.selected}
-                                        maxSize = {maxDescSize}
-                        />
-                        {/*{!this.state.selected && !loading && <RadarCharts data={radarData}/>}*/}
-
-                        {!loading &&
+                    <div style={styles.sideBar}>
                         <div>
-                            <h3>Sources</h3>
-                            <BySourceChart bySourceData={bySourceData}
-                                           selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : ''}
-                                           descriptorId={this.state.selectedDescriptorId}/>
-                        </div>}
+                            <Sliders title={""}
+                                      filters={this.state.filters}
+                                      onFilterChange={this.handleFilterChange}
+                                      isRange={true}
+                                      linesData={storyPlots}
+                                     isStorySelected = {this.state.selectedStory}
+                                     selectedStory = {stories[this.state.selectedStoryId]||{}}
+                            />
+                            {loading &&
+                            <div>
+                                <Spinner />
+                            </div>
+                            }
+                            <ReactCSSTransitionGroup
+                                transitionName="opac"
+                                transitionEnterTimeout={500}
+                                transitionLeave={false}>
+                                {storyControls}
+                            </ReactCSSTransitionGroup>
+                        </div>
                     </div>
 
                 </div>
@@ -303,7 +318,7 @@ styles = {
     },
     topics: (selected)=>{
         return {
-            float:'right',
+            float:'left',
             width: '23%',
             paddingTop:'3em',
             transition:'all 1s',

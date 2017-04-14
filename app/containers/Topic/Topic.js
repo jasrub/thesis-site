@@ -45,7 +45,10 @@ export const Topic = React.createClass ({
                     transitionEnterTimeout={700}
                     transitionLeaveTimeout={500}>
                 {this.props.isStorySelected &&
-                <Iframe url={this.props.stories[this.props.selectedStoryId].url} id={this.props.stories[this.props.selectedStoryId].id} onClose={this.props.onStoryClose}/>}
+                <Iframe url={this.props.stories[this.props.selectedStoryId].url}
+                        id={this.props.stories[this.props.selectedStoryId].id}
+                        title={this.props.stories[this.props.selectedStoryId].title}
+                        onClose={this.props.onStoryClose}/>}
                 </ReactCSSTransitionGroup>
                 <div>
                     <Stories storiesIds = {storyList.slice(0,this.state.storiesCount)}
@@ -67,6 +70,7 @@ export const Iframe = React.createClass({
         url: PropTypes.string,
         onClose: PropTypes.func,
         id: PropTypes.string,
+        title : PropTypes.string,
     },
 
     render() {
@@ -75,7 +79,7 @@ export const Iframe = React.createClass({
             <div key={this.props.id} style={{textAlign:'center'}}>
             <div style={styles.iframeBox}>
                 <button style={styles.closeButton} onClick={this.props.onClose} type="button" className="pt-button pt-minimal pt-icon-cross"/>
-                <a href={this.props.url} target="_blank">Click here to open the story in a new tab</a>
+                <div style={styles.titleLink}><a style={styles.titleLink} href={this.props.url} target="_blank">{this.props.title}</a></div>
                 <iframe width="100%" height="95%" src={this.props.url}
                         frameBorder="0" allowTransparency="true" style={{background: '#FFFFFF'}} onLoad={()=>{}}/>
             </div>
@@ -100,9 +104,11 @@ margin: 'auto',
     iframeBox: {
         position: 'relative',
         width:'96.8%',
+        // border: 'solid 3px #10a38a',
         //background: 'rgba(0,0,0,0.4)',
         height: '60vh',
         margin:'auto',
+        // padding: '0.1em',
 
     },
     closeButton: {
@@ -110,6 +116,9 @@ margin: 'auto',
         top: '0',
         right: '0',
         zIndex:'100',
+    },
+    titleLink:{
+        color: '#10a38a',
     }
 };
 

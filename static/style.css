@@ -55,30 +55,39 @@ h1, h2, h3, h4, h5, h6 {
   background: #ff9046;
 }
 
+.story-control .pt-slider-handle, .story-control .pt-slider-handle-active,  .story-control .pt-slider-handle:hover, .story-control .pt-slider-handle-active:hover {
+  background: #10a38a;
+}
+.story-control .pt-slider-handle .pt-active {
+  background: #10b49b;
+}
 
-.pt-control.pt-switch input:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator {
-  background-color: #ff9e58; }
-.pt-control.pt-switch input:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator::before {
-  left: 14px;
-  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }
-.pt-control.pt-switch:hover .pt-control-indicator {
-  background-color: rgba(115, 134, 148, 0.5); }
-.pt-control.pt-switch:hover input:checked ~ .pt-control-indicator, .pt-control.pt-switch:hover .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch:hover input:indeterminate ~ .pt-control-indicator {
-  background-color: #e48655; }
-.pt-control.pt-switch input:not(:disabled):active ~ .pt-control-indicator {
-  box-shadow: none;
-  background-color: rgba(92, 112, 128, 0.5); }
-.pt-control.pt-switch input:not(:disabled):active:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:not(:disabled):active:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:not(:disabled):active:indeterminate ~ .pt-control-indicator {
-  background-color: #d47d4f; }
-.pt-control.pt-switch input:not(:disabled):active:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:not(:disabled):active:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:not(:disabled):active:indeterminate ~ .pt-control-indicator::before {
-  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }
-.pt-control.pt-switch input:disabled ~ .pt-control-indicator {
-  background-color: rgba(206, 217, 224, 0.5); }
-.pt-control.pt-switch input:disabled ~ .pt-control-indicator::before {
-  box-shadow: none;
-  background-color: rgba(255, 255, 255, 0.8); }
-.pt-control.pt-switch input:disabled:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:disabled:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:disabled:indeterminate ~ .pt-control-indicator {
-  background-color: rgba(212, 125, 79, 0.5); }
+
+
+
+/*.pt-control.pt-switch input:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator {*/
+  /*background-color: #ff9e58; }*/
+/*.pt-control.pt-switch input:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator::before {*/
+  /*left: 14px;*/
+  /*box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }*/
+/*.pt-control.pt-switch:hover .pt-control-indicator {*/
+  /*background-color: rgba(115, 134, 148, 0.5); }*/
+/*.pt-control.pt-switch:hover input:checked ~ .pt-control-indicator, .pt-control.pt-switch:hover .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch:hover input:indeterminate ~ .pt-control-indicator {*/
+  /*background-color: #e48655; }*/
+/*.pt-control.pt-switch input:not(:disabled):active ~ .pt-control-indicator {*/
+  /*box-shadow: none;*/
+  /*background-color: rgba(92, 112, 128, 0.5); }*/
+/*.pt-control.pt-switch input:not(:disabled):active:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:not(:disabled):active:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:not(:disabled):active:indeterminate ~ .pt-control-indicator {*/
+  /*background-color: #d47d4f; }*/
+/*.pt-control.pt-switch input:not(:disabled):active:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:not(:disabled):active:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:not(:disabled):active:indeterminate ~ .pt-control-indicator::before {*/
+  /*box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }*/
+/*.pt-control.pt-switch input:disabled ~ .pt-control-indicator {*/
+  /*background-color: rgba(206, 217, 224, 0.5); }*/
+/*.pt-control.pt-switch input:disabled ~ .pt-control-indicator::before {*/
+  /*box-shadow: none;*/
+  /*background-color: rgba(255, 255, 255, 0.8); }*/
+/*.pt-control.pt-switch input:disabled:checked ~ .pt-control-indicator, .pt-control.pt-switch .pt-control.pt-checkbox input:disabled:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch input:disabled:indeterminate ~ .pt-control-indicator {*/
+  /*background-color: rgba(212, 125, 79, 0.5); }*/
 
 .grid:after {
   content: "";
