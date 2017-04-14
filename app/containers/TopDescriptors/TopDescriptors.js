@@ -40,6 +40,7 @@ export const TopDescriptors = React.createClass({
                     stories = {this.props.stories}
                     selected = {this.props.selected===desc}
                     glow={glow}
+                    maxSize={this.props.maxSize}
                 />);
         });
 
@@ -53,6 +54,7 @@ export const TopDescriptors = React.createClass({
                             notInclude={top}
                             clicked={this.props.onClick}
                             stories={this.props.stories}
+                            maxSize={this.props.maxSize}
                     />
                     </div>
                 </FlipMove>
