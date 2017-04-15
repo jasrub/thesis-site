@@ -172,10 +172,10 @@ export const Main = React.createClass ({
             return this.props.descriptorsData.storyPlots;
         }
         else {
-            const storyPlots = this.props.descriptorsData.storyPlots
+            const storyPlots = clone(this.props.descriptorsData.storyPlots);
             this.props.descriptorsData.descriptors[this.state.selectedDescriptorId].DescriptorsResults.forEach((s)=>{
                 const story = this.props.descriptorsData.constStories[s.storyId];
-                Object.keys(storyPlots).forEach((filterName)=>{
+                Object.keys( this.props.descriptorsData.storyPlots).forEach((filterName)=>{
                     var val = story[filterName].toFixed(1);
                     if (val=='-0.0') {
                         val = '0.0'
@@ -219,7 +219,8 @@ export const Main = React.createClass ({
                            story={stories[this.state.selectedStoryId]}
                            descriptorClicked={this.descriptorClicked}/>: <div/>;
 
-        const storyPlots = this.props.descriptorsData.storyPlots//this.storyPlots();
+        const storyPlots = this.state.selected ? this.storyPlots(): this.props.descriptorsData.storyPlots;
+        console.log(this.state.selected, storyPlots)
 
         return (
 
@@ -313,13 +314,13 @@ styles = {
     },
     sideBar: {
         float: 'left',
-        width: '35%',
+        width: '30%',
         paddingTop:'3em',
     },
     topics: (selected)=>{
         return {
             float:'left',
-            width: '23%',
+            width: '25%',
             paddingTop:'3em',
             transition:'all 1s',
         }
@@ -327,9 +328,9 @@ styles = {
     stories: (selected)=>{
         return {
             float:'left',
-            width: '42%',
+            width: '45%',
             opacity: selected? '1' : '0',
-            paddingTop:'3em',
+            padding:'3em 1em 0 1em',
             textAlign:'center',
             transition:'all 1s',
         }
@@ -337,3 +338,36 @@ styles = {
 
 };
 
+function clone(obj) {
+    var copy;
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj;
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i]);
+        }
+        return copy;
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {};
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+        }
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}

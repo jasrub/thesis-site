@@ -33,7 +33,9 @@ export const Controls = React.createClass ({
                                 <FilterLineChart data={this.props.linesData[filterName]}
                                                  showDot = {this.props.isStorySelected}
                                                  dotX = {dotX}
-                                                 style={{marginBottom:'-10px'}}/>
+                                                 style={{marginBottom:'-10px'}}
+                                                 name={filterName}
+                                />
                                 <SliderRow
                                     name={filterName}
                                     changeFunction={this.props.onFilterChange}
@@ -54,15 +56,18 @@ export const Controls = React.createClass ({
 export const FilterLineChart = React.createClass({
     render () {
         const data = this.props.data;
-        const dot = <ReferenceDot x={this.props.dotX} y={320} r={7} fill="#10a38a" stroke="none"/>
+        const dataMax = data && this.props.dotX!='-2'? Math.max(...data.map((item)=>item.count)): 0;
+        const dotY = Math.round(dataMax/3);
+        const dot = <ReferenceDot x={this.props.dotX} isFront={true} y={dotY} r={7} fill="#10a38a" stroke="none" yAxisId={'total-'+this.props.name}/>
 
         return (
             <ResponsiveContainer width={'100%'} aspect={9/1}>
                 <AreaChart data={data} margin={{top: 0, right: 0, left: 0, bottom: 0}}>
                     <XAxis dataKey="val" hide={true}/>
-                    <YAxis hide={true}/>
-                    <Area type='monotone' dataKey='count' stroke='rgba(220, 220, 220, 0.2)' fill='rgba(170, 170, 170, 0.27)' isAnimationActive={false}/>
-                    {/*<Area type='monotone' dataKey='descCount' stroke='rgba(220, 220, 220, 0.2)' fill='#9C5586' isAnimationActive={true}/>*/}
+                    <YAxis type="number" dataKey='count' yAxisId={'total-'+this.props.name}  domain={['dataMin', 'dataMax']} hide={true}/>
+                    <YAxis type="number" dataKey='descCount' yAxisId={'descriptor-area-'+this.props.name} hide={true}/>
+                    <Area type='monotone' yAxisId={'total-'+this.props.name} dataKey='count' stroke='rgba(220, 220, 220, 0.2)' fill='rgba(170, 170, 170, 0.27)' isAnimationActive={false}/>
+                    <Area type='monotone'  yAxisId={'descriptor-area-'+this.props.name} dataKey='descCount' stroke='rgba(220, 220, 220, 0.2)' fill='#9C5586' isAnimationActive={true}/>
                     {dot}
 
                 </AreaChart>

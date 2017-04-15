@@ -92,7 +92,7 @@ const CustomizedAxisTick = React.createClass({
 
         return (
             <g transform={`translate(${x},${y})`}>
-                <text x={(-y+3)} y={0} dx={0} textAnchor="start" dominantBaseline="middle" fill="#fff" transform="rotate(90)" fontSize="0.5vw">{name}</text>
+                <text x={(-y+3)} y={0} dx={0} textAnchor="start" dominantBaseline="middle" fill="#fff" transform="rotate(90)" fontSize="0.6vw">{name}</text>
             </g>
         );
     }

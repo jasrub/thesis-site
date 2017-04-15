@@ -21,16 +21,17 @@ export const AppNav = React.createClass({
 				<div style={styles.navContent}>
 					<div style={{ display: 'inline-block' }}>
 						<div>
-							<div style={styles.appTitle} onClick={this.props.onHomeClick}>Panorama</div>
+							<Link to={'/'} onClick={this.props.onHomeClick} style={styles.appTitle}>Panorama</Link>
+							{/*<div style={styles.appTitle} onClick={this.props.onHomeClick}>Panorama</div>*/}
 						</div>
 
-						{/*<div style={styles.linkWrapper}>*/}
-							{/*<span style={styles.link} onClick={this.props.onHomeClick}> Hot Topics </span>*/}
+						<div style={styles.linkWrapper}>
+							<Link to={'/'} onClick={this.props.onHomeClick} style={styles.link}>Quick Tour</Link>
 
 							{/*<span style={styles.link}>Sources Compare</span>*/}
+							<Link to={'/about'} style={styles.link}>About</Link>
 
-								{/*/!*<span style={styles.link}>About</span>*!/*/}
-						{/*</div>*/}
+						</div>
 					</div>
 					
 				</div>
@@ -52,11 +53,11 @@ styles = {
 		//background: 'rgba(250, 250, 250 ,0.1)'
 	},
 	navContent: {
-		padding: '1em',
+		padding: '1em 0',
 		maxWidth: '1024px',
 	},
     linkWrapper: {
-        display: 'table',
+        display: 'inline-table',
         width: '100%',
 		//textAlign: 'center'
     },
@@ -73,6 +74,9 @@ styles = {
 		fontSize:'4em',
         cursor: 'pointer',
         fontFamily: "'Dosis', sans-serif",
+		fontWeight: "bold",
+		color:'white',
+        textDecoration: 'none',
 	}
 	
 };

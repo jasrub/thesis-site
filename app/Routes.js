@@ -16,6 +16,7 @@ function getComponent(component) {
 export default (
 	<Route getComponent={getComponent('App')}>
 		<Route path="/" getComponent={getComponent('Main')} />
+		<Route path="/about" getComponent={getComponent('About')} />
 
 		<Route path="*" getComponent={getComponent('NoMatch')} />
 	</Route>

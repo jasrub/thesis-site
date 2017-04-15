@@ -80,7 +80,7 @@ export const Iframe = React.createClass({
             <div style={styles.iframeBox}>
                 <button style={styles.closeButton} onClick={this.props.onClose} type="button" className="pt-button pt-minimal pt-icon-cross"/>
                 <div style={styles.titleLink}><a style={styles.titleLink} href={this.props.url} target="_blank">{this.props.title}</a></div>
-                <iframe width="100%" height="95%" src={this.props.url}
+                <iframe width="100%" height="92%" src={this.props.url}
                         frameBorder="0" allowTransparency="true" style={{background: '#FFFFFF'}} onLoad={()=>{}}/>
             </div>
             </div>
@@ -119,6 +119,8 @@ margin: 'auto',
     },
     titleLink:{
         color: '#10a38a',
+        fontWeight: 'bold',
+        paddingBottom:'0.5em',
     }
 };
 
