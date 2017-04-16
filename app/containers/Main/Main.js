@@ -220,7 +220,6 @@ export const Main = React.createClass ({
                            descriptorClicked={this.descriptorClicked}/>: <div/>;
 
         const storyPlots = this.state.selected ? this.storyPlots(): this.props.descriptorsData.storyPlots;
-        console.log(this.state.selected, storyPlots)
 
         return (
 
@@ -229,7 +228,6 @@ export const Main = React.createClass ({
                 <div className="grid">
                     <div style={styles.topics(this.state.selected)}>
 
-                        <h3>Topics</h3>
                         <TopDescriptors descriptors={allDescriptors}
                                         list = {descriptorsArray}
                                         relatedTopics = {relatedTopics}
@@ -252,10 +250,18 @@ export const Main = React.createClass ({
                         </div>}
                     </div>
 
-                    <div style={styles.stories(this.state.selected)}>
+                    <div style={styles.stories}>
+
+                        <div style={styles.centerContent(!this.state.selected)}>
+                            <div style={styles.explain}>
+                            Click around to explore, compare & control today's news
+                                <img width="100%" src="/static/arrows.png" style={{paddingTop:'1em'}}/>
+                            </div>
+                        </div>
 
 
-                        {this.state.selected && <Topic descriptor={selected}
+                        <div style={styles.centerContent(this.state.selected)}>
+                        <Topic descriptor={selected}
                                                        stories = {stories}
                                                        show={this.state.selected}
                                                        allDescriptors={allDescriptors}
@@ -266,7 +272,7 @@ export const Main = React.createClass ({
                                                        onStoryClick = {this.storyClicked}
                                                        onStoryClose = {this.storyClosed}
                         />
-                        }
+                        </div>
                     </div>
                     <div style={styles.sideBar}>
                         <div>
@@ -325,15 +331,27 @@ styles = {
             transition:'all 1s',
         }
     },
-    stories: (selected)=>{
-        return {
+    stories: {
             float:'left',
             width: '45%',
-            opacity: selected? '1' : '0',
             padding:'3em 1em 0 1em',
             textAlign:'center',
+
+        },
+    centerContent: (show)=>{
+        return {
+            opacity: show? '1' : '0',
+            display: show? 'block': 'none',
             transition:'all 1s',
+
         }
+    },
+    explain: {
+        fontSize: '3em',
+        fontWeight:'100',
+        width:'70%',
+        margin: '0 auto',
+        opacity: '0.7',
     }
 
 };

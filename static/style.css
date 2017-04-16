@@ -8,7 +8,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
   color: #F1F1F9;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: lighter;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -27,7 +27,8 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   color: #F1F1F9;
-  font-weight: lighter;
+  font-weight: bold;
+  padding: 0.3em 0 0.3em 0;
 
 }
 
@@ -69,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
   /*background-color: #ff9e58; }*/
 /*.pt-control.pt-switch input:checked ~ .pt-control-indicator::before, .pt-control.pt-switch .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator::before, .pt-control.pt-checkbox .pt-control.pt-switch input:indeterminate ~ .pt-control-indicator::before {*/
   /*left: 14px;*/
-  /*box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }*/
+  /*box-shaw: 0 0 0 1px rgba(16, 22, 26, 0.2), 0 1px 1px rgba(16, 22, 26, 0.2); }*/
 /*.pt-control.pt-switch:hover .pt-control-indicator {*/
   /*background-color: rgba(115, 134, 148, 0.5); }*/
 /*.pt-control.pt-switch:hover input:checked ~ .pt-control-indicator, .pt-control.pt-switch:hover .pt-control.pt-checkbox input:indeterminate ~ .pt-control-indicator, .pt-control.pt-checkbox .pt-control.pt-switch:hover input:indeterminate ~ .pt-control-indicator {*/
@@ -248,14 +249,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .label-button {
   margin: 0 auto;
-  background: #ff8833;
+  background: #c36f33;
   box-shadow:none;
   border: none;
   border-radius: 10px;
   padding:1em;
   cursor:pointer;
   color: #fff;
-  fontWeight: lighter;
+  font-weight: lighter;
 }
 
 .label-button:disabled{

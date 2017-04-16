@@ -47,16 +47,18 @@ export const TopDescriptors = React.createClass({
         return(
 
         <div>
-                <FlipMove duration={750} easing="ease-out">
-                    {items}
                     <div style={styles.searchBar} key="searchBar"><Search descriptorsList={this.props.list}
-                            descriptors={this.props.descriptors}
-                            notInclude={top}
-                            clicked={this.props.onClick}
-                            stories={this.props.stories}
-                            maxSize={this.props.maxSize}
+                                                                          descriptors={this.props.descriptors}
+                                                                          notInclude={top}
+                                                                          clicked={this.props.onClick}
+                                                                          stories={this.props.stories}
+                                                                          maxSize={this.props.maxSize}
                     />
                     </div>
+
+                    <h3>Topics</h3>
+            <FlipMove duration={750} easing="ease-out">
+                    {items}
                 </FlipMove>
         </div>)
     },
@@ -66,7 +68,7 @@ export const TopDescriptors = React.createClass({
 
 styles = {
     searchBar:{
-        padding: '3em 0',
+        padding:  '0',
     }
 };
 

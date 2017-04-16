@@ -74,7 +74,7 @@ export const Search = React.createClass({
 
 
                 <label className="pt-label">
-                    Search Other Topics
+                    Search Topics
                     <div className="pt-input-group">
                         <span className="pt-icon pt-icon-search"></span>
                         <input className="pt-input" type="search" placeholder="Try things like animals or basketball" dir="auto"

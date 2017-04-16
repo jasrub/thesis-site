@@ -19,11 +19,10 @@ export const AppNav = React.createClass({
 		return (
 			<nav style={styles.navStyle}>
 				<div style={styles.navContent}>
-					<div style={{ display: 'inline-block' }}>
-						<div>
-							<Link to={'/'} onClick={this.props.onHomeClick} style={styles.appTitle}>Panorama</Link>
-							{/*<div style={styles.appTitle} onClick={this.props.onHomeClick}>Panorama</div>*/}
-						</div>
+					<div style={{display:'table', width: '100%'}}>
+						<Link to={'/'} style={styles.logo} onClick={this.props.onHomeClick}>
+							<img src="/static/logo_small.png" />
+						</Link>
 
 						<div style={styles.linkWrapper}>
 							<Link to={'/'} onClick={this.props.onHomeClick} style={styles.link}>Quick Tour</Link>
@@ -54,29 +53,28 @@ styles = {
 	},
 	navContent: {
 		padding: '1em 0',
-		maxWidth: '1024px',
 	},
     linkWrapper: {
-        display: 'inline-table',
-        width: '100%',
-		//textAlign: 'center'
+        display: 'table-cell',
+        width: '30%',
+		float: 'right',
+		textAlign: 'right'
     },
     link: {
-            display: 'table-cell',
             textDecoration: 'none',
-            textAlign: 'center',
-            width: '50%',
-            padding: '1em 0em',
+            //textAlign: 'center',
+            padding: '1em',
             color: '#fff',
 			cursor: 'pointer',
+        	float: 'right',
+		display: 'inline',
+		fontWeight:'300',
     },
-	appTitle: {
-		fontSize:'4em',
-        cursor: 'pointer',
-        fontFamily: "'Dosis', sans-serif",
-		fontWeight: "bold",
-		color:'white',
+    logo: {
         textDecoration: 'none',
-	}
+        color: 'white',
+		display: 'table-cell',
+		width: '50%',
+    },
 	
 };
