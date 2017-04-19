@@ -47,7 +47,7 @@ export const BySourceChart = React.createClass({
                         {
                             data.map((entry, index) => (
                                 <Cell  key={`cell-${index}`} cursor="pointer"
-                                      fill={data[index].name === selectedSource ? '#10a38a': 'rgba(255, 125, 58, 0.8)' }
+                                      fill={data[index].name === selectedSource ? '#9C5586': 'rgba(255, 125, 58, 0.8)' }
                                 />
                             ))
                         }

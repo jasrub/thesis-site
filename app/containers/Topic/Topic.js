@@ -33,7 +33,11 @@ export const Topic = React.createClass ({
 
     render() {
         const desc = this.props.descriptor;
-        const storyList = desc? desc.DescriptorsResults.sort(fieldSorter(['-score', 'storyId'])):[];
+        const storyListAll = desc? desc.DescriptorsResults.sort(fieldSorter(['-score', 'storyId'])):[];
+        const storyList = this.props.selectedSource ?
+            storyListAll.filter((story)=>{
+            return this.props.stories[story.storyId].mediaName==this.props.selectedSourceName
+        }): storyListAll;
         const moreStories = storyList.length>this.state.storiesCount?
             <span onClick={this.moreClicked}>Show More Stories</span>:
             <div><p>No more stories to show.</p><p> Try Playing with the sliders on the right or select another topic</p></div>

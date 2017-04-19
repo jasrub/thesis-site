@@ -8,7 +8,7 @@ import StoryControls from 'components/StoryControls/StoryControls';
 import Sliders from 'components/Sliders/Sliders';
 import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
 import Topic from 'containers/Topic/Topic';
-import {Spinner} from '@blueprintjs/core';
+import {Spinner, Overlay} from '@blueprintjs/core';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Joyride from 'react-joyride';
 
@@ -170,20 +170,25 @@ export const Main = React.createClass ({
         }
     },
     storyPlots(){
-        if (!this.state.selected || Object.keys(this.props.descriptorsData.stories).length<1) {
+        if (Object.keys(this.props.descriptorsData.constStories).length<1 || (!this.state.selected && !this.state.selectedSource)) {
             return this.props.descriptorsData.storyPlots;
         }
         else {
+            const arrToUse = this.state.selected?
+                this.props.descriptorsData.descriptors[this.state.selectedDescriptorId].DescriptorsResults :
+                Object.keys(this.props.descriptorsData.constStories).map((id)=>{return{storyId:id}});
             const storyPlots = clone(this.props.descriptorsData.storyPlots);
-            this.props.descriptorsData.descriptors[this.state.selectedDescriptorId].DescriptorsResults.forEach((s)=>{
+            arrToUse.forEach((s)=>{
                 const story = this.props.descriptorsData.constStories[s.storyId];
                 Object.keys( this.props.descriptorsData.storyPlots).forEach((filterName)=>{
-                    var val = story[filterName].toFixed(1);
-                    if (val=='-0.0') {
-                        val = '0.0'
+                    if ((this.state.selectedSource && story.mediaName == this.state.selectedSourceName)|| !this.state.selectedSource) {
+                        var val = story[filterName].toFixed(1);
+                        if (val == '-0.0') {
+                            val = '0.0'
+                        }
+                        var element = storyPlots[filterName].find((el) => el.val == val)
+                        element['descCount'] += 1
                     }
-                    var element = storyPlots[filterName].find((el)=>el.val==val)
-                    element['descCount'] += 1
                 })
             })
             return storyPlots
@@ -250,7 +255,7 @@ export const Main = React.createClass ({
                            story={stories[this.state.selectedStoryId]}
                            descriptorClicked={this.descriptorClicked}/>: <div/>;
 
-        const storyPlots = this.state.selected ? this.storyPlots(): this.props.descriptorsData.storyPlots;
+        const storyPlots = this.state.selected || this.state.selectedSource ? this.storyPlots(): this.props.descriptorsData.storyPlots;
 
         return (
 
@@ -350,12 +355,19 @@ export const Main = React.createClass ({
                                                        selectedStoryId = {this.state.selectedStoryId}
                                                        onStoryClick = {this.storyClicked}
                                                        onStoryClose = {this.storyClosed}
+                               selectedSource={this.state.selectedSource}
+                               selectedSourceName={this.state.selectedSourceName}
                         />
                         </div>
                     </div>
                     <div style={styles.sideBar}>
                         <div>
+                            <Overlay isOpen={this.state.selectedStory} inline={true} hasBackdrop={false}
+                                     transitionDuration={1}>
+                                {storyControls}
+                            </Overlay>
                             <div className="filters">
+                                <h3>Filter By:</h3>
                             <Sliders title={""}
                                       filters={this.state.filters}
                                       onFilterChange={this.handleFilterChange}
@@ -370,12 +382,6 @@ export const Main = React.createClass ({
                                 <Spinner />
                             </div>
                             }
-                            <ReactCSSTransitionGroup
-                                transitionName="opac"
-                                transitionEnterTimeout={500}
-                                transitionLeave={false}>
-                                {storyControls}
-                            </ReactCSSTransitionGroup>
                         </div>
                     </div>
 
@@ -433,8 +439,7 @@ styles = {
         width:'70%',
         margin: '0 auto',
         opacity: '0.7',
-    }
-
+    },
 };
 
 function clone(obj) {
