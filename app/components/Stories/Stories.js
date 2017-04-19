@@ -60,7 +60,7 @@ export const Story = React.createClass({
         const showImage = s.showImage || s.isSuperglue;
         const image_url = showImage? s.image: '';
         return(
-                <div className="outer-square">
+                <div className="outer-square story">
 
                 <div className="square" style={styles.square(image_url)} onClick={this.onClick}>
                     <div className={showImage? "overlay": ""}>

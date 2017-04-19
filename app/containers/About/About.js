@@ -1,13 +1,15 @@
 import React from 'react';
 import AppNav from 'components/AppNav/AppNav';
 
+let styles;
 export const About = React.createClass({
 
     render() {
         return (
             <div>
                 <AppNav onHomeClick={()=>{}}/>
-                <div>
+                <div style={styles.container}>
+                    <div style={styles.content}>
                     <p>
                     Panorama is an interactive interface , that is used both as an open-box news aggregator, as well as a set of  news annotators, and is  based on underlying machine learning models that learn from the user as the user herself explores the material.
                     Facebook is a black box aggregator. It selects and prioritizes posts based on rules you don't know and can't control. Christian Sandvig proposes glass-box algorithms - you can see how they work and test them, but not alter them. An open box aggregator is one where you can flip the switches, try different settings and compare their results.
@@ -23,6 +25,7 @@ export const About = React.createClass({
                     <p>
                     Panorama uses principles of information visualization and user experience  to address the problem of information overload. It allows readers to explore underlying patterns of news stories, reflect on our world by adding meaning and help manage information overload and focus the attention to what matters.
                     </p>
+                    </div>
                 </div>
             </div>
         );
@@ -30,3 +33,13 @@ export const About = React.createClass({
 });
 
 export default About;
+
+styles = {
+    container: {
+        maxWidth: '1024px',
+        textAlign: 'center',
+    },
+    content: {
+        textAlign: 'left',
+    }
+}

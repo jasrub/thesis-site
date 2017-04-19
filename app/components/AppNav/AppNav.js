@@ -25,7 +25,7 @@ export const AppNav = React.createClass({
 						</Link>
 
 						<div style={styles.linkWrapper}>
-							<Link to={'/'} onClick={this.props.onHomeClick} style={styles.link}>Quick Tour</Link>
+							<Link to={'/'} onClick={this.props.onTourClick} style={styles.link}>Quick Tour</Link>
 
 							{/*<span style={styles.link}>Sources Compare</span>*/}
 							<Link to={'/about'} style={styles.link}>About</Link>

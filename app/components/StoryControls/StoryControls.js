@@ -82,7 +82,7 @@ export const StoryControls = React.createClass({
 
         return (
             <div>
-                <div style={styles.labelBox}>
+                <div style={styles.labelBox} className="story-controls">
                 <Controls title={"Help the Algorithms Improve! How would you rate this story?"} filters={this.state.values} onFilterChange={this.handleValueChange}/>
                 <div style={styles.buttonContainer}>
                     <button className={"label-button"}

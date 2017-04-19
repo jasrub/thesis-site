@@ -17,3 +17,8 @@ $icon-font-path: "~@blueprintjs/core/resources/icons";
 // Import Core Blueprint sass
 // ****************************
 @import "~@blueprintjs/core/src/blueprint.scss";
+
+
+// Import Joyride sass
+// ****************************
+@import '~react-joyride/lib/react-joyride';

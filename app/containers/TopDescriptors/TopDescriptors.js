@@ -57,9 +57,11 @@ export const TopDescriptors = React.createClass({
                     </div>
 
                     <h3>Topics</h3>
+            <div className={"topics"}>
             <FlipMove duration={750} easing="ease-out">
                     {items}
                 </FlipMove>
+            </div>
         </div>)
     },
 

@@ -10,6 +10,7 @@ import TopDescriptors from 'containers/TopDescriptors/TopDescriptors';
 import Topic from 'containers/Topic/Topic';
 import {Spinner} from '@blueprintjs/core';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Joyride from 'react-joyride';
 
 
 let styles;
@@ -64,7 +65,8 @@ export const Main = React.createClass ({
                     leftLabel: "Trending",
                     rightLabel: "Ongoing"
                 },
-            }
+            },
+            isJoyrideRunning:false,
         };
     },
 
@@ -188,6 +190,35 @@ export const Main = React.createClass ({
         }
     },
 
+    callback(data) {
+        console.log('%ccallback', 'color: #47AAAC; font-weight: bold; font-size: 13px;'); //eslint-disable-line no-console
+        console.log(data); //eslint-disable-line no-console
+    },
+
+    addSteps(steps) {
+        let newSteps = steps;
+
+        if (!Array.isArray(newSteps)) {
+            newSteps = [newSteps];
+        }
+
+        if (!newSteps.length) {
+            return;
+        }
+
+        // Force setState to be synchronous to keep step order.
+        this.setState(currentState => {
+            currentState.steps = currentState.steps.concat(newSteps);
+            return currentState;
+        });
+    },
+
+    resetTour() {
+        this.joyride.reset(true);
+        this.setState({isJoyrideRunning:true})
+    },
+
+
 
     render() {
         console.log('story count: ', this.props.descriptorsData.storyCount);
@@ -224,7 +255,55 @@ export const Main = React.createClass ({
         return (
 
             <div>
-                <AppNav onHomeClick={this.resetSelection}/>
+                <Joyride
+                    ref={c => (this.joyride = c)}
+                    steps={[
+                        {
+                            title: 'Topics',
+                            text: 'These are the most mentioned topics in the news from the past 24 hours. <br/>' +
+                            'Click on one of them to see the stories about this topic. You can also search for other topics that are not on the top list <br/>' +
+                            'Try! click one!',
+                            position: 'right',
+                            selector: '.topics',
+                        },
+                        {
+                            title: 'Sources',
+                            text: 'This section shows all the different media sources of news stories. When you select a specific topic, or play with the filters on the right, you could see how many stories form each source matched you selections.',
+                            position: 'top',
+                            selector: '.sources',
+                        },
+                        {
+                            title: 'Filters',
+                            text: 'Use these sliders to determine what content you see. ' +
+                            'You can choose to see only politically left leaning stories, or only trending, positive subjective stories.' +
+                            'The charts show the distribution of stories across each on of the labels.',
+                            position: 'left',
+                            selector: '.filters',
+                        },
+                        {
+                            title: 'Story',
+                            text: 'Click on any story to read it. Then, you\'ll also get to help the "Panorama" algorithms improve. <br/>' +
+                            'Click one now!',
+                            position: 'bottom',
+                            selector: '.story',
+                        },
+                        {
+                            title: 'Your Job:',
+                            text: 'Here you can see what the machine learning algorithm thought of the story you are reading. Disagree? Please send in your opinion, so the algorithms can improve',
+                            position: 'left',
+                            selector: '.story-controls',
+                        },
+
+
+                    ]}
+                    run={this.state.isJoyrideRunning} // or some other boolean for when you want to start it
+                    type={"continuous"}
+                    showOverlay={true}
+                    allowClicksThruHole={true}
+                    autoStart={true}
+                    disableOverlay={true}
+                />
+                <AppNav onHomeClick={this.resetSelection} onTourClick={this.resetTour}/>
                 <div className="grid">
                     <div style={styles.topics(this.state.selected)}>
 
@@ -240,7 +319,7 @@ export const Main = React.createClass ({
                         />
 
                         {!loading &&
-                        <div>
+                        <div className={"sources"}>
                             <h3 onClick={this.resetSourceSelection}>Sources</h3>
                             <BySourceChart bySourceData={bySourceData}
                                            selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : this.state.selectedSourceName}
@@ -254,7 +333,7 @@ export const Main = React.createClass ({
 
                         <div style={styles.centerContent(!this.state.selected)}>
                             <div style={styles.explain}>
-                            Click around to explore, compare & control today's news
+                            Click around to explore, compare & control today's news stories
                                 <img width="100%" src="/static/arrows.png" style={{paddingTop:'1em'}}/>
                             </div>
                         </div>
@@ -276,6 +355,7 @@ export const Main = React.createClass ({
                     </div>
                     <div style={styles.sideBar}>
                         <div>
+                            <div className="filters">
                             <Sliders title={""}
                                       filters={this.state.filters}
                                       onFilterChange={this.handleFilterChange}
@@ -284,6 +364,7 @@ export const Main = React.createClass ({
                                      isStorySelected = {this.state.selectedStory}
                                      selectedStory = {stories[this.state.selectedStoryId]||{}}
                             />
+                            </div>
                             {loading &&
                             <div>
                                 <Spinner />
