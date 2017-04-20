@@ -65,7 +65,7 @@
     "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "^15.3.0",
     "react-flip-move": "^2.9.1",
-    "react-ga": "^2.1.2",
+    "react-ga": "^2.2.0",
     "react-helmet": "^3.1.0",
     "react-joyride": "^1.10.1",
     "react-redux": "^4.4.5",

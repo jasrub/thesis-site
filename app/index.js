@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ga from 'react-ga';
+import ReactGA from 'react-ga';
 import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 import { Provider } from 'react-redux';
@@ -11,14 +11,18 @@ import fetch from 'isomorphic-fetch';
 
 const store = configureStore();
 if (window.location.hostname !== 'localhost') {
+    ReactGA.initialize('UA-97694748-1');
+}
+else {
+    ReactGA.initialize('UA-97729524-1');
 }
 
 require('es6-promise').polyfill();
 
 function onRouteUpdate() {
 	// Log Page View
-	ga.set({ page: window.location.pathname });
-	ga.pageview(window.location.pathname);
+    ReactGA.set({ page: window.location.pathname });
+    ReactGA.pageview(window.location.pathname);
 
 	// Smooth scroll if needed
 	const { hash } = window.location;

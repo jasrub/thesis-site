@@ -11,6 +11,7 @@ import Topic from 'containers/Topic/Topic';
 import {Spinner, Overlay} from '@blueprintjs/core';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Joyride from 'react-joyride';
+import ReactGA from 'react-ga';
 
 
 let styles;
@@ -73,6 +74,12 @@ export const Main = React.createClass ({
     handleFilterChange(filter, value) {
         const loading = (this.props.descriptorsData.loading || this.props.descriptorsData.storiesLoading ||
         this.props.descriptorsData.sourcesLoading );
+        ReactGA.event({
+            category: 'Filter',
+            action: 'filterChange',
+            label: filter,
+            value: value*10
+        });
         if (!loading) {
             const newFilters = this.state.filters;
             newFilters[filter].min = value[0];
@@ -98,6 +105,11 @@ export const Main = React.createClass ({
             selectedStory: false,
             selectedStoryId: null,
         });
+        ReactGA.event({
+            category: 'Descriptor',
+            action: 'Descriptor Clicked',
+            label: descriptor
+        });
     },
 
     storyClicked(storyId) {
@@ -105,9 +117,19 @@ export const Main = React.createClass ({
             selectedStory: true,
             selectedStoryId: storyId,
         });
+        ReactGA.event({
+            category: 'Story',
+            action: 'Story Clicked',
+            label: stotyId
+        });
     },
 
     storyClosed() {
+        ReactGA.event({
+            category: 'Story',
+            action: 'Story Closed',
+            label: this.state.selectedStoryId
+        });
         this.setState({
             selectedStory: false,
             selectedStoryId: null,
@@ -119,6 +141,11 @@ export const Main = React.createClass ({
             this.resetSourceSelection()
         }
         else {
+            ReactGA.event({
+                category: 'Source',
+                action: 'Source clicked',
+                label: sourceName
+            });
             this.setState({
                 selectedSource: true,
                 selectedSourceName: sourceName,
