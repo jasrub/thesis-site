@@ -12,6 +12,7 @@ import fetch from 'isomorphic-fetch';
 const store = configureStore();
 if (window.location.hostname !== 'localhost') {
     ReactGA.initialize('UA-97694748-1');
+    ReactGA.plugin.require('eventTracker');
 }
 else {
     ReactGA.initialize('UA-97729524-1');
