@@ -36,7 +36,7 @@ export const Topic = React.createClass ({
         const storyListAll = desc? desc.DescriptorsResults.sort(fieldSorter(['-score', 'storyId'])):[];
         const storyList = this.props.selectedSource ?
             storyListAll.filter((story)=>{
-            return this.props.stories[story.storyId].mediaName==this.props.selectedSourceName
+                return this.props.stories[story.storyId].mediaName==this.props.selectedSourceName
         }): storyListAll;
         const moreStories = storyList.length>this.state.storiesCount?
             <span onClick={this.moreClicked}>Show More Stories</span>:

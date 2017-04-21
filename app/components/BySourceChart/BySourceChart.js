@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Radium from 'radium';
-import {BarChart, Bar, XAxis, YAxis, Cell, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label} from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, Cell, CartesianGrid, Tooltip, ResponsiveContainer, Label} from 'recharts';
 
 let styles;
 
@@ -42,14 +42,21 @@ export const BySourceChart = React.createClass({
                     <YAxis type="number" dataKey="size" hide={true} domain={[0,1]}/>
                     <Bar dataKey="size" fill="rgba(0, 167, 126, 0.4)"
                          isAnimationActive={this.state.animate}
-                         verticalAnchor="middle" label={<CustomizedAxisTick/> }
-                         onClick={this.handleBarClick}>
+                         verticalAnchor="middle" label={<CustomizedAxisTick onClick={this.handleBarClick}/> }
+                         onClick={this.handleBarClick}
+                    >
                         {
-                            data.map((entry, index) => (
+                            data.map((entry, index) => {
+
+                                const isSelected = data[index].name === selectedSource;
+                                return (
                                 <Cell  key={`cell-${index}`} cursor="pointer"
-                                      fill={data[index].name === selectedSource ? '#9C5586': 'rgba(255, 125, 58, 0.8)' }
-                                />
-                            ))
+                                           fill= {isSelected? '#9C5586': 'rgba(255, 125, 58, 0.8)'}
+                                      stroke = {isSelected?"white": "none"}
+                                       strokeWidth = {isSelected?1: 0}
+                                />)
+                            })
+
                         }
                     </Bar>
                     <Tooltip
@@ -88,11 +95,11 @@ const CustomTooltip  = React.createClass({
 
 const CustomizedAxisTick = React.createClass({
     render () {
-        const {x, y, fill, name} = this.props;
+        const {x, y, fill, name, index, onClick} = this.props;
 
         return (
-            <g transform={`translate(${x},${y})`}>
-                <text x={(-y+3)} y={0} dx={0} textAnchor="start" dominantBaseline="middle" fill="#fff" transform="rotate(90)" fontSize="0.6vw">{name}</text>
+            <g transform={`translate(${x},${y})`} onClick={()=>onClick(null, index)} cursor="pointer">
+                <text x={(-y+3)} y={0} dx={0} textAnchor="start" dominantBaseline="middle" fill="#fff" transform="rotate(90)" fontSize="0.73vw">{name}</text>
             </g>
         );
     }

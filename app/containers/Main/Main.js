@@ -105,6 +105,7 @@ export const Main = React.createClass ({
             selectedStory: false,
             selectedStoryId: null,
         });
+        //this.resetSourceSelection();
         ReactGA.event({
             category: 'Descriptor',
             action: 'Descriptor Clicked',
@@ -120,7 +121,7 @@ export const Main = React.createClass ({
         ReactGA.event({
             category: 'Story',
             action: 'Story Clicked',
-            label: stotyId
+            label: storyId
         });
     },
 
@@ -352,7 +353,7 @@ export const Main = React.createClass ({
 
                         {!loading &&
                         <div className={"sources"}>
-                            <h3 onClick={this.resetSourceSelection}>Sources</h3>
+                            <h3 onClick={this.resetSourceSelection} style={{cursor:"pointer"}}>Sources</h3>
                             <BySourceChart bySourceData={bySourceData}
                                            selectedSource={this.state.selectedStory?stories[this.state.selectedStoryId].mediaName : this.state.selectedSourceName}
                                            descriptorId={this.state.selectedDescriptorId}
@@ -434,13 +435,13 @@ styles = {
     },
     sideBar: {
         float: 'left',
-        width: '30%',
+        width: '25%',
         paddingTop:'3em',
     },
     topics: (selected)=>{
         return {
             float:'left',
-            width: '25%',
+            width: '30%',
             paddingTop:'3em',
             transition:'all 1s',
         }
