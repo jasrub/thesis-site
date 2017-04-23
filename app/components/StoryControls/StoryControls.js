@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Controls from 'components/Controls/Controls';
 import { Position, Toaster } from "@blueprintjs/core";
 import { postLabel } from './actions';
+import ReactGA from 'react-ga';
 
 
 let styles;
@@ -73,8 +74,15 @@ export const StoryControls = React.createClass({
         this.setState({
                 clicked: true
         });
-        this.props.dispatch(postLabel(this.props.story, this.state.values))
         // send labels to api!!
+        this.props.dispatch(postLabel(this.props.story, this.state.values))
+
+        ReactGA.event({
+            category: 'Story',
+            action: 'Label submitted',
+            label: this.props.story.id
+        });
+
     },
 
     render() {
