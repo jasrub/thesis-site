@@ -3,6 +3,7 @@ import Radium from 'radium';
 import { getDescriptors, getRelated, getStories, getStoryImage, getSources } from './actions';
 import { connect } from 'react-redux';
 import AppNav from 'components/AppNav/AppNav';
+import AppFooter from 'components/AppFooter/AppFooter';
 import BySourceChart from 'components/BySourceChart/BySourceChart';
 import StoryControls from 'components/StoryControls/StoryControls';
 import Sliders from 'components/Sliders/Sliders';
@@ -414,6 +415,7 @@ export const Main = React.createClass ({
                     </div>
 
                 </div>
+                <AppFooter/>
             </div>
         );
     }

@@ -96,12 +96,13 @@ styles = {
 
     title: {
         textAlign: 'left',
-        fontSize: '0.9em',
+        fontSize: '1em',
         color: '#FFF',
         margin: '0 auto',
-        opacity: '0.7',
+        opacity: '0.9',
         //margin: '6em',
         padding: '0.3em',
+        fontWeight:'300',
 
     },
 };

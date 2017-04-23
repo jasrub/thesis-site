@@ -25,6 +25,12 @@ export const About = React.createClass({
                     <p>
                     Panorama uses principles of information visualization and user experience  to address the problem of information overload. It allows readers to explore underlying patterns of news stories, reflect on our world by adding meaning and help manage information overload and focus the attention to what matters.
                     </p>
+                        <p>
+                        This is a first prototype built by <a href="http://www.jasrub.com/">Jasmin Rubinovitz</a>, as part of her masters thesis at the Viral Communications group at MIT Media Lab
+                        <p>
+                        Please email <a href="mailto:jasrub@media.mit.edu">jasrub@media.mit.edu</a> with any questions or thoughts.
+                        </p>
+                        </p>
                     </div>
                 </div>
             </div>
