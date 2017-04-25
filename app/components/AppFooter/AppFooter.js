@@ -9,7 +9,7 @@ export const AppFooter = React.createClass({
 
         return (
             <div style={styles.container}>
-                <div> © <a href={"http://www.jasrub.com/"} style={styles.link}> Jasmin Rubiovitz</a></div>
+                <div> © <a href={"http://www.jasrub.com/"} style={styles.link}> Jasmin Rubinovitz</a></div>
             </div>
         );
     }
