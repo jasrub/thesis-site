@@ -77,9 +77,8 @@ export const Main = React.createClass ({
         this.props.descriptorsData.sourcesLoading );
         ReactGA.event({
             category: 'Filter',
-            action: 'filterChange',
-            label: filter,
-            value: value*10
+            action: 'filter changed',
+            label: filter+' '+value[0]+' , '+value[1]
         });
         if (!loading) {
             const newFilters = this.state.filters;
