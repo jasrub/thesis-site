@@ -18,8 +18,10 @@ export const Descriptor = React.createClass ({
         glow: PropTypes.boolean,
     },
 
-    setInitialState() {
-        selected:false
+    getInitialState() {
+        return {
+            selected: false
+        }
     },
 
     handleClick() {

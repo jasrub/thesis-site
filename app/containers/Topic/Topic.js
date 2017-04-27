@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import Stories from 'components/Stories/Stories';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import LinkPreview from 'components/storyPreview/preview';
 
 
 let styles;
@@ -76,17 +77,33 @@ export const Iframe = React.createClass({
         id: PropTypes.string,
         title : PropTypes.string,
     },
+    // componentDidMount(){
+    //     (function(w, d){
+    //         var id='embedly-platform', n = 'script';
+    //         if (!d.getElementById(id)){
+    //             w.embedly = w.embedly || function() {(w.embedly.q = w.embedly.q || []).push(arguments);};
+    //             var e = d.createElement(n); e.id = id; e.async=1;
+    //             e.src = ('https:' === document.location.protocol ? 'https' : 'http') + '://cdn.embedly.com/widgets/platform.js';
+    //             var s = d.getElementsByTagName(n)[0];
+    //             s.parentNode.insertBefore(e, s);
+    //         }
+    //     })(window, document);
+    //     embedly('card', '#embedly-'+this.props.id);
+    // },
+    // componentDidUpdate(prevProps, prevState) {
+    //     embedly('card', '#embedly-'+this.props.id);
+    // },
 
     render() {
         return(
 
-            <div key={this.props.id} style={{textAlign:'center'}}>
-            <div style={styles.iframeBox}>
+            <div>
                 <button style={styles.closeButton} onClick={this.props.onClose} type="button" className="pt-button pt-minimal pt-icon-cross"/>
                 <div style={styles.titleLink}><a style={styles.titleLink} href={this.props.url} target="_blank">{this.props.title}</a></div>
-                <iframe width="100%" height="92%" src={this.props.url}
-                        frameBorder="0" allowTransparency="true" style={{background: '#FFFFFF'}} onLoad={()=>{}}/>
-            </div>
+                <div style={styles.embedlyBox}>
+                    <LinkPreview url={this.props.url}/>
+                {/*<a className="card-this" data-card-controls="0" id={"embedly-"+this.props.id} href={this.props.url}>{this.props.title}</a>*/}
+                </div>
             </div>
         )
     }
@@ -99,7 +116,11 @@ styles = {
     grid: {
         position:'relative',
         display: 'block',
-margin: 'auto',
+        margin: 'auto',
+    },
+    embedlyBox:{
+        background: '#FFFFFF',
+        minHeight: '30vh',
     },
     title: {
         fontSize:'3em',
