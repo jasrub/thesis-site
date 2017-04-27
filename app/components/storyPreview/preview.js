@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EmbedlyPreview from './embedly';
+import EmbedlyPreview from './Embedly';
 
 export default function LinkPreview({url}) {
     if (noPreviewForURL(url)) {
