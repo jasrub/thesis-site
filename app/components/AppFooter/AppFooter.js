@@ -20,11 +20,16 @@ export default Radium(AppFooter);
 
 styles = {
     container: {
-        borderTop: '1px solid #888',
-        paddingTop: '1em',
-        marginTop: '4em',
+        //borderTop: '1px solid #888',
+        padding: '1em',
         textAlign: 'center',
-        color: '#888'
+        color: '#888',
+        position:'absolute',
+        right: '0',
+        bottom: '0',
+        left: '0',
+        width: '100%',
+
     },
     link: {
         color: '#888',

@@ -1,19 +1,23 @@
 html {
+  box-sizing: border-box;
+}
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
     padding: 2em;
-	background: linear-gradient(-15deg, #171435, #1A3746 );
-    background-repeat: no-repeat;
-    background-size: cover;
   color: #F1F1F9;
   font-family: 'Roboto', sans-serif;
   font-weight: lighter;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-    min-height:100vh;
+
+  background: linear-gradient(-15deg, #171435, #1A3746 );
+  background-repeat: no-repeat;
+  background-size: cover;
+
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -23,11 +27,16 @@ body {
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100vh;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: #F1F1F9;
-  font-weight: bold;
+  font-weight: 400;
   padding: 0.3em 0 0.3em 0;
 
 }
@@ -96,6 +105,10 @@ h1, h2, h3, h4, h5, h6 {
   clear: both;
 }
 
+.grid {
+  min-height: 100%;
+}
+
 .pt-toast {
   background: #ff9046;
 }
@@ -115,7 +128,7 @@ h1, h2, h3, h4, h5, h6 {
 .outer-square {
   display: inline-block;
   position: relative;
-  width: 23%;
+  width: 27%;
   padding-bottom : 23%; /* = width for a 1:1 aspect ratio */
   margin:0.2em 0.4em;
   text-align: center;

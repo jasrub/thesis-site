@@ -336,6 +336,7 @@ export const Main = React.createClass ({
                     autoStart={true}
                     disableOverlay={true}
                 />
+                <div style={{minHeight:'100%'}}>
                 <AppNav onHomeClick={this.resetSelection} onTourClick={this.resetTour}/>
                 <div className="grid">
                     <div style={styles.topics(this.state.selected)}>
@@ -367,7 +368,7 @@ export const Main = React.createClass ({
                         <div style={styles.centerContent(!this.state.selected)}>
                             <div style={styles.explain}>
                             Click around to explore, compare & control today's news stories
-                                <img width="100%" src="/static/arrows.png" style={{paddingTop:'1em'}}/>
+                                {/*<img width="100%" src="/static/arrows.png" style={{paddingTop:'1em'}}/>*/}
                             </div>
                         </div>
 
@@ -395,7 +396,7 @@ export const Main = React.createClass ({
                                 {storyControls}
                             </Overlay>
                             <div className="filters">
-                                <h3>Filter By:</h3>
+                                <h3>Filter By</h3>
                             <Sliders title={""}
                                       filters={this.state.filters}
                                       onFilterChange={this.handleFilterChange}
@@ -413,6 +414,7 @@ export const Main = React.createClass ({
                         </div>
                     </div>
 
+                </div>
                 </div>
                 <AppFooter/>
             </div>
@@ -463,11 +465,12 @@ styles = {
         }
     },
     explain: {
-        fontSize: '3em',
+        fontSize: '2em',
         fontWeight:'100',
-        width:'70%',
-        margin: '0 auto',
+        width:'50%',
         opacity: '0.7',
+        margin: '0 auto',
+        paddingTop:'5em',
     },
 };
 

@@ -21,7 +21,7 @@ export const AppNav = React.createClass({
 				<div style={styles.navContent}>
 					<div style={{display:'table', width: '100%'}}>
 						<Link to={'/'} style={styles.logo} onClick={this.props.onHomeClick}>
-							<img src="/static/logo_small.png" />
+							<img src="/static/PanoramaLogoWhite.png" />
 						</Link>
 
 						<div style={styles.linkWrapper}>
@@ -75,6 +75,7 @@ styles = {
         color: 'white',
 		display: 'table-cell',
 		width: '50%',
+		opacity: '0.7',
     },
 	
 };

@@ -6,7 +6,7 @@ export const About = React.createClass({
 
     render() {
         return (
-            <div>
+            <div style={{minHeight:'100%'}}>
                 <AppNav onHomeClick={()=>{}}/>
                 <div style={styles.container}>
                     <div style={styles.content}>

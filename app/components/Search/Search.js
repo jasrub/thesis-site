@@ -74,8 +74,8 @@ export const Search = React.createClass({
 
 
                 <label className="pt-label">
-                    Search Topics
-                    <div className="pt-input-group">
+                    <h3> Search other topics </h3>
+                    <div className="pt-input-group" style={styles.searchBar}>
                         <span className="pt-icon pt-icon-search"></span>
                         <input className="pt-input" type="search" placeholder="Try things like animals or basketball" dir="auto"
                                value={this.state.searchValue}
@@ -94,7 +94,10 @@ export const Search = React.createClass({
 
 styles = {
     search: {
-        maxWidth: '90%',
+        maxWidth: '70%',
+    },
+    searchBar: {
+
     }
 };
 
