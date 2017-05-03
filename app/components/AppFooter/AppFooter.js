@@ -9,7 +9,9 @@ export const AppFooter = React.createClass({
 
         return (
             <div style={styles.container}>
-                <div> © <a href={"http://www.jasrub.com/"} style={styles.link}> Jasmin Rubinovitz</a></div>
+                <div>This is an experimental interface built at MIT Media Lab</div>
+                <div>Have any feedback, questions or thoughts? contact <a href="mailto:jasrub@media.mit.edu">jasrub@media.mit.edu</a></div>
+                {/*<div> © <a href={"http://www.jasrub.com/"} style={styles.link}> Jasmin Rubinovitz</a></div>*/}
             </div>
         );
     }
@@ -20,7 +22,8 @@ export default Radium(AppFooter);
 
 styles = {
     container: {
-        //borderTop: '1px solid #888',
+        borderTop: '0.3px solid #555',
+        marginTop:  '2em',
         padding: '1em',
         textAlign: 'center',
         color: '#888',
@@ -33,6 +36,7 @@ styles = {
     },
     link: {
         color: '#888',
+        fontSize: '0.5em'
     },
 
 };

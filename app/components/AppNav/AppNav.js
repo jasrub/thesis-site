@@ -75,7 +75,6 @@ styles = {
         color: 'white',
 		display: 'table-cell',
 		width: '50%',
-		opacity: '0.7',
     },
 	
 };
