@@ -368,7 +368,7 @@ export const Main = React.createClass ({
                         <div style={styles.centerContent(!this.state.selected)}>
                             <div style={styles.explain}>
                             Click around to explore, compare & control today's news stories
-                                {/*<img width="100%" src="/static/arrows.png" style={{paddingTop:'1em'}}/>*/}
+                                <img width="100%" src="/static/arrows.png" style={{paddingTop:'1em'}}/>
                             </div>
                         </div>
 
