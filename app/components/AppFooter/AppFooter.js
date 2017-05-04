@@ -10,7 +10,7 @@ export const AppFooter = React.createClass({
         return (
             <div style={styles.container}>
                 <div>This is an experimental interface built at MIT Media Lab</div>
-                <div>Have any feedback, questions or thoughts? contact <a href="mailto:jasrub@media.mit.edu">jasrub@media.mit.edu</a></div>
+                <div>Have any feedback, questions or thoughts? contact  <a href="mailto:jasrub@media.mit.edu">  jasrub@media.mit.edu</a></div>
                 {/*<div> © <a href={"http://www.jasrub.com/"} style={styles.link}> Jasmin Rubinovitz</a></div>*/}
             </div>
         );
