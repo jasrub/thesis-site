@@ -25,4 +25,4 @@ npm run start-prod
 
 ## API
 
-The API used for this frontend is available at [https://github.com/isTravis/pubpub-experiments-api](https://github.com/isTravis/pubpub-experiments-api).
+The API used for this frontend is available at [https://github.com/jasrub/thesis-api](https://github.com/jasrub/thesis-api).
