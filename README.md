@@ -1,4 +1,6 @@
-# Experiments Site
+frontend side of Panorama.um-dokku.media.mit.edu
+
+Forked from https://github.com/isTravis/pubpub-experiments-site
 
 
 ## Install & run
